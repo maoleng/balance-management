@@ -17,11 +17,11 @@ class NotifyCoinCommand extends Command
     {
         $client = new Client;
         $endpoint = 'https://api.binance.com/api/v3/ticker/price?symbol=';
-        $content = '';
 
         $notify_coins = NotifyCoin::query()->get();
-
         $coin_prices = [];
+
+        $content = '';
         foreach ($notify_coins as $notify_coin) {
             $response = $client->get($endpoint.$notify_coin->coin.'USDT')->getBody()->getContents();
             $price = json_decode($response)->price;
@@ -36,7 +36,8 @@ class NotifyCoinCommand extends Command
 
             $btf_profit = number_format($profit).' VND';
             $btf_price = round($price, 8);
-            $content .= "**$notify_coin->coin**: $btf_price ($btf_profit)\n";
+
+            $content .= $notify_coin->coin.'       '.$btf_price.'       '.$btf_profit."\n";
         }
         CoinPrice::query()->insert($coin_prices);
         (new Client)->post(env('ENDPOINT_TELEGRAM_LOG_MESSAGE'), [
@@ -47,6 +48,7 @@ class NotifyCoinCommand extends Command
             'json' => [
                 'channel_uuid' => env('COIN_NOTIFY_CHANNEL_ID'),
                 'content' => $content,
+                'parse_mode' => 'HTML',
             ],
         ]);
     }
