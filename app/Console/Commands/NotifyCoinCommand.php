@@ -25,18 +25,17 @@ class NotifyCoinCommand extends Command
         foreach ($notify_coins as $notify_coin) {
             $response = $client->get($endpoint.$notify_coin->coin.'USDT')->getBody()->getContents();
             $price = json_decode($response)->price;
-            $real_money = $this->getRealMoneyOfCoin($notify_coin->coin);
-            $profit = $notify_coin->coin_amount * $real_money - $notify_coin->balance;
+            $profit = $notify_coin->coin_amount === 0 ? 0 :
+                $notify_coin->coin_amount * $this->getRealMoneyOfCoin($notify_coin->coin) - $notify_coin->balance;
             $coin_prices[] = [
                 'coin' => $notify_coin->coin,
                 'price' => $price,
-                'real_money' => $real_money,
                 'profit' => $profit,
                 'created_at' => now(),
             ];
 
             $btf_profit = number_format($profit).' VND';
-            $btf_price = round($price, 1);
+            $btf_price = round($price, 8);
             $content .= "$notify_coin->coin: $btf_price ($btf_profit)\n";
         }
         CoinPrice::query()->insert($coin_prices);
