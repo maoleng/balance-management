@@ -8,7 +8,7 @@ class CoinPrice extends Model
 {
 
     protected $fillable = [
-        'coin', 'price', 'real_money', 'created_at',
+        'coin', 'price', 'real_money', 'profit', 'created_at',
     ];
 
 }

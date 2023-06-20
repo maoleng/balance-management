@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('coin', 10);
             $table->double('price');
             $table->double('real_money');
+            $table->double('profit')->nullable();
             $table->dateTime('created_at');
         });
     }

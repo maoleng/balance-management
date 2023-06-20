@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notify_coins', function (Blueprint $table) {
             $table->id();
-            $table->string('coin', 10);
+            $table->string('coin', 10)->unique();
             $table->double('coin_amount');
             $table->double('balance');
             $table->boolean('is_notify');
