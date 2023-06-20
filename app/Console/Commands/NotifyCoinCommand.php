@@ -36,7 +36,7 @@ class NotifyCoinCommand extends Command
 
             $btf_profit = number_format($profit).' VND';
             $btf_price = round($price, 8);
-            $content .= "$notify_coin->coin: $btf_price ($btf_profit)\n";
+            $content .= "**$notify_coin->coin**: $btf_price ($btf_profit)\n";
         }
         CoinPrice::query()->insert($coin_prices);
         (new Client)->post(env('ENDPOINT_TELEGRAM_LOG_MESSAGE'), [
