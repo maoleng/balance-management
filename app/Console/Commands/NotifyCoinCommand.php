@@ -27,7 +27,7 @@ class NotifyCoinCommand extends Command
             $price = json_decode($response)->price;
             $real_money = $this->getRealMoneyOfCoin($notify_coin->coin);
             $profit = $notify_coin->coin_amount * $real_money - $notify_coin->balance;
-            $coin_prices = [
+            $coin_prices[] = [
                 'coin' => $notify_coin->coin,
                 'price' => $price,
                 'real_money' => $real_money,
