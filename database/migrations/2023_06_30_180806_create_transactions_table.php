@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('type');
             $table->foreignId('reason_id')->constrained();
             $table->dateTime('created_at');
+            $table->softDeletes();
         });
     }
 

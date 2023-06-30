@@ -11,6 +11,7 @@ Route::group(['prefix' => 'invest'], static function () {
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
     Route::get('/', [TransactionController::class, 'index']);
     Route::post('/', [TransactionController::class, 'store'])->name('store');
+    Route::delete('/{transaction}', [TransactionController::class, 'destroy'])->name('destroy');
 });
 
 Route::get('/', function () {
