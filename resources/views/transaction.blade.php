@@ -9,7 +9,8 @@
                 <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Transaction</button>
                 <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
+                        <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
+                            @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalCenterTitle">Add Transaction</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -18,7 +19,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="firstname" class="form-label">Amount</label>
-                                        <input type="text" class="form-control" id="firstname" required="">
+                                        <input type="text" class="form-control" name="price" required="">
                                     </div>
 
                                 </div>
@@ -27,8 +28,8 @@
                                         <label for="firstname" class="form-label">Type</label>
                                         <br>
                                         <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                                            <li class="nav-item" role="presentation"><a class="nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
-                                            <li class="nav-item" role="presentation"><a class="nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
+                                            <li class="nav-item" role="presentation"><a data-type="1" class="btn-earn nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
+                                            <li class="nav-item" role="presentation"><a data-type="0" class="btn-earn nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -36,23 +37,24 @@
                                 <div class="col-md-12">
                                     <label for="firstname" class="form-label">Reason</label>
                                     <div class="dropdown">
-                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Primary Outline Dropdown
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sl-reason" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Choose reason
                                         </button>
                                         <ul class="dropdown-menu border-0 shadow p-3">
-                                            <li><a class="dropdown-item py-2 rounded" href="#">Action</a></li>
-                                            <li><a class="dropdown-item py-2 rounded" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item py-2 rounded" href="#">Something else here</a></li>
+                                            @foreach($reasons as $reason)
+                                                <li><a data-id="{{ $reason->id }}" class="sl-reason dropdown-item py-2 rounded" href="#">{{ $reason->name }}</a></li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
-
                             </div>
+                            <input id="i-reason" type="hidden" name="reason_id">
+                            <input id="i-type" type="hidden" name="type" value="1">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Create</button>
+                                <button class="btn btn-primary">Create</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -179,5 +181,18 @@
                 .columns.adjust()
                 .responsive.recalc();
         });
+    </script>
+
+    <script>
+        $('.sl-reason').on('click', function () {
+            $('#i-reason').val($(this).data('id'))
+            $('#sl-reason').text($(this).text())
+        })
+        $('.btn-earn').on('click', function () {
+            $('#i-type').val($(this).data('type'))
+        })
+
+
+
     </script>
 @endsection
