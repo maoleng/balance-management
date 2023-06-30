@@ -1,9 +1,11 @@
 @extends('theme.master')
 
+@section('title') Invest @endsection
+
 @section('body')
 
     <div class="body d-flex py-3">
-    <div class="container-xxl">
+        <div class="container-xxl">
         <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center flex-wrap">
             <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Add more coin</button>
             <div class="modal fade" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
@@ -119,6 +121,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
     </div>
 @endsection
 

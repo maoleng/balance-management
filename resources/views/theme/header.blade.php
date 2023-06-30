@@ -50,7 +50,7 @@
                     <div class="row align-items-center g-2">
                         <div class="col">
                             <!-- Pretitle -->
-                            <h1 class="h4 mt-1">Market</h1>
+                            <h1 class="h4 mt-1">@yield('title')</h1>
                         </div>
                     </div> <!-- Row end  -->
                 </div>

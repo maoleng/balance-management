@@ -1,0 +1,183 @@
+@extends('theme.master')
+
+@section('title') Transaction @endsection
+
+@section('body')
+    <div class="body d-flex py-3">
+        <div class="container-xxl">
+            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center flex-wrap">
+                <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Transaction</button>
+                <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Add Transaction</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Amount</label>
+                                        <input type="text" class="form-control" id="firstname" required="">
+                                    </div>
+
+                                </div>
+                                <div class="row pt-3 pb-3">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Type</label>
+                                        <br>
+                                        <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                                            <li class="nav-item" role="presentation"><a class="nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
+                                            <li class="nav-item" role="presentation"><a class="nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="firstname" class="form-label">Reason</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Primary Outline Dropdown
+                                        </button>
+                                        <ul class="dropdown-menu border-0 shadow p-3">
+                                            <li><a class="dropdown-item py-2 rounded" href="#">Action</a></li>
+                                            <li><a class="dropdown-item py-2 rounded" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item py-2 rounded" href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Create</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="p2pone" class="priceTable table table-hover custom-table table-bordered align-middle mb-0" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Label</th>
+                        <th>Created At</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($transactions as $transaction)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if ($transaction->type === 0)
+                                        <span class="badge bg-danger">-</span>&nbsp; &nbsp;
+                                    @else
+                                        <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
+                                    @endif
+                                    <span class="font-weight-bold @if($transaction->type === 0) text-danger @else text-secondary @endif">
+                                        {{ $transaction->prettyPrice }} <small class="text-muted small">VND</small>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span>{{ $transaction->reason->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span>{{ $transaction->reason->label }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span>{{ $transaction->prettyCreatedAt }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-light-success text-uppercase" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Edit</button>
+                                <div class="modal fade modal-sm" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Add Transaction</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label for="firstname" class="form-label">Amount</label>
+                                                        <input type="text" class="form-control" id="firstname" required="">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row pt-3 pb-3">
+                                                    <div class="col-md-12">
+                                                        <label for="firstname" class="form-label">Type</label>
+                                                        <br>
+                                                        <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                                                            <li class="nav-item" role="presentation"><a class="nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
+                                                            <li class="nav-item" role="presentation"><a class="nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <label for="firstname" class="form-label">Reason</label>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Primary Outline Dropdown
+                                                        </button>
+                                                        <ul class="dropdown-menu border-0 shadow p-3">
+                                                            <li><a class="dropdown-item py-2 rounded" href="#">Action</a></li>
+                                                            <li><a class="dropdown-item py-2 rounded" href="#">Another action</a></li>
+                                                            <li><a class="dropdown-item py-2 rounded" href="#">Something else here</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-info text-uppercase">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                <div class="pt-5">
+                    {{ $transactions->links('vendor.pagination.paginator') }}
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script src="assets/bundles/dataTables.bundle.js"></script>
+
+    <script src="assets/js/template.js"></script>
+    <script>
+
+        $('.myProjectTable').DataTable({
+            responsive: true
+        });
+
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .responsive.recalc();
+        });
+    </script>
+@endsection
