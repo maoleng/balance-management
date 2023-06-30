@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Reason extends Model
 {
 
+    public $timestamps = false;
+
+
     protected $fillable = [
-        'type', 'reason_id', 'created_at',
+        'name', 'label',
     ];
 
 }

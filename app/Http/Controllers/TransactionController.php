@@ -14,7 +14,7 @@ class TransactionController extends Controller
     public function index(): View
     {
         $transactions = Transaction::query()->orderByDesc('created_at')->paginate(8);
-        $reasons = Reason::query()->get();
+        $reasons = Reason::query()->orderBy('name')->get();
 
         return view('transaction', [
             'transactions' => $transactions,
@@ -25,10 +25,16 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $reason_id = isset($data['new_reason']) ?
+            Reason::query()->create([
+                'name' => $data['new_reason'],
+                'label' => $data['new_reason_label'],
+            ])->id : $data['reason_id'] ;
+
         Transaction::query()->create([
             'price' => $data['price'],
             'type' => $data['type'],
-            'reason_id' => $data['reason_id'],
+            'reason_id' => $reason_id,
             'created_at' => now(),
         ]);
 

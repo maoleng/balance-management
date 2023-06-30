@@ -5,6 +5,9 @@
 @section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
+            @if ($errors->any())
+                {!! implode('', $errors->all('<h3>:message</h3>')) !!}
+            @endif
             <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center flex-wrap">
                 <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Transaction</button>
                 <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
@@ -19,9 +22,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="firstname" class="form-label">Amount</label>
-                                        <input type="text" class="form-control" name="price" required="">
+                                        <input type="number" class="form-control" name="price" required="">
                                     </div>
-
                                 </div>
                                 <div class="row pt-3 pb-3">
                                     <div class="col-md-12">
@@ -33,8 +35,7 @@
                                         </ul>
                                     </div>
                                 </div>
-
-                                <div class="col-md-12">
+                                <div class="row pt-3 pb-3">
                                     <label for="firstname" class="form-label">Reason</label>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sl-reason" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,6 +47,24 @@
                                             @endforeach
                                         </ul>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <label class="form-label">Or create new reason</label>
+
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input name="new_reason" class="form-control" placeholder="Reason...">
+                                            <label>Reason</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-floating">
+                                            <input name="new_reason_label" class="form-control" placeholder="Label">
+                                            <label>Label</label>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <input id="i-reason" type="hidden" name="reason_id">
@@ -115,8 +134,8 @@
                     {{ $transactions->links('vendor.pagination.paginator') }}
                 </div>
             </div>
-        </div>
-    </div>
+        </h1>
+    </h1>
 @endsection
 
 @section('script')

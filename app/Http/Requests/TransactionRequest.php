@@ -20,10 +20,16 @@ class TransactionRequest extends FormRequest
                 'numeric',
             ],
             'reason_id' => [
-                'required',
+                'required_without:new_reason',
             ],
             'type' => [
                 'required',
+            ],
+            'new_reason' => [
+                'required_without:reason_id',
+            ],
+            'new_reason_label' => [
+                'nullable',
             ],
         ];
     }
