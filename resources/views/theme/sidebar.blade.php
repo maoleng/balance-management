@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li>
-                <a class="m-link active" href="">
+                <a class="m-link active" href="{{ route('market.index') }}">
                     <svg  xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" width="24px" height="24px" viewBox="0 0 64 64">
 
                         <linearGradient id="crp_svg" gradientUnits="userSpaceOnUse" x1="13.876" y1="13.876" x2="50.1249" y2="50.1249">

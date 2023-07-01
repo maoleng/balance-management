@@ -1,109 +1,299 @@
 @extends('theme.master')
 
-@section('body')
+@section('title') Dashboard @endsection
 
+@section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
-
-            <div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 mb-3">
-                <div class="col">
+            <div class="row g-3 mb-3 row-deck">
+                <div class="col-xl-7 col-lg-6 col-md-12">
                     <div class="card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="flex-fill text-truncate">
-                                <span class="text-muted small text-uppercase">Top gainer (24h)</span>
-                                <span class="h6 mt-3 mb-1 fw-bold d-block">DF/USDT</span>
-                                <div class="d-flex justify-content-between">
-                                    <div class="price-block">
-                                        <span class="fs-6 fw-bold color-price-up">0.3165</span>
-                                        <span class="small text-muted px-2">$0</span>
-                                    </div>
-                                    <div class="price-report">
-                                        <span class="small text-success">+59.10% <i class="fa fa-level-up"></i></span>
-                                    </div>
+                        <div class="card-header bg-primary border-bottom-0 py-3">
+                            <h6 class="card-title mb-0 text-light">My Wallet</h6>
+                        </div>
+                        <div class="row card-body">
+                            <div class="col-lg-6">
+                                <div>Balance</div>
+                                <h3>5,156,467,500 VND</h3>
+                                <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">Stock Market
+                                </div>
+                                <h5>3,456,748,000 VND</h5>
+                                <div class="mt-3 text-uppercase text-muted small">Cash, Credit, E-Wallet, ...</div>
+                                <h5>2,156,748,000 VND</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <div id="apex-circle-gradientfuture"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-primary border-bottom-0 py-3">
+                            <h6 class="card-title mb-0 text-light">Earn / Spend</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#Today" role="tab">Today</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Week" role="tab">Week</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Month" role="tab">Month</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Year" role="tab">Year</a></li>
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#All" role="tab">All</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="Today">
+                                    <div>Earn</div>
+                                    <h3>0.0386245 BTC</h3>
+                                    <div>Spend</div>
+                                    <h3>0.0386245 BTC</h3>
+                                </div>
+                                <div class="tab-pane fade" id="Week">
+                                    <div>Earn</div>
+                                    <h3>0.0386245 BTC</h3>
+                                    <div>Spend</div>
+                                    <h3>0.0386245 BTC</h3>
+                                </div>
+                                <div class="tab-pane fade" id="Month">
+                                    <div>Earn</div>
+                                    <h3>0.0386245 BTC</h3>
+                                    <div>Spend</div>
+                                    <h3>0.0386245 BTC</h3>
+                                </div>
+                                <div class="tab-pane fade" id="Year">
+                                    <div>Earn</div>
+                                    <h3>0.0386245 BTC</h3>
+                                    <div>Spend</div>
+                                    <h3>0.0386245 BTC</h3>
+                                </div>
+                                <div class="tab-pane fade" id="All">
+                                    <div>Earn</div>
+                                    <h3>0.0386245 BTC</h3>
+                                    <div>Spend</div>
+                                    <h3>0.0386245 BTC</h3>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="flex-fill text-truncate">
-                                <span class="text-muted small text-uppercase">Top loser (24h)</span>
-                                <span class="h6 mt-3 mb-1 fw-bold d-block">XTZDOWN/USDT</span>
-                                <div class="d-flex justify-content-between">
-                                    <div class="price-block">
-                                        <span class="fs-6 fw-bold color-price-down">2.831</span>
-                                        <span class="small text-muted px-2">$3</span>
-                                    </div>
-                                    <div class="price-report">
-                                        <span class="small text-danger">-40.87% <i class="fa fa-level-down"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="flex-fill text-truncate">
-                                <span class="text-muted small text-uppercase">Highlight</span>
-                                <span class="h6 mt-3 mb-1 fw-bold d-block">USDT/BIDR</span>
-                                <div class="d-flex justify-content-between">
-                                    <div class="price-block">
-                                        <span class="fs-6 fw-bold">14,339</span>
-                                        <span class="small text-muted px-2">$1</span>
-                                    </div>
-                                    <div class="price-report">
-                                        <span class="small text-danger">-0.44% <i class="fa fa-level-down"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="flex-fill text-truncate">
-                                <span class="text-muted small text-uppercase">GRT/USDT</span>
-                                <span class="h6 mt-3 mb-1 fw-bold d-block">DOT/USDT</span>
-                                <div class="d-flex justify-content-between">
-                                    <div class="price-block">
-                                        <span class="fs-6 fw-bold color-price-up">30.90</span>
-                                        <span class="small text-muted px-2">$31</span>
-                                    </div>
-                                    <div class="price-report">
-                                        <span class="small text-success">+3.66% <i class="fa fa-level-up"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- Row End -->
-
-
+            </div>
         </div>
+{{--        <div class="row g-3 mb-3 row-deck">--}}
+{{--            <div class="col-xl-12 col-lg-6 col-md-12">--}}
+{{--                <div class="card mb-3">--}}
+{{--                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">--}}
+{{--                        <h6 class="m-0 fw-bold">Money Spent By Time</h6>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <div id="apex-chart-line-column"></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="row g-3 mb-3 row-deck">--}}
+{{--            <div class="col-xl-8 col-lg-6 col-md-12">--}}
+{{--                <div class="card">--}}
+{{--                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">--}}
+{{--                        <h6 class="m-0 fw-bold">Spent In What ?</h6>--}}
+{{--                    </div>--}}
+{{--                    <div class=" row card-body">--}}
+{{--                        <div class="col-lg-6">--}}
+{{--                            <div>Today</div>--}}
+{{--                            <h3>5,156,467,500 VND</h3>--}}
+{{--                            <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">This week</div>--}}
+{{--                            <h5>3,456,748,000 VND</h5>--}}
+{{--                            <div class="mt-3 text-uppercase text-muted small">This month</div>--}}
+{{--                            <h5>2,156,748,000 VND</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-6">--}}
+{{--                            <div id="apex-simple-donutp2p"></div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
-
 @endsection
-
 @section('script')
-    <script src="assets/bundles/dataTables.bundle.js"></script>
-
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+    <script src="assets/bundles/apexcharts.bundle.js"></script>
     <script src="assets/js/template.js"></script>
+    <script src="assets/js/page/widget.js"></script>
+    <script src="assets/js/page/chart-apex.js"></script>
     <script>
+        $(document).ready(function() {
+            var options = {
+                chart: {
+                    height: 300,
+                    type: 'radialBar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                colors: ['var(--chart-color1)'],
+                plotOptions: {
+                    radialBar: {
+                        startAngle: -135,
+                        endAngle: 225,
+                        hollow: {
+                            margin: 0,
+                            size: '70%',
+                            background: '#fff',
+                            image: undefined,
+                            imageOffsetX: 0,
+                            imageOffsetY: 0,
+                            position: 'front',
 
-        $('.myProjectTable').DataTable({
-            responsive: true
+                            dropShadow: {
+                                enabled: true,
+                                top: 3,
+                                left: 0,
+                                blur: 4,
+                                opacity: 0.24
+                            }
+                        },
+                        track: {
+                            background: '#fff',
+                            strokeWidth: '67%',
+                            margin: 0, // margin is in pixels
+                            dropShadow: {
+                                enabled: true,
+                                top: -3,
+                                left: 0,
+                                blur: 4,
+                                opacity: 0.35
+                            }
+                        },
+
+                        dataLabels: {
+                            showOn: 'always',
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: '#888',
+                                fontSize: '17px'
+                            },
+                            value: {
+                                formatter: function(val) {
+                                    return parseInt(val);
+                                },
+                                color: '#111',
+                                fontSize: '36px',
+                                show: true,
+                            }
+                        }
+                    }
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'dark',
+                        type: 'horizontal',
+                        shadeIntensity: 0.5,
+                        gradientToColors: ['var(--chart-color2)'],
+                        inverseColors: true,
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 100]
+                    }
+                },
+                series: [75],
+                stroke: {
+                    lineCap: 'round'
+                },
+                labels: ['Percent'],
+            }
+
+            var chart = new ApexCharts(
+                document.querySelector("#apex-circle-gradientfuture"),
+                options
+            );
+
+            chart.render();
         });
 
-        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust()
-                .responsive.recalc();
-        });
+        // $(document).ready(function() {
+        //     var options = {
+        //         chart: {
+        //             height: 350,
+        //             type: 'line',
+        //             toolbar: {
+        //                 show: false,
+        //             },
+        //         },
+        //         colors: ['var(--chart-color1)', 'var(--chart-color2)'],
+        //         series: [{
+        //             name: 'Website Blog',
+        //             type: 'column',
+        //             data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+        //         }, {
+        //             name: 'Social Media',
+        //             type: 'line',
+        //             data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+        //         }],
+        //         stroke: {
+        //             width: [0, 4]
+        //         },
+        //         // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        //         labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+        //         xaxis: {
+        //             type: 'datetime'
+        //         },
+        //         yaxis: [{
+        //             title: {
+        //                 text: 'Website Blog',
+        //             },
+        //
+        //         }, {
+        //             opposite: true,
+        //             title: {
+        //                 text: 'Social Media'
+        //             }
+        //         }]
+        //     }
+        //     var chart = new ApexCharts(
+        //         document.querySelector("#apex-chart-line-column"),
+        //         options
+        //     );
+        //
+        //     chart.render();
+        // });
+
+        // $(document).ready(function() {
+        //     var options = {
+        //         chart: {
+        //             height: 250,
+        //             type: 'donut',
+        //         },
+        //         dataLabels: {
+        //             enabled: false,
+        //         },
+        //         legend: {
+        //             position: 'right',
+        //             horizontalAlign: 'center',
+        //             show: true,
+        //         },
+        //         colors: ['var(--chart-color5)', 'var(--chart-color4)', 'var(--chart-color3)'],
+        //         series: [44, 55, 41],
+        //         labels: ['Buy', 'Sell', 'Transfer'],
+        //         responsive: [{
+        //             breakpoint: 480,
+        //             options: {
+        //                 chart: {
+        //                     width: 200
+        //                 },
+        //                 legend: {
+        //                     position: 'bottom'
+        //                 }
+        //             }
+        //         }]
+        //     }
+        //
+        //     var chart = new ApexCharts(
+        //         document.querySelector("#apex-simple-donutp2p"),
+        //         options
+        //     );
+        //
+        //     chart.render();
+        // });
     </script>
 @endsection
