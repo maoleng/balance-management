@@ -134,8 +134,8 @@
                     {{ $transactions->links('vendor.pagination.paginator') }}
                 </div>
             </div>
-        </h1>
-    </h1>
+        </div>
+    </div>
 @endsection
 
 @section('script')
