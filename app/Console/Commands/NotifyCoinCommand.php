@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\BalanceController;
 use App\Models\CoinPrice;
 use App\Models\NotifyCoin;
 use GuzzleHttp\Client;
@@ -42,7 +43,7 @@ class NotifyCoinCommand extends Command
 
             $content .= $notify_coin->coin.'       '.$btf_price.'       '.$btf_profit."\n";
         }
-        $content .= 'USDT       '.number_format($this->getRealMoneyOfCoin('USDT')).' VND';
+        $content .= 'USDT       '.number_format((new BalanceController)->getRealMoneyOfCoin('USDT')).' VND';
         CoinPrice::query()->insert($coin_prices);
         (new Client)->post(env('ENDPOINT_TELEGRAM_LOG_MESSAGE'), [
             'verify' => false,
@@ -55,24 +56,6 @@ class NotifyCoinCommand extends Command
                 'parse_mode' => 'HTML',
             ],
         ]);
-    }
-
-    private function getRealMoneyOfCoin($coin): float
-    {
-        $response = (new Client)->post('https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search', [
-            'json' => [
-                'asset' => $coin,
-                'fiat' => 'VND',
-                'merchantCheck' => true,
-                'page' => 1,
-                'payTypes' => ['BANK'],
-                'publisherType' => null,
-                'rows' => 1,
-                'tradeType' => 'SELL'
-            ],
-        ])->getBody()->getContents();
-
-        return (double) (json_decode($response, true)['data'])[0]['adv']['price'];
     }
 
 }

@@ -12,16 +12,16 @@
                             <h6 class="card-title mb-0 text-light">My Wallet</h6>
                         </div>
                         <div class="row card-body">
-                            <div class="col-lg-6">
+                            <div class="col-lg-7">
                                 <div>Balance</div>
-                                <h3>5,156,467,500 VND</h3>
+                                <h3>{{ formatVND($cash_balance + $stock_balance) }}</h3>
                                 <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">Stock Market
                                 </div>
-                                <h5>3,456,748,000 VND</h5>
+                                <h5>{{ formatVND($stock_balance) }} ({{ formatVND($stock_profit) }})</h5>
                                 <div class="mt-3 text-uppercase text-muted small">Cash, Credit, E-Wallet, ...</div>
-                                <h5>2,156,748,000 VND</h5>
+                                <h5>{{ formatVND($cash_balance) }}</h5>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <div id="apex-circle-gradientfuture"></div>
                             </div>
                         </div>
@@ -43,33 +43,33 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="Today">
                                     <div>Earn</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->earn_today) }}</h3>
                                     <div>Spend</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->spend_today) }}</h3>
                                 </div>
                                 <div class="tab-pane fade" id="Week">
                                     <div>Earn</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->earn_week) }}</h3>
                                     <div>Spend</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->spend_week) }}</h3>
                                 </div>
                                 <div class="tab-pane fade" id="Month">
                                     <div>Earn</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->earn_month) }}</h3>
                                     <div>Spend</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->spend_month) }}</h3>
                                 </div>
                                 <div class="tab-pane fade" id="Year">
                                     <div>Earn</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->earn_year) }}</h3>
                                     <div>Spend</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->spend_year) }}</h3>
                                 </div>
                                 <div class="tab-pane fade" id="All">
                                     <div>Earn</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->total_earn) }}</h3>
                                     <div>Spend</div>
-                                    <h3>0.0386245 BTC</h3>
+                                    <h3>{{ formatVND($overview->total_spend) }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -196,11 +196,11 @@
                         stops: [0, 100]
                     }
                 },
-                series: [75],
+                series: [{{ $percent_stock_balance }}],
                 stroke: {
                     lineCap: 'round'
                 },
-                labels: ['Percent'],
+                labels: ['Stock/Balance'],
             }
 
             var chart = new ApexCharts(
