@@ -27,7 +27,7 @@ class NotifyCoinCommand extends Command
             $response = $client->get($endpoint.$notify_coin->coin.'USDT')->getBody()->getContents();
             $price = json_decode($response)->price;
             if ($notify_coin->coin_amount) {
-                $profit = $notify_coin->coin_amount * $this->getRealMoneyOfCoin($notify_coin->coin) - $notify_coin->balance;
+                $profit = $notify_coin->coin_amount * (new BalanceController)->getRealMoneyOfCoin($notify_coin->coin) - $notify_coin->balance;
                 $coin_prices[] = [
                     'coin' => $notify_coin->coin,
                     'price' => $price,
