@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class NotifyCoin extends Model
 {
 
+    public $timestamps = false;
+
     protected $fillable = [
         'coin', 'coin_amount', 'balance', 'is_notify',
     ];

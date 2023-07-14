@@ -11,6 +11,7 @@ Route::get('/market', [SiteController::class, 'market'])->name('market.index');
 
 Route::group(['prefix' => 'invest', 'as' => 'invest.'], static function () {
     Route::get('/', [InvestController::class, 'index'])->name('index');
+    Route::put('/{notify_coin}', [InvestController::class, 'update'])->name('update');
 });
 
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {

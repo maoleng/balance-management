@@ -88,7 +88,9 @@
                                 <button type="button" class="btn btn-light-success text-uppercase" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Edit</button>
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
+                                        <form action="{{ route('invest.update', ['notify_coin' => $notify_coin]) }}" method="post" class="modal-content">
+                                            @csrf
+                                            @method('PUT')
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalCenterTitle">Edit investment</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -97,19 +99,19 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="firstname" class="form-label">Amount</label>
-                                                        <input type="text" class="form-control" id="firstname" required="">
+                                                        <input type="text" class="form-control" name="coin_amount" required="">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="firstname" class="form-label">Balance</label>
-                                                        <input type="text" class="form-control" id="firstname" required="">
+                                                        <input type="text" class="form-control" name="balance" required="">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                <button class="btn btn-primary">Save changes</button>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
