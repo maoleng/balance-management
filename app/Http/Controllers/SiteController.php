@@ -25,11 +25,10 @@ class SiteController extends Controller
             SUM(CASE WHEN type = 1 THEN price WHEN type = 0 THEN 0 END) AS total_earn
         ")->first();
 
-        $cash_balance = Transaction::query()->rawValue('SUM(CASE WHEN type = 0 THEN -price WHEN type = 1 THEN price END)');
+        $cash_balance = Transaction::query()->rawValue('SUM(CASE WHEN type = 0 THEN -price ELSE price END)');
         $stock = (new BalanceController())->getStockBalance();
         $stock_balance = $stock['profit'] + $stock['invest'];
         $percent_stock_balance = $stock_balance * 100 / ($cash_balance + $stock['profit'] + $stock['invest']);
-
 
         return view('index', [
             'overview' => $overview,
