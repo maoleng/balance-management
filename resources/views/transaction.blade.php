@@ -32,6 +32,7 @@
                                         <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
                                             <li class="nav-item" role="presentation"><a data-type="1" class="btn-earn nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
                                             <li class="nav-item" role="presentation"><a data-type="0" class="btn-earn nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
+                                            <li class="nav-item" role="presentation"><a data-type="null" class="btn-earn nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Invest</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -95,22 +96,24 @@
                                 <div class="d-flex align-items-center">
                                     @if ($transaction->type === 0)
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
-                                    @else
+                                    @elseif ($transaction->type === 1)
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
+                                    @else
+                                        <span class="badge bg-careys-pink">@</span>&nbsp; &nbsp;
                                     @endif
-                                    <span class="font-weight-bold {{ $transaction->type === 0 ? 'text-danger' : 'text-secondary' }} ">
+                                    <span class="font-weight-bold @if ($transaction->type === 0) 'text-danger' @elseif ($transaction->type === 1) : 'text-secondary' @else 'bg-careys-pink' @endif ">
                                         {{ $transaction->prettyPrice }} <small class="text-muted small">VND</small>
                                     </span>
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <span>{{ $transaction->reason->name }}</span>
+                                    <span>{{ $transaction->reason->name ?? null }}</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <span>{{ $transaction->reason->label }}</span>
+                                    <span>{{ $transaction->reason->label ?? null }}</span>
                                 </div>
                             </td>
                             <td>

@@ -14,24 +14,28 @@ class TransactionRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'price' => [
                 'required',
                 'numeric',
             ],
-            'reason_id' => [
-                'required_without:new_reason',
-            ],
             'type' => [
-                'required',
-            ],
-            'new_reason' => [
-                'required_without:reason_id',
+                'nullable',
             ],
             'new_reason_label' => [
                 'nullable',
             ],
         ];
+        $reason_rules = [
+            'reason_id' => [
+                $this->type === null ? 'nullable' : 'required_without:new_reason',
+            ],
+            'new_reason' => [
+                $this->type === null ? 'nullable' : 'required_without:reason_id',
+            ],
+        ];
+
+        return array_merge($rules, $reason_rules);
     }
 
 }

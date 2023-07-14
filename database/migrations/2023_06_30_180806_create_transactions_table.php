@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->double('price');
-            $table->boolean('type');
-            $table->foreignId('reason_id')->constrained();
+            $table->boolean('type')->nullable();
+            $table->foreignId('reason_id')->nullable()->constrained();
             $table->dateTime('created_at');
             $table->softDeletes();
         });
