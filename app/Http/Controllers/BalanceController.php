@@ -32,6 +32,17 @@ class BalanceController extends Controller
 
     public function getRealMoneyOfCoin($coin): float
     {
+        if (in_array($coin, ['USDT', 'BTC', 'BNB', 'ETH', 'C98', 'XRP', 'ADA', 'SLP', 'DOGE', 'TUSD'])) {
+            return $this->getP2PCoinPrice($coin);
+        }
+        $response = (new Client)->get("https://api.binance.com/api/v3/ticker/price?symbol={$coin}USDT")->getBody()->getContents();
+        $coin_in_usdt_price = (double) json_decode($response, true)['price'];
+
+        return $this->getP2PCoinPrice('USDT') * $coin_in_usdt_price;
+    }
+
+    private function getP2PCoinPrice($coin): float
+    {
         $response = (new Client)->post('https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search', [
             'json' => [
                 'asset' => $coin,
