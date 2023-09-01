@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cookie;
 
 class SiteController extends Controller
 {
