@@ -1,8 +1,3 @@
-@php
-    $cookieValue = Illuminate\Support\Facades\Cookie::get('the_key');
-    echo "Cookie 'the_key' value: " . $cookieValue;
-@endphp
-
 @extends('theme.master')
 
 @section('title') Dashboard @endsection
