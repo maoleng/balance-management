@@ -1,6 +1,7 @@
 <?php
 
 use App\Lib\JWT\JWT;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 
 if (!function_exists('c')) {
@@ -13,7 +14,7 @@ if (!function_exists('c')) {
 if (! function_exists('formatVND')) {
     function formatVND($money): string
     {
-        return number_format($money).' VND';
+        return number_format($money).' <small class="text-muted small">VND</small>';
     }
 }
 

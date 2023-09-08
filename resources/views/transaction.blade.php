@@ -102,7 +102,7 @@
                                         <span class="badge bg-careys-pink">@</span>&nbsp; &nbsp;
                                     @endif
                                     <span class="font-weight-bold @if ($transaction->type === 0) 'text-danger' @elseif ($transaction->type === 1) : 'text-secondary' @else 'bg-careys-pink' @endif ">
-                                        {{ $transaction->prettyPrice }} <small class="text-muted small">VND</small>
+                                        {!! formatVND($transaction->price) !!}
                                     </span>
                                 </div>
                             </td>

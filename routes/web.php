@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FinancialManagementController;
 use App\Http\Controllers\InvestController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TransactionController;
@@ -29,4 +30,12 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
         Route::post('/', [TransactionController::class, 'store'])->name('store');
         Route::delete('/{transaction}', [TransactionController::class, 'destroy'])->name('destroy');
     });
+
+    Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {
+        Route::get('/', [FinancialManagementController::class, 'index'])->name('index');
+        Route::post('/', [FinancialManagementController::class, 'store'])->name('store');
+        Route::put('/{category}', [FinancialManagementController::class, 'update'])->name('update');
+        Route::delete('/{category}', [FinancialManagementController::class, 'destroy'])->name('destroy');
+    });
+
 });

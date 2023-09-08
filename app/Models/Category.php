@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reason extends Model
+class Category extends Model
 {
 
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'label', 'is_group',
+        'name', 'label', 'money',
     ];
 
 }
