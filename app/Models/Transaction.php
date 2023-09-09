@@ -13,7 +13,7 @@ class Transaction extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'price', 'type', 'reason_id', 'created_at',
+        'price', 'type', 'reason_id', 'transaction_id', 'created_at',
     ];
 
     public function getPrettyCreatedAtAttribute(): string

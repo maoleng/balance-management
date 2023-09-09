@@ -29,3 +29,36 @@ if (! function_exists('authed')) {
         return c(JWT::class)->match($token);
     }
 }
+
+if (! function_exists('showMessage')) {
+    function showMessage(): string
+    {
+        $errors = session()->get('errors');
+        if (! empty($errors)) {
+            $error_message = is_array($errors) ? implode('<br>', $errors) : $errors;
+
+            return <<<HTML
+                <div class="toast d-flex align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body">
+                        $error_message
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            HTML;
+        }
+
+        $success = session()->get('success');
+        if (isset($success)) {
+            return <<<HTML
+                <div class="toast d-flex align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body">
+                        $success
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            HTML;
+        }
+
+        return '';
+    }
+}

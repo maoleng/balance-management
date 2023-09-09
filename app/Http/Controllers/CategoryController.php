@@ -8,14 +8,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class FinancialManagementController extends Controller
+class CategoryController extends Controller
 {
 
     public function index(): View
     {
         $categories = Category::query()->orderBy('name')->get();
 
-        return view('financial-management.index', [
+        return view('category.index', [
             'categories' => $categories,
         ]);
     }

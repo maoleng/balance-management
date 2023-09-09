@@ -76,15 +76,20 @@
                     <div><h6 class="mb-0">Transaction</h6><small class="text-muted">Transaction History</small></div>
                 </a>
             </li>
-            <li>
-                <a class="m-link active" href="{{ route('financial-management.index') }}">
+
+            <li class="collapsed">
+                <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Authentication" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24px" height="20px" viewBox="0 0 32 32">
                         <path d="M2,0v32h28V0H2z M28,30H4V2h24V30z" style="fill:var(--primary-color);"></path>
                         <path d="M19,8V4H6v10h20V8H19z M8,6h9v2H8V6z M24,12H8v-2h16V12z" style="fill:var(--svg-color);"></path>
                         <path d="M19,20v-4H6v10h20v-6H19z M8,18h9v2H8V18z M24,24H8v-2h16V24z" style="fill:var(--svg-color);"></path>
                     </svg>
-                    <div><h6 class="mb-0">Financial</h6><small class="text-muted">Financial Management</small></div>
+                    <div><h6 class="mb-0">Finance</h6><small class="text-muted">Finance Management</small></div><span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
                 </a>
+                <ul class="sub-menu collapse" id="menu-Authentication">
+                    <li><a class="ms-link" href="{{ route('financial-management.category.index') }}"><span>Category</span></a></li>
+                    <li><a class="ms-link" href="{{ route('financial-management.reason.index') }}"><span>Reason</span></a></li>
+                </ul>
             </li>
         </ul>
         <!-- Menu: menu collepce btn -->

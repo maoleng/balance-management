@@ -13,10 +13,10 @@ class TransactionController extends Controller
 
     public function index(): View
     {
-        $transactions = Transaction::query()->orderByDesc('created_at')->paginate(8);
+        $transactions = Transaction::query()->with('reason')->orderByDesc('created_at')->paginate(8);
         $reasons = Reason::query()->orderBy('name')->get();
 
-        return view('transaction', [
+        return view('transaction.index', [
             'transactions' => $transactions,
             'reasons' => $reasons,
         ]);
@@ -37,6 +37,7 @@ class TransactionController extends Controller
                 [
                     'name' => $data['new_reason'],
                     'label' => $data['new_reason_label'],
+                    'is_group' => false,
                 ]
             )->id;
         }

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FinancialManagementController;
 use App\Http\Controllers\InvestController;
+use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\AuthenticateMiddleware;
@@ -25,17 +27,12 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
         Route::put('/{notify_coin}', [InvestController::class, 'update'])->name('update');
     });
 
-    Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
-        Route::get('/', [TransactionController::class, 'index'])->name('index');
-        Route::post('/', [TransactionController::class, 'store'])->name('store');
-        Route::delete('/{transaction}', [TransactionController::class, 'destroy'])->name('destroy');
-    });
+    Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'destroy']);
+
 
     Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {
-        Route::get('/', [FinancialManagementController::class, 'index'])->name('index');
-        Route::post('/', [FinancialManagementController::class, 'store'])->name('store');
-        Route::put('/{category}', [FinancialManagementController::class, 'update'])->name('update');
-        Route::delete('/{category}', [FinancialManagementController::class, 'destroy'])->name('destroy');
+        Route::resource('category', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('reason', ReasonController::class)->only(['index', 'store', 'update', 'destroy']);
     });
 
 });
