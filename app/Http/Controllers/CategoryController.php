@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -29,7 +28,7 @@ class CategoryController extends Controller
             'label' => $data['label'],
         ]);
 
-        return back();
+        return back()->with('success', 'Create category successfully');
     }
 
     public function update(CategoryRequest $request, Category $category): RedirectResponse
@@ -41,14 +40,14 @@ class CategoryController extends Controller
             'label' => $data['label'],
         ]);
 
-        return back();
+        return back()->with('success', 'Update category successfully');
     }
 
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
 
-        return back();
+        return back()->with('success', 'Delete category successfully');
     }
 
 }

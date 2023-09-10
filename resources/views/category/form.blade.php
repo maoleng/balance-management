@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
             <label for="firstname" class="form-label">Category</label>
-            <input type="text" class="form-control" name="name" value="{{ $category->name ?? old('name') }}" required="">
+            <input type="text" class="form-control" name="name" value="{{ $category->name ?? null }}" required="">
         </div>
     </div>
     <div class="row pt-3 pb-3">
@@ -19,7 +19,7 @@
             </button>
             <ul class="dropdown-menu border-0 shadow p-3">
                 @foreach(ReasonLabel::asArray() as $label => $value)
-                    <li><a data-label="{{ $value }}" class="sl-label dropdown-item py-2 rounded" href="#">{{ $label }}</a></li>
+                    <li><a data-label="{{ $value }}" data-id="{{ $category->id ?? null }}" class="sl-label dropdown-item py-2 rounded" href="#">{{ $label }}</a></li>
                 @endforeach
             </ul>
         </div>
@@ -27,11 +27,11 @@
     <div class="row pt-3 pb-3">
         <div class="col-md-12">
             <label for="firstname" class="form-label">Money</label>
-            <input type="number" value="{{ $category->money ?? old('money') }}" class="form-control" name="money" required="">
+            <input type="number" value="{{ $category->money ?? null }}" class="form-control" name="money" required="">
         </div>
     </div>
 </div>
-<input id="i-label" type="hidden" name="label" value="{{ $category->label ?? old('label') }}">
+<input id="i-{{ $category->id ?? null }}-label" type="hidden" name="label" value="{{ $category->label ?? null }}">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button class="btn btn-primary">Create</button>

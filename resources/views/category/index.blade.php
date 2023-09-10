@@ -8,9 +8,7 @@
 @section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
-            @if ($errors->any())
-                {!! implode('', $errors->all('<h3>:message</h3>')) !!}
-            @endif
+            {!! showMessage() !!}
             <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center flex-wrap">
                 <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Category</button>
                 <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
@@ -88,11 +86,9 @@
 
     <script>
         $('.sl-label').on('click', function () {
-            $('#i-label').val($(this).data('label'))
+            const id = $(this).data('id')
+            $(`#i-${id}-label`).val($(this).data('label'))
             $('.btn-label').text($(this).text())
-        })
-        $('.btn-earn').on('click', function () {
-            $('#i-type').val($(this).data('type'))
         })
 
 
