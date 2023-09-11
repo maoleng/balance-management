@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReasonLabel;
 use App\Http\Requests\TransactionRequest;
+use App\Http\Requests\UpdateGroupTransactionRequest;
 use App\Models\Reason;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +15,8 @@ class TransactionController extends Controller
 
     public function index(): View
     {
-        $transactions = Transaction::query()->with('reason')->orderByDesc('created_at')->paginate(8);
+        $transactions = Transaction::query()->whereNull('transaction_id')
+            ->with(['reason', 'transactions.reason'])->orderByDesc('created_at')->paginate(8);
         $reasons = Reason::query()->orderBy('name')->get();
 
         return view('transaction.index', [
@@ -25,22 +28,15 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        if ($data['type'] === null) {
-            $reason_id = null;
-        } elseif (isset($data['reason_id'])) {
-            $reason_id = $data['reason_id'];
-        } else {
-            $reason_id = Reason::query()->firstOrCreate(
-                [
-                    'name' => $data['new_reason'],
-                ],
-                [
-                    'name' => $data['new_reason'],
-                    'label' => $data['new_reason_label'],
-                    'is_group' => false,
-                ]
-            )->id;
-        }
+        $reason_id = $data['type'] === null ? null : ($data['reason_id'] ?? Reason::query()->firstOrCreate(
+            [
+                'name' => $data['new_reason'],
+            ],
+            [
+                'name' => $data['new_reason'],
+                'is_group' => false,
+            ]
+        )->id);
 
         Transaction::query()->create([
             'price' => $data['price'],
@@ -49,14 +45,44 @@ class TransactionController extends Controller
             'created_at' => now(),
         ]);
 
-        return redirect()->back();
+        return back()->with('success', 'Create transaction successfully');
     }
 
     public function destroy(Transaction $transaction): RedirectResponse
     {
+        $check = $transaction->transactions->isNotEmpty();
+        if ($check) {
+            return back()->with('errors', 'This transaction has many children transactions, please delete it first');
+        }
+
+        $transaction->transactions()->delete();
         $transaction->delete();
 
-        return redirect()->back();
+        return back()->with('success', 'Delete transaction successfully');
+    }
+
+    public function updateGroupTransaction(UpdateGroupTransactionRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+
+        Transaction::query()->where('transaction_id', $data['transaction_id'])
+            ->whereNotIn('id', $data['transaction_ids'] ?? [])->delete();
+
+        $transactions = $request->get('transactions') ?? [];
+        foreach ($transactions as $transaction) {
+            $data = [
+                'price' => $transaction['price'],
+                'quantity' => $transaction['quantity'],
+                'type' => 0,
+                'reason_id' => $transaction['reason_id'],
+                'transaction_id' => $data['transaction_id'],
+                'created_at' => now(),
+            ];
+
+            Transaction::query()->updateOrInsert(['id' => $transaction['id']], $data);
+        }
+
+        return back()->with('success', 'Update transaction successfully');
     }
 
 }

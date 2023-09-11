@@ -28,7 +28,7 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     });
 
     Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'destroy']);
-
+    Route::put('transaction/group-transaction', [TransactionController::class, 'updateGroupTransaction'])->name('transaction.update-group-transaction');
 
     Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {
         Route::resource('category', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);

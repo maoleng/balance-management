@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
@@ -13,7 +14,7 @@ class Transaction extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'price', 'type', 'reason_id', 'transaction_id', 'created_at',
+        'price', 'quantity', 'type', 'reason_id', 'transaction_id', 'created_at',
     ];
 
     public function getPrettyCreatedAtAttribute(): string
@@ -25,5 +26,16 @@ class Transaction extends Model
     {
         return $this->belongsTo(Reason::class);
     }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(__CLASS__);
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        return $this->transactions->sum(fn($transaction) => $transaction->price * $transaction->quantity);
+    }
+
 
 }

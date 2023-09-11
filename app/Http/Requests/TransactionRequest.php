@@ -22,9 +22,6 @@ class TransactionRequest extends FormRequest
             'type' => [
                 'nullable',
             ],
-            'new_reason_label' => [
-                'nullable',
-            ],
         ];
         $reason_rules = [
             'reason_id' => [

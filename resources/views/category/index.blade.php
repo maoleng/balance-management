@@ -51,7 +51,7 @@
                             </td>
                             <td class="dt-body-right sorting_1">
                                 <div class="btn-group" role="group">
-                                    <button data-bs-toggle="modal" data-bs-target="#m-{{ $category->id }}" type="button" class="btn btn-outline-secondary"><i class="icofont-edit text-success"></i>
+                                    <button data-bs-toggle="modal" data-bs-target="#m-{{ $category->id ?? null }}" type="button" class="btn btn-outline-secondary"><i class="icofont-edit text-success"></i>
                                     </button>
                                     <form action="{{ route('financial-management.category.destroy', ['category' => $category]) }}" method="post">
                                         @csrf

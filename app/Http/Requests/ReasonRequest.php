@@ -14,7 +14,7 @@ class ReasonRequest extends BaseRequest
                 'required',
             ],
             'label' => [
-                'required',
+                'nullable',
             ],
             'is_group' => [
                 'required',
