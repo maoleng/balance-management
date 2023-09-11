@@ -128,7 +128,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <input name="quantities[]" type="number" class="form-control" value="{{ $sub_transaction->quantity }}" required="">
+                                                    <input name="quantities[]" class="form-control" value="{{ $sub_transaction->quantity }}" required="">
                                                 </div>
                                             </td>
                                             <td>
@@ -201,7 +201,7 @@
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
-                            <input name="quantities[]" type="number" class="form-control" required="">
+                            <input name="quantities[]" class="form-control" required="">
                         </div>
                     </td>
                     <td>
