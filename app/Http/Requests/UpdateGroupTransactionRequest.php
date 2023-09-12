@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Transaction;
 use Illuminate\Validation\ValidationException;
 
 class UpdateGroupTransactionRequest extends BaseRequest
@@ -37,7 +38,10 @@ class UpdateGroupTransactionRequest extends BaseRequest
             ];
         }
 
-        $this->merge(['transactions' => $transactions]);
+        $this->merge([
+            'transactions' => $transactions,
+            'transaction' => Transaction::query()->find($transaction_id),
+        ]);
 
         return [
             'reason_ids' => [

@@ -76,7 +76,7 @@ class TransactionController extends Controller
                 'type' => 0,
                 'reason_id' => $transaction['reason_id'],
                 'transaction_id' => $data['transaction_id'],
-                'created_at' => now(),
+                'created_at' => $request->get('transaction')->created_at,
             ];
 
             Transaction::query()->updateOrInsert(['id' => $transaction['id']], $data);
