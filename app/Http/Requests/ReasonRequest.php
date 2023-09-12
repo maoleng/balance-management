@@ -19,6 +19,9 @@ class ReasonRequest extends BaseRequest
             'is_group' => [
                 'required',
             ],
+            'is_child' => [
+                'required',
+            ],
         ];
     }
 

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->integer('label')->nullable();
-            $table->boolean('is_group');
+            $table->boolean('is_group')->default(false);
+            $table->boolean('is_child')->default(false);
         });
     }
 
