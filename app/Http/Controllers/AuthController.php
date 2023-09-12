@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Lib\JWT\JWT;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AuthController extends Controller
 {
+
     public function login(): View
     {
         return view('login');
@@ -35,11 +37,4 @@ class AuthController extends Controller
         return redirect()->route('index')->cookie('token', $token, 60 * 24 * 365 * 5);
     }
 
-    public function logout(): \Illuminate\Http\RedirectResponse
-    {
-        session()->forget('authed');
-        session()->flush();
-
-        return redirect()->route('login');
-    }
 }

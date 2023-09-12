@@ -4,29 +4,20 @@
             <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
                 <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
                     <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-                        <img class="avatar lg rounded-circle img-thumbnail" src="assets/images/profile_av.svg" alt="profile">
+                        <img class="avatar lg rounded-circle img-thumbnail" src="{{ asset('assets/images/avatar.jpg') }}" alt="profile">
                     </a>
                     <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
                         <div class="card border-0 w280">
                             <div class="card-body pb-0">
                                 <div class="d-flex py-1">
-                                    <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                    <img class="avatar rounded-circle" src="{{ asset('assets/images/avatar.jpg') }}" alt="profile">
                                     <div class="flex-fill ms-3">
-                                        <p class="mb-0"><span class="font-weight-bold">John	Quinn</span></p>
-                                        <small class="">Johnquinn@gmail.com</small>
+                                        <p class="mb-0"><span class="font-weight-bold">{{ env('AUTH_NAME') }}</span></p>
+                                        <small class="">{{ env('AUTH_EMAIL') }}</small>
                                     </div>
                                 </div>
 
                                 <div><hr class="dropdown-divider border-dark"></div>
-                            </div>
-                            <div class="list-group m-2 ">
-                                <a href="" class="list-group-item list-group-item-action border-0 ">
-                                    <svg xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" class="me-3">
-                                        <rect xmlns="http://www.w3.org/2000/svg" class="st0" width="24" height="24" style="fill:none;;" fill="none"></rect>
-                                        <path xmlns="http://www.w3.org/2000/svg"  d="M20,4c0-1.104-0.896-2-2-2H6C4.896,2,4,2.896,4,4v16c0,1.104,0.896,2,2,2h12  c1.104,0,2-0.896,2-2V4z" style="fill:var(--primary-color);" data-st="fill:var(--chart-color4);"></path>
-                                        <path xmlns="http://www.w3.org/2000/svg" class="st0" d="M15,6.81v2.56c0.62,0.7,1,1.62,1,2.63c0,2.21-1.79,4-4,4s-4-1.79-4-4c0-1.01,0.38-1.93,1-2.63V6.81  C7.21,7.84,6,9.78,6,12c0,3.31,2.69,6,6,6c3.31,0,6-2.69,6-6C18,9.78,16.79,7.84,15,6.81z M13,6.09C12.68,6.03,12.34,6,12,6  s-0.68,0.03-1,0.09V12h2V6.09z"></path>
-                                    </svg>Signout
-                                </a>
                             </div>
                         </div>
                     </div>
