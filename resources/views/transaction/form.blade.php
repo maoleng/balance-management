@@ -37,7 +37,6 @@
             <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
                 <li class="nav-item" role="presentation"><a data-type="1" class="btn-earn nav-link active" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
                 <li class="nav-item" role="presentation"><a data-type="0" class="btn-earn nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
-                <li class="nav-item" role="presentation"><a data-type="null" class="btn-earn nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Invest</a></li>
             </ul>
         </div>
     </div>

@@ -13,11 +13,11 @@ class TransactionRequest extends BaseRequest
                 'numeric',
             ],
             'type' => [
-                'nullable',
+                'required',
             ],
             'reason' => [
                 'nullable',
-                $this->type === null ? 'nullable' : 'required_without:type',
+                'required',
             ],
         ];
     }

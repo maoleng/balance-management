@@ -37,12 +37,10 @@
                                 <div class="d-flex align-items-center">
                                     @if ($transaction->type === 0)
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
-                                    @elseif ($transaction->type === 1)
+                                    @else ($transaction->type === 1)
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
-                                    @else
-                                        <span class="badge bg-careys-pink">@</span>&nbsp; &nbsp;
                                     @endif
-                                    <span class="font-weight-bold @if ($transaction->type === 0) 'text-danger' @elseif ($transaction->type === 1) : 'text-secondary' @else 'bg-careys-pink' @endif ">
+                                    <span class="font-weight-bold @if ($transaction->type === 0) 'text-danger' @else 'text-secondary' @endif ">
                                         @if ($transaction->reason?->is_group)
                                             {!! formatVND($transaction->totalPrice) !!}
                                         @else
@@ -59,7 +57,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     @if ($transaction->reason?->is_group)
-                                        <a href="{{ $transaction }}" data-bs-toggle="modal" data-bs-target="#m-{{ $transaction->id }}" class="btn btn-outline-info text-uppercase">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#m-{{ $transaction->id }}" class="btn btn-outline-info text-uppercase">
                                             <i class="icofont-eye-alt text-nowrap"></i>
                                         </a>
                                     @else

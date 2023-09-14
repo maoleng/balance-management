@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double('price');
             $table->double('quantity')->default(1);
-            $table->boolean('type')->nullable();
+            $table->boolean('type');
             $table->foreignId('reason_id')->nullable()->constrained();
             $table->foreignId('transaction_id')->nullable()->constrained();
             $table->dateTime('created_at');
