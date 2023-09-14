@@ -86,10 +86,6 @@
             const id = $(this).data('id')
             $(`#i-${id}-is_group`).val($(this).data('is_group'))
         })
-        $('.btn-is_child').on('click', function () {
-            const id = $(this).data('id')
-            $(`#i-${id}-is_child`).val($(this).data('is_child'))
-        })
 
 
     </script>

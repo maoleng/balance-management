@@ -2,19 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class TransactionRequest extends FormRequest
+class TransactionRequest extends BaseRequest
 {
-
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     public function rules(): array
     {
-        $rules = [
+        return [
             'price' => [
                 'required',
                 'numeric',
@@ -22,17 +15,11 @@ class TransactionRequest extends FormRequest
             'type' => [
                 'nullable',
             ],
-        ];
-        $reason_rules = [
-            'reason_id' => [
-                $this->type === null ? 'nullable' : 'required_without:new_reason',
-            ],
-            'new_reason' => [
-                $this->type === null ? 'nullable' : 'required_without:reason_id',
+            'reason' => [
+                'nullable',
+                $this->type === null ? 'nullable' : 'required_without:type',
             ],
         ];
-
-        return array_merge($rules, $reason_rules);
     }
 
 }

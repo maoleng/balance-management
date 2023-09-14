@@ -28,7 +28,7 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $reason_id = $data['type'] === null ? null : ($data['reason_id'] ?? Reason::query()->firstOrCreate(['name' => $data['new_reason']])->id);
+        $reason_id = $data['type'] === null ? null : Reason::query()->firstOrCreate(['name' => $data['reason']])->id;
 
         Transaction::query()->create([
             'price' => $data['price'],

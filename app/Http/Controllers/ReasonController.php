@@ -26,7 +26,6 @@ class ReasonController extends Controller
             'name' => $data['name'],
             'label' => $data['label'],
             'is_group' => $data['is_group'],
-            'is_child' => $data['is_child'],
         ]);
 
         return back()->with('success', 'Create reason successfully');
@@ -39,7 +38,6 @@ class ReasonController extends Controller
             'name' => $data['name'],
             'label' => $data['label'],
             'is_group' => $data['is_group'],
-            'is_child' => $data['is_child'],
         ]);
 
         return back()->with('success', 'Update reason successfully');

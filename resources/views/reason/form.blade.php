@@ -34,20 +34,9 @@
             </ul>
         </div>
     </div>
-    <div class="row pt-3 pb-3">
-        <div class="col-md-12">
-            <label for="firstname" class="form-label">Is children reason</label>
-            <br>
-            <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                <li class="nav-item" role="presentation"><a data-is_child="1" data-id="{{ $reason->id ?? null }}" class="btn-is_child nav-link {{ isset($reason) && $reason->is_child ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Yes</a></li>
-                <li class="nav-item" role="presentation"><a data-is_child="0" data-id="{{ $reason->id ?? null }}" class="btn-is_child nav-link {{ isset($reason) && ! $reason->is_child ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">No</a></li>
-            </ul>
-        </div>
-    </div>
 </div>
 <input id="i-{{ $reason->id ?? null }}-label" type="hidden" name="label" value="{{ $reason->label ?? null }}">
 <input id="i-{{ $reason->id ?? null }}-is_group" type="hidden" name="is_group" value="{{ $reason->is_group ?? null }}">
-<input id="i-{{ $reason->id ?? null }}-is_child" type="hidden" name="is_child" value="{{ $reason->is_child ?? null }}">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button class="btn btn-primary">{{ isset($reason) ? 'Update' : 'Create' }}</button>

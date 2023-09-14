@@ -4,7 +4,27 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <div class="row">
+    <div class="row" id="test-r">
+        <label for="firstname" class="form-label">Reason</label>
+        <div class="main-search px-4">
+            <input id="i-reason" name="reason" class="form-control" type="text" placeholder="Enter your search key word">
+            <div class="card border-0 shadow rounded-2 search-result slidedown">
+                <div class="card-body text-start">
+                    <div class=" bg-transparent text-wrap">
+                        @foreach($reasons as $reason)
+                            <a class="badge a-reason {{ $reason->is_group ? 'bg-secondary' : 'btn ' }}">
+                                {{ $reason->name }}
+                                @if ($reason->is_group)
+                                    <i class="fa fa-minus ms-1"></i>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3 pb-3">
         <div class="col-md-12">
             <label for="firstname" class="form-label">Amount</label>
             <input type="number" class="form-control" name="price" required="">
@@ -21,32 +41,7 @@
             </ul>
         </div>
     </div>
-    <div class="row pt-3 pb-3">
-        <label for="firstname" class="form-label">Reason</label>
-        <div class="dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sl-reason" data-bs-toggle="dropdown" aria-expanded="false">
-                Choose reason
-            </button>
-            <ul class="dropdown-menu border-0 shadow p-3">
-                @foreach($reasons as $reason)
-                    <li><a data-id="{{ $reason->id }}" class="sl-reason dropdown-item py-2 rounded" href="#">{{ $reason->name }}</a></li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <label class="form-label">Or create new reason</label>
-
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input name="new_reason" class="form-control" placeholder="Reason...">
-                <label>Reason</label>
-            </div>
-        </div>
-
-    </div>
 </div>
-<input id="i-reason" type="hidden" name="reason_id">
 <input id="i-type" type="hidden" name="type" value="1">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

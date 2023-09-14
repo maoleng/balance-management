@@ -180,10 +180,18 @@
     <script src="{{ asset('assets/js/template.js') }}"></script>
 
     <script>
-        $('.sl-reason').on('click', function () {
-            $('#i-reason').val($(this).data('id'))
-            $('#sl-reason').text($(this).text())
-        })
+        $("#i-reason").on("input", function () {
+            const searchText = $(this).val().toLowerCase();
+            $(".a-reason").each(function () {
+                const reasonName = $(this).text().toLowerCase();
+                if (reasonName.includes(searchText)) {
+                    $(this).removeAttr("hidden");
+                } else {
+                    $(this).attr("hidden", "true");
+                }
+            });
+        });
+
         $('.btn-earn').on('click', function () {
             $('#i-type').val($(this).data('type'))
         })

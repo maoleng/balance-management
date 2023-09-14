@@ -11,7 +11,7 @@ class Reason extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'label', 'is_group', 'is_child',
+        'name', 'label', 'is_group',
     ];
 
     public function transactions(): HasMany
