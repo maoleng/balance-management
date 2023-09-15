@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReasonLabel;
 use App\Http\Requests\TransactionRequest;
 use App\Http\Requests\UpdateGroupTransactionRequest;
 use App\Models\Reason;
@@ -28,11 +27,18 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $reason_id = Reason::query()->firstOrCreate(['name' => $data['reason']])->id;
+        $reason_id = Reason::query()->firstOrCreate(
+            [
+                'name' => $data['reason']
+            ],
+            [
+                'name' => $data['reason'],
+                'type' => $data['type'],
+            ]
+        )->id;
 
         Transaction::query()->create([
             'price' => $data['price'],
-            'type' => $data['type'],
             'reason_id' => $reason_id,
             'created_at' => now(),
         ]);
@@ -65,7 +71,6 @@ class TransactionController extends Controller
             $data = [
                 'price' => $transaction['price'],
                 'quantity' => $transaction['quantity'],
-                'type' => 0,
                 'reason_id' => $transaction['reason_id'],
                 'transaction_id' => $data['transaction_id'],
                 'created_at' => $request->get('transaction')->created_at,

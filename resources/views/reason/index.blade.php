@@ -86,6 +86,10 @@
             const id = $(this).data('id')
             $(`#i-${id}-is_group`).val($(this).data('is_group'))
         })
+        $('.btn-type').on('click', function () {
+            const id = $(this).data('id')
+            $(`#i-${id}-type`).val($(this).data('type'))
+        })
 
 
     </script>

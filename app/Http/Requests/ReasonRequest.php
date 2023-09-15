@@ -13,6 +13,9 @@ class ReasonRequest extends BaseRequest
             'name' => [
                 'required',
             ],
+            'type' => [
+                'required',
+            ],
             'label' => [
                 'nullable',
             ],

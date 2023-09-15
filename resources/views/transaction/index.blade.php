@@ -35,12 +35,12 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if ($transaction->type === 0)
+                                    @if ($transaction->reason->type === 0)
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
-                                    @else ($transaction->type === 1)
+                                    @else ($transaction->reason->type === 1)
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
                                     @endif
-                                    <span class="font-weight-bold @if ($transaction->type === 0) 'text-danger' @else 'text-secondary' @endif ">
+                                    <span class="font-weight-bold @if ($transaction->reason->type === 0) 'text-danger' @else 'text-secondary' @endif ">
                                         @if ($transaction->reason?->is_group)
                                             {!! formatVND($transaction->totalPrice) !!}
                                         @else
@@ -189,8 +189,24 @@
                 }
             });
         });
+        $('#i-reason').on('input', function () {
+            const reason = $(this).val()
+            $(".a-reason").each(function() {
+                const type = $(this).data('type')
+                const typeBtn = $(`a[data-type="${type}"].btn-type`)
+                const reasonText = $(this).text().trim();
+                if (reasonText === reason) {
+                    typeBtn.addClass('active')
+                    $('#i-type').val(type)
+                    return false;
+                } else {
+                    typeBtn.removeClass('active')
+                    $('#i-type').val('')
+                }
+            });
+        })
 
-        $('.btn-earn').on('click', function () {
+        $('.btn-type').on('click', function () {
             $('#i-type').val($(this).data('type'))
         })
         $('.btn-add_transaction').on('click', function () {

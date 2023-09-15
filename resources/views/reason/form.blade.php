@@ -12,6 +12,16 @@
         </div>
     </div>
     <div class="row pt-3 pb-3">
+        <div class="col-md-12">
+            <label for="firstname" class="form-label">Reason type</label>
+            <br>
+            <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                <li class="nav-item" role="presentation"><a data-type="1" data-id="{{ $reason->id ?? null }}" class="btn-type nav-link {{ isset($reason) && $reason->type === \App\Enums\ReasonType::EARN ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
+                <li class="nav-item" role="presentation"><a data-type="0" data-id="{{ $reason->id ?? null }}" class="btn-type nav-link {{ isset($reason) && $reason->type === \App\Enums\ReasonType::SPEND ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row pt-3 pb-3">
         <label for="firstname" class="form-label">Label</label>
         <div class="dropdown">
             <button class="btn-label btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,6 +45,7 @@
         </div>
     </div>
 </div>
+<input id="i-{{ $reason->id ?? null }}-type" type="hidden" name="type" value="{{ $reason->type ?? null }}">
 <input id="i-{{ $reason->id ?? null }}-label" type="hidden" name="label" value="{{ $reason->label ?? null }}">
 <input id="i-{{ $reason->id ?? null }}-is_group" type="hidden" name="is_group" value="{{ $reason->is_group ?? null }}">
 <div class="modal-footer">

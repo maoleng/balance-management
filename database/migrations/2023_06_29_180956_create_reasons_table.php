@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->boolean('type')->nullable();
             $table->integer('label')->nullable();
             $table->boolean('is_group')->default(false);
         });

@@ -24,6 +24,7 @@ class ReasonController extends Controller
         $data = $request->validated();
         Reason::query()->create([
             'name' => $data['name'],
+            'type' => $data['type'],
             'label' => $data['label'],
             'is_group' => $data['is_group'],
         ]);
@@ -36,6 +37,7 @@ class ReasonController extends Controller
         $data = $request->validated();
         $reason->update([
             'name' => $data['name'],
+            'type' => $data['type'],
             'label' => $data['label'],
             'is_group' => $data['is_group'],
         ]);
