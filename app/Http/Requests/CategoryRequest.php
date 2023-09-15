@@ -18,11 +18,8 @@ class CategoryRequest extends FormRequest
             'name' => [
                 'required',
             ],
-            'label' => [
-                'required',
-            ],
             'money' => [
-                'required',
+                'nullable',
             ],
         ];
     }

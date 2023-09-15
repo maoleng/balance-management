@@ -1,4 +1,3 @@
-@php use App\Enums\ReasonLabel; @endphp
 @csrf
 <div class="modal-header">
     <h5 class="modal-title" id="exampleModalCenterTitle">Add Category</h5>
@@ -12,26 +11,12 @@
         </div>
     </div>
     <div class="row pt-3 pb-3">
-        <label for="firstname" class="form-label">Label</label>
-        <div class="dropdown">
-            <button class="btn-label btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ isset($category) ? ReasonLabel::getKey($category->label) : 'Choose label' }}
-            </button>
-            <ul class="dropdown-menu border-0 shadow p-3">
-                @foreach(ReasonLabel::asArray() as $label => $value)
-                    <li><a data-label="{{ $value }}" data-id="{{ $category->id ?? null }}" class="sl-label dropdown-item py-2 rounded" href="#">{{ $label }}</a></li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-    <div class="row pt-3 pb-3">
         <div class="col-md-12">
             <label for="firstname" class="form-label">Money</label>
-            <input type="number" value="{{ $category->money ?? null }}" class="form-control" name="money" required="">
+            <input type="number" value="{{ $category->money ?? null }}" class="form-control" name="money">
         </div>
     </div>
 </div>
-<input id="i-{{ $category->id ?? null }}-label" type="hidden" name="label" value="{{ $category->label ?? null }}">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button class="btn btn-primary">Create</button>

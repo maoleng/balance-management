@@ -25,7 +25,6 @@ class CategoryController extends Controller
         Category::query()->create([
             'name' => $data['name'],
             'money' => $data['money'],
-            'label' => $data['label'],
         ]);
 
         return back()->with('success', 'Create category successfully');
@@ -37,7 +36,6 @@ class CategoryController extends Controller
         $category->update([
             'name' => $data['name'],
             'money' => $data['money'],
-            'label' => $data['label'],
         ]);
 
         return back()->with('success', 'Update category successfully');

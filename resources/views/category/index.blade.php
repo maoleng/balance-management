@@ -1,4 +1,3 @@
-@php use App\Enums\ReasonLabel; @endphp
 @extends('theme.master')
 
 @section('title')
@@ -24,7 +23,6 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Label</th>
                         <th>Money</th>
                         <th>Action</th>
                     </tr>
@@ -35,11 +33,6 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span>{{ $category->name }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    {!! ReasonLabel::getBadge($category->label) !!}
                                 </div>
                             </td>
                             <td>
@@ -84,13 +77,4 @@
 @section('script')
     <script src="{{ asset('assets/js/template.js') }}"></script>
 
-    <script>
-        $('.sl-label').on('click', function () {
-            const id = $(this).data('id')
-            $(`#i-${id}-label`).val($(this).data('label'))
-            $('.btn-label').text($(this).text())
-        })
-
-
-    </script>
 @endsection
