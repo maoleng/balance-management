@@ -1,4 +1,4 @@
-@php use App\Enums\ReasonLabel; @endphp
+@php use App\Enums\ReasonLabel; use App\Enums\ReasonType; @endphp
 @csrf
 <div class="modal-header">
     <h5 class="modal-title" id="exampleModalCenterTitle">Add Reason</h5>
@@ -15,39 +15,55 @@
         <div class="col-md-12">
             <label for="firstname" class="form-label">Reason type</label>
             <br>
-            <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                <li class="nav-item" role="presentation"><a data-type="1" data-id="{{ $reason->id ?? null }}" class="btn-type nav-link {{ isset($reason) && $reason->type === \App\Enums\ReasonType::EARN ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>
-                <li class="nav-item" role="presentation"><a data-type="0" data-id="{{ $reason->id ?? null }}" class="btn-type nav-link {{ isset($reason) && $reason->type === \App\Enums\ReasonType::SPEND ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Spend</a></li>
-            </ul>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="type" value="1" id="type_1-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === ReasonType::EARN ? 'checked' : '' }}>
+                <label class="btn btn-outline-primary" for="type_1-{{ $reason->id ?? null }}">Earn</label>
+
+                <input type="radio" class="btn-check" name="type" value="0" id="type_2-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === ReasonType::SPEND ? 'checked' : '' }}>
+                <label class="btn btn-outline-primary" for="type_2-{{ $reason->id ?? null }}">Spend</label>
+            </div>
         </div>
     </div>
     <div class="row pt-3 pb-3">
-        <label for="firstname" class="form-label">Label</label>
-        <div class="dropdown">
-            <button class="btn-label btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ isset($reason->label) ? ReasonLabel::getKey($reason->label) : 'Choose label' }}
-            </button>
-            <ul class="dropdown-menu border-0 shadow p-3">
+        <div class="col-md-12">
+            <label for="firstname" class="form-label">Label</label>
+            <br>
+            <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
                 @foreach(ReasonLabel::asArray() as $label => $value)
-                    <li><a data-label="{{ $value }}" data-id="{{ $reason->id ?? null }}" class="sl-label dropdown-item py-2 rounded" href="#">{{ $label }}</a></li>
+                    <input type="radio" class="btn-check" name="label" value="{{ $value }}" id="r-{{ $label }}-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->label === $value ? 'checked' : '' }}>
+                    <label class="btn btn-outline-primary" for="r-{{ $label }}-{{ $reason->id ?? null }}">{{ $label }}</label>
                 @endforeach
-            </ul>
+            </div>
         </div>
     </div>
     <div class="row pt-3 pb-3">
         <div class="col-md-12">
             <label for="firstname" class="form-label">Group Reason</label>
             <br>
-            <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                <li class="nav-item" role="presentation"><a data-is_group="1" data-id="{{ $reason->id ?? null }}" class="btn-reason nav-link {{ isset($reason) && $reason->is_group ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Yes</a></li>
-                <li class="nav-item" role="presentation"><a data-is_group="0" data-id="{{ $reason->id ?? null }}" class="btn-reason nav-link {{ isset($reason) && ! $reason->is_group ? 'active' : '' }}" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">No</a></li>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="is_group" value="1" id="is_group_1-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->is_group ? 'checked' : '' }}>
+                <label class="btn btn-outline-primary" for="is_group_1-{{ $reason->id ?? null }}">Yes</label>
+
+                <input type="radio" class="btn-check" name="is_group" value="0" id="is_group_2-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && ! $reason->is_group ? 'checked' : '' }}>
+                <label class="btn btn-outline-primary" for="is_group_2-{{ $reason->id ?? null }}">No</label>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3 pb-3">
+        <label for="firstname" class="form-label">Category</label>
+        <div class="dropdown">
+            <button id="btn-{{ $reason->id ?? null }}-category_id" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ isset($reason->category_id) ? $reason->category->name : 'Choose label' }}
+            </button>
+            <ul class="dropdown-menu border-0 shadow p-3">
+                @foreach($categories as $category)
+                    <li><a data-category_id="{{ $category->id }}" data-id="{{ $reason->id ?? null }}" class="sl-category_id dropdown-item py-2 rounded" href="#">{{ $category->name }}</a></li>
+                @endforeach
             </ul>
         </div>
     </div>
 </div>
-<input id="i-{{ $reason->id ?? null }}-type" type="hidden" name="type" value="{{ $reason->type ?? null }}">
-<input id="i-{{ $reason->id ?? null }}-label" type="hidden" name="label" value="{{ $reason->label ?? null }}">
-<input id="i-{{ $reason->id ?? null }}-is_group" type="hidden" name="is_group" value="{{ $reason->is_group ?? null }}">
+<input id="i-{{ $reason->id ?? null }}-category_id" type="hidden" name="category_id" value="{{ $reason->category_id ?? null }}">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button class="btn btn-primary">{{ isset($reason) ? 'Update' : 'Create' }}</button>

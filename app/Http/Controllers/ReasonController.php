@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReasonRequest;
+use App\Models\Category;
 use App\Models\Reason;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -12,10 +13,12 @@ class ReasonController extends Controller
 
     public function index(): View
     {
-        $reasons = Reason::query()->orderBy('name')->get();
+        $reasons = Reason::query()->with('category')->orderBy('name')->get();
+        $categories = Category::query()->get();
 
         return view('reason.index', [
             'reasons' => $reasons,
+            'categories' => $categories,
         ]);
     }
 
@@ -25,8 +28,9 @@ class ReasonController extends Controller
         Reason::query()->create([
             'name' => $data['name'],
             'type' => $data['type'],
-            'label' => $data['label'],
+            'label' => $data['label'] ?? null,
             'is_group' => $data['is_group'],
+            'category_id' => $data['category_id'] ?? null,
         ]);
 
         return back()->with('success', 'Create reason successfully');
@@ -38,8 +42,9 @@ class ReasonController extends Controller
         $reason->update([
             'name' => $data['name'],
             'type' => $data['type'],
-            'label' => $data['label'],
+            'label' => $data['label'] ?? null,
             'is_group' => $data['is_group'],
+            'category_id' => $data['category_id'] ?? null,
         ]);
 
         return back()->with('success', 'Update reason successfully');

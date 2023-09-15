@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
-
 class ReasonRequest extends BaseRequest
 {
 
@@ -21,6 +19,9 @@ class ReasonRequest extends BaseRequest
             ],
             'is_group' => [
                 'required',
+            ],
+            'category_id' => [
+                'nullable',
             ],
         ];
     }

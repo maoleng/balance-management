@@ -24,6 +24,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Category</th>
                         <th>Label</th>
                         <th>Action</th>
                     </tr>
@@ -34,6 +35,11 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span>{{ $reason->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span>{{ $reason->category?->name }}</span>
                                 </div>
                             </td>
                             <td>
@@ -77,20 +83,12 @@
     <script src="{{ asset('assets/js/template.js') }}"></script>
 
     <script>
-        $('.sl-label').on('click', function () {
+        $('.sl-category_id').on('click', function () {
+            const category_id = $(this).data('category_id')
             const id = $(this).data('id')
-            $(`#i-${id}-label`).val($(this).data('label'))
-            $('.btn-label').text($(this).text())
+            $(`#i-${id}-category_id`).val(category_id)
+            $(`#btn-${id}-category_id`).text($(this).text())
         })
-        $('.btn-reason').on('click', function () {
-            const id = $(this).data('id')
-            $(`#i-${id}-is_group`).val($(this).data('is_group'))
-        })
-        $('.btn-type').on('click', function () {
-            const id = $(this).data('id')
-            $(`#i-${id}-type`).val($(this).data('type'))
-        })
-
 
     </script>
 @endsection
