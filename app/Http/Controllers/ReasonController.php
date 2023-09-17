@@ -6,6 +6,7 @@ use App\Http\Requests\ReasonRequest;
 use App\Models\Category;
 use App\Models\Reason;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ReasonController extends Controller
@@ -60,6 +61,7 @@ class ReasonController extends Controller
             return back()->with('errors', 'There is transaction relate to this reason');
         }
         $reason->delete();
+        Storage::disk('local')->delete('public/'.$reason->image);
 
         return back()->with('success', 'Delete reason successfully');
     }
