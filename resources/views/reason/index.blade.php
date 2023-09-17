@@ -34,7 +34,7 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ getFullPath($reason->image) }}" alt="" class="img-fluid avatar mx-1">
+                                    <img src="{{ getFullPath($reason->image) }}" alt="" class="img-fluid avatar lg mx-1">
                                     <span>{{ $reason->name }}</span>
                                 </div>
                             </td>

@@ -51,6 +51,7 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
+                                    <img src="{{ getFullPath($transaction->reason->image) }}" alt="" class="img-fluid avatar lg mx-1">
                                     <span>{{ $transaction->reason->name ?? null }}</span>
                                 </div>
                             </td>
