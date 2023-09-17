@@ -70,7 +70,7 @@
     @foreach ($reasons as $reason)
         <div class="modal fade modal-sm" id="m-{{ $reason->id }}" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <form action="{{ route('financial-management.reason.update', ['reason' => $reason]) }}" method="post" class="modal-content">
+                <form action="{{ route('financial-management.reason.update', ['reason' => $reason]) }}" enctype="multipart/form-data" method="post" class="modal-content">
                     @method('PUT')
                     @include('reason.form')
                 </form>

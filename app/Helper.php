@@ -21,7 +21,7 @@ if (! function_exists('formatVND')) {
 if (! function_exists('getFullPath')) {
     function getFullPath($path): string
     {
-        return asset('/storage/'.$path ?? '');
+        return asset('/storage/'.$path);
     }
 }
 

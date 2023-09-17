@@ -29,7 +29,7 @@ class ReasonRequest extends BaseRequest
                     $file = $this->file('image');
                     if ($file !== null) {
                         $path = 'reasons/'.Str::slug($this->get('name')).'.'.$file->extension();
-                        Storage::disk('local')->put($path, $file->getContent());
+                        Storage::disk('local')->put('public/'.$path, $file->getContent());
 
                         $this->merge(['image_path' => $path]);
                     }
