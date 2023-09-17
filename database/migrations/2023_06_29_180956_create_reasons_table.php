@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('type')->nullable();
             $table->integer('label')->nullable();
             $table->boolean('is_group')->default(false);
+            $table->string('image')->nullable();
             $table->foreignId('category_id')->nullable()->constrained();
         });
     }

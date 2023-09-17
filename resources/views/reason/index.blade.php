@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Reason</button>
                 <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <form action="{{ route('financial-management.reason.store') }}" method="post" class="modal-content">
+                        <form action="{{ route('financial-management.reason.store') }}" enctype="multipart/form-data" method="post" class="modal-content">
                             @include('reason.form')
                         </form>
                     </div>
@@ -34,6 +34,7 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
+                                    <img src="{{ getFullPath($reason->image) }}" alt="" class="img-fluid avatar mx-1">
                                     <span>{{ $reason->name }}</span>
                                 </div>
                             </td>

@@ -37,7 +37,7 @@
     </div>
     <div class="row pt-3 pb-3">
         <div class="col-md-12">
-            <label for="firstname" class="form-label">Type</label>
+            <label for="firstname" class="form-label">Icon</label>
             <br>
             <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
                 <li class="nav-item" role="presentation"><a data-type="1" class="btn-type nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Earn</a></li>

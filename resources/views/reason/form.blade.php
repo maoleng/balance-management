@@ -62,6 +62,13 @@
             </ul>
         </div>
     </div>
+    <div class="row pt-3 pb-3">
+        <div class="col-md-12">
+            <label for="firstname" class="form-label">Type</label>
+            <br>
+            <input class="form-control" type="file" name="image">
+        </div>
+    </div>
 </div>
 <input id="i-{{ $reason->id ?? null }}-category_id" type="hidden" name="category_id" value="{{ $reason->category_id ?? null }}">
 <div class="modal-footer">

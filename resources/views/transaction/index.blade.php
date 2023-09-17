@@ -51,7 +51,12 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4825/4825292.png" alt="" class="img-fluid avatar mx-1">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/878/878220.png" alt="" class="img-fluid avatar mx-1">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/5417/5417227.png" alt="" class="img-fluid avatar mx-1">
+
                                     <span>{{ $transaction->reason->name ?? null }}</span>
+
                                 </div>
                             </td>
                             <td>

@@ -18,6 +18,13 @@ if (! function_exists('formatVND')) {
     }
 }
 
+if (! function_exists('getFullPath')) {
+    function getFullPath($path): string
+    {
+        return asset('/storage/'.$path ?? '');
+    }
+}
+
 if (! function_exists('authed')) {
     function authed()
     {
