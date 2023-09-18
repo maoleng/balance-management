@@ -42,15 +42,10 @@ class ReasonController extends Controller
     public function update(ReasonRequest $request, Reason $reason): RedirectResponse
     {
         $data = $request->validated();
-
-        $reason->update([
-            'name' => $data['name'],
-            'type' => $data['type'],
-            'label' => $data['label'] ?? null,
-            'is_group' => $data['is_group'],
-            'image' => $request->get('image_path'),
-            'category_id' => $data['category_id'] ?? null,
-        ]);
+        if ($image = $request->get('image_path')) {
+            $data['image'] = $image;
+        }
+        $reason->update($data);
 
         return back()->with('success', 'Update reason successfully');
     }
