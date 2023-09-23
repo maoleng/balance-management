@@ -53,7 +53,7 @@
         <label for="firstname" class="form-label">Category</label>
         <div class="dropdown">
             <button id="btn-{{ $reason->id ?? null }}-category_id" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ isset($reason->category_id) ? $reason->category->name : 'Choose label' }}
+                {{ isset($reason->category_id) ? $reason->category?->name : 'Choose label' }}
             </button>
             <ul class="dropdown-menu border-0 shadow p-3">
                 @foreach($categories as $category)

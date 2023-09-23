@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 @include('theme.head_tag')
+@yield('style')
 <body>
 <div id="cryptoon-layout" class="theme-orange">
     @include('theme.sidebar')

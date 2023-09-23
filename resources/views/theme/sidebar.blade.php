@@ -105,6 +105,19 @@
                     <li><a class="ms-link {{ Route::is('financial-management.reason.*') ? 'active' : '' }}" href="{{ route('financial-management.reason.index') }}"><span>Reason</span></a></li>
                 </ul>
             </li>
+            <li class="collapsed">
+                <a class="m-link {{ Route::is('statistic.*') ? 'active' : '' }}" data-bs-toggle="collapse" data-bs-target="#menu-Statistic" href="#">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <div>
+                        <h6 class="mb-0">Statistic</h6>
+                        <small class="text-muted">Statistic System</small>
+                    </div>
+                    <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                </a>
+                <ul class="sub-menu collapse {{ Route::is('statistic.*') ? 'show' : '' }}" id="menu-Statistic">
+                    <li><a class="ms-link {{ Route::is('statistic.expense') ? 'active' : '' }}" href="{{ route('statistic.expense') }}"><span>Expense</span></a></li>
+                </ul>
+            </li>
         </ul>
         <!-- Menu: menu collepce btn -->
         <button type="button" class="btn btn-link sidebar-mini-btn text-muted">
