@@ -44,16 +44,21 @@ trait MoneySpentByCategory
     {
         $faker = Faker::create();
         $data = $q->groupBy('categories.id', 'categories.name')->get();
-        $series = [];
-        $colors = [];
+        $result = [
+            'series' => [],
+            'labels' => [],
+            'colors' => [],
+            'images' => [],
+        ];
+
         foreach ($data as $each) {
-            $series[] = $each->money;
-            $colors[] = $faker->hexColor;
+            $result['series'][] = $each->money;
+            $result['labels'][] = $each->category;
+            $result['colors'][] = $faker->hexColor;
+            $result['images'][] = $faker->imageUrl;
         }
 
-        $faker->randomElements();
-        dd($series);
-        dd($data);
+        return $result;
     }
 
     private function getResultForTreeMapChart(Builder $q): array

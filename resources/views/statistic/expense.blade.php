@@ -96,23 +96,34 @@
                     series: e['tree-map'].series,
                     colors: e['tree-map'].colors,
                 })
+                chartPie.updateOptions({
+                    series: e['pie'].series,
+                    colors: e['pie'].colors,
+                    labels: e['pie'].labels,
+                    fill: {
+                        image: {
+                            src: e['pie'].images,
+                        }
+                    }
+                })
             })
         })
 
         function getPieOptions()
         {
             return {
-                series: [44, 33, 54, 45],
+                series: [],
+                labels: [],
                 chart: {
-                    width: 380,
+                    height: 350,
                     type: 'pie',
                 },
-                colors: ['#93C3EE', '#E5C6A0', '#669DB5', '#94A74A'],
+                colors: [],
                 fill: {
                     type: 'image',
                     opacity: 0.85,
                     image: {
-                        src: ['../../assets/images/stripes.jpg', '../../assets/images/1101098.png', '../../assets/images/4679113782_ca13e2e6c0_z.jpg', '../../assets/images/2979121308_59539a3898_z.jpg'],
+                        src: [],
                         width: 25,
                         imagedHeight: 25
                     },
