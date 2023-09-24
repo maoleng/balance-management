@@ -39,7 +39,7 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     Route::group(['prefix' => 'statistic', 'as' => 'statistic.'], function () {
         Route::get('/', [StatisticController::class, 'index'])->name('index');
         Route::get('/expense', [StatisticController::class, 'expense'])->name('expense');
+        Route::get('/income', [StatisticController::class, 'income'])->name('income');
     });
 
 });
-Route::get('/test', [StatisticController::class, 'index']);

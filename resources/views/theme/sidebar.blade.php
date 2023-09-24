@@ -117,6 +117,9 @@
                 <ul class="sub-menu collapse {{ Route::is('statistic.*') ? 'show' : '' }}" id="menu-Statistic">
                     <li><a class="ms-link {{ Route::is('statistic.expense') ? 'active' : '' }}" href="{{ route('statistic.expense') }}"><span>Expense</span></a></li>
                 </ul>
+                <ul class="sub-menu collapse {{ Route::is('statistic.*') ? 'show' : '' }}" id="menu-Statistic">
+                    <li><a class="ms-link {{ Route::is('statistic.income') ? 'active' : '' }}" href="{{ route('statistic.income') }}"><span>Income</span></a></li>
+                </ul>
             </li>
         </ul>
         <!-- Menu: menu collepce btn -->

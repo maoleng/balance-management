@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Traits\Statistics;
+namespace App\Services\Statistics;
 
 use App\Enums\ChartType;
 use App\Enums\FilterTime;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-trait MoneySpentByCategory
+class IncomeByReason
 {
 
-    private function getMoneySpentByCategory($time): array
+    public static function getIncomeByReason($time): array
     {
         $ranges = match ($time) {
             FilterTime::TODAY => [now()->startOfDay(), now()],
@@ -21,29 +20,28 @@ trait MoneySpentByCategory
             FilterTime::THIS_YEAR => [now()->startOfYear(), now()],
             default => [now()->startOfCentury(), now()],
         };
-        $q = DB::table('categories')
-            ->join('reasons', 'categories.id', '=', 'reasons.category_id')
+        $q = DB::table('reasons')
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
-            ->where('reasons.type', '=', 0)
+            ->where('reasons.type', '=', 1)
             ->whereBetween('transactions.created_at', $ranges)
             ->select(
-                'categories.id',
-                'categories.name as category',
+                'reasons.id',
+                'reasons.name as reason',
                 DB::raw('SUM(transactions.price * transactions.quantity) as money')
             )
         ;
 
         return [
-            ChartType::STACKED_BAR => $this->getResultForStackedBarChart($q->clone(), $time),
-            ChartType::TREE_MAP => $this->getResultForTreeMapChart($q->clone()),
-            ChartType::PIE => $this->getResultForPieChart($q->clone()),
+            ChartType::STACKED_BAR => self::getResultForStackedBarChart($q->clone(), $time),
+            ChartType::TREE_MAP => self::getResultForTreeMapChart($q->clone()),
+            ChartType::PIE => self::getResultForPieChart($q->clone()),
         ];
     }
 
-    private function getResultForPieChart(Builder $q): array
+    private static function getResultForPieChart(Builder $q): array
     {
         $faker = Faker::create();
-        $data = $q->groupBy('categories.id', 'categories.name')->get();
+        $data = $q->addSelect('reasons.image')->groupBy('reasons.id', 'reasons.name')->get();
         $result = [
             'series' => [],
             'labels' => [],
@@ -53,24 +51,24 @@ trait MoneySpentByCategory
 
         foreach ($data as $each) {
             $result['series'][] = $each->money;
-            $result['labels'][] = $each->category;
+            $result['labels'][] = $each->reason;
             $result['colors'][] = $faker->hexColor;
-            $result['images'][] = $faker->imageUrl;
+            $result['images'][] = getFullPath($each->image);
         }
 
         return $result;
     }
 
-    private function getResultForTreeMapChart(Builder $q): array
+    private static function getResultForTreeMapChart(Builder $q): array
     {
         $faker = Faker::create();
-        $data = $q->groupBy('categories.id', 'categories.name')->get();
+        $data = $q->groupBy('reasons.id', 'reasons.name')->get();
         $result = [];
         $colors = [];
         foreach ($data as $each) {
             $colors[] = $faker->hexColor;
             $result[] = [
-                'x' => $each->category,
+                'x' => $each->reason,
                 'y' => $each->money,
             ];
         }
@@ -83,19 +81,19 @@ trait MoneySpentByCategory
         ];
     }
 
-    private function getResultForStackedBarChart(Builder $q, $time): array
+    private static function getResultForStackedBarChart(Builder $q, $time): array
     {
         $data = match ($time) {
             FilterTime::THIS_WEEK => $q->addSelect(
                 DB::raw('DATE(transactions.created_at) as time'),
-            )->groupBy('time', 'categories.id', 'categories.name')->orderBy('time')->get(),
+            )->groupBy('time', 'reasons.id', 'reasons.name')->orderBy('time')->get(),
             FilterTime::THIS_MONTH => $q->addSelect(
                 DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%u") as time'),
-            )->groupBy('time', 'categories.id', 'categories.name')->orderBy('time')->get(),
+            )->groupBy('time', 'reasons.id', 'reasons.name')->orderBy('time')->get(),
             FilterTime::THIS_YEAR => $q->addSelect(
                 DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m") as time'),
-            )->groupBy('time', 'categories.id', 'categories.name')->orderBy('time')->get(),
-            default => $q->groupBy('categories.id', 'categories.name')->get(),
+            )->groupBy('time', 'reasons.id', 'reasons.name')->orderBy('time')->get(),
+            default => $q->groupBy('reasons.id', 'reasons.name')->get(),
         };
         $times = $data->pluck('time')->unique();
         $times = match ($time) {
@@ -117,7 +115,7 @@ trait MoneySpentByCategory
             default => [null => 'All'],
         };
 
-        $formatted_data = $data->groupBy('category')->map(function ($money_group_by_date) use ($times) {
+        $formatted_data = $data->groupBy('reason')->map(function ($money_group_by_date) use ($times) {
             $result = [];
             foreach ($times as $key => $time) {
                 $money = $money_group_by_date->firstWhere('time', $key);
@@ -128,9 +126,9 @@ trait MoneySpentByCategory
         })->toArray();
 
         $series = [];
-        foreach ($formatted_data as $category => $moneys) {
+        foreach ($formatted_data as $reason => $moneys) {
             $series[] = [
-                'name' => $category,
+                'name' => $reason,
                 'data' => array_values($moneys),
             ];
         }
