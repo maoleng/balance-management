@@ -42,3 +42,4 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     });
 
 });
+Route::get('/test', [StatisticController::class, 'index']);

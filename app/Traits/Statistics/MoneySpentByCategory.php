@@ -36,7 +36,24 @@ trait MoneySpentByCategory
         return [
             ChartType::STACKED_BAR => $this->getResultForStackedBarChart($q->clone(), $time),
             ChartType::TREE_MAP => $this->getResultForTreeMapChart($q->clone()),
+            ChartType::PIE => $this->getResultForPieChart($q->clone()),
         ];
+    }
+
+    private function getResultForPieChart(Builder $q)
+    {
+        $faker = Faker::create();
+        $data = $q->groupBy('categories.id', 'categories.name')->get();
+        $series = [];
+        $colors = [];
+        foreach ($data as $each) {
+            $series[] = $each->money;
+            $colors[] = $faker->hexColor;
+        }
+
+        $faker->randomElements();
+        dd($series);
+        dd($data);
     }
 
     private function getResultForTreeMapChart(Builder $q): array
