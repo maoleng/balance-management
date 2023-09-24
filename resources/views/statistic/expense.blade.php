@@ -14,7 +14,6 @@
                         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#stacked-bar" role="tab">Stacked Bar Chart</a></li>
                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tree-map" role="tab">Tree Map Chart</a></li>
                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#pie" role="tab">Pie Chart</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#polar-area" role="tab">Polar Area Chart</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -46,9 +45,6 @@
                         <div class="tab-pane fade" id="pie">
                             <div id="chart-pie"></div>
                         </div>
-                        <div class="tab-pane fade" id="polar-area">
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -58,23 +54,11 @@
     </div>
 @endsection
 
-@section('style')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-@endsection
-
 @section('script')
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <script src="{{ asset('assets/bundles/apexcharts.bundle.js') }}"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script>
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'))
-        });
-
         const chartStackedBar = new ApexCharts(document.querySelector("#chart-stacked_bar"), getStackedBarOptions());
         chartStackedBar.render();
 
@@ -127,6 +111,10 @@
                         width: 25,
                         imagedHeight: 25
                     },
+                },
+                title: {
+                    text: 'Pie Chart',
+                    align: 'center'
                 },
                 stroke: {
                     width: 4

@@ -40,7 +40,7 @@ trait MoneySpentByCategory
         ];
     }
 
-    private function getResultForPieChart(Builder $q)
+    private function getResultForPieChart(Builder $q): array
     {
         $faker = Faker::create();
         $data = $q->groupBy('categories.id', 'categories.name')->get();
