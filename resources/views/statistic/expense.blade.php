@@ -11,10 +11,10 @@
                 <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
                     <h6 class="mb-0 fw-bold">Statistic Expense By Category</h6>
                     <ul class="nav nav-tabs tab-body-header rounded d-inline-flex mt-2 mt-md-0" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#stacked-bar-chart" role="tab">Stacked Bar Chart</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tree-map" role="tab">Tree Map</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#pie-chart" role="tab">Pie Chart</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#polar-area-chart" role="tab">Polar Area Chart</a></li>
+                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#stacked-bar" role="tab">Stacked Bar Chart</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tree-map" role="tab">Tree Map Chart</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#pie" role="tab">Pie Chart</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#polar-area" role="tab">Polar Area Chart</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -37,16 +37,16 @@
                                 <label class="btn btn-outline-primary" for="all">All</label>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="stacked-bar-chart">
-                            <div id="chart-stacked-bar"></div>
+                        <div class="tab-pane fade show active" id="stacked-bar">
+                            <div id="chart-stacked_bar"></div>
                         </div>
                         <div class="tab-pane fade" id="tree-map">
+                            <div id="chart-tree_map"></div>
+                        </div>
+                        <div class="tab-pane fade" id="pie">
 
                         </div>
-                        <div class="tab-pane fade" id="pie-chart">
-
-                        </div>
-                        <div class="tab-pane fade" id="polar-area-chart">
+                        <div class="tab-pane fade" id="polar-area">
 
                         </div>
                     </div>
@@ -75,27 +75,51 @@
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'))
         });
 
-        const options = getStackedBarOptions()
-        const chart = new ApexCharts(document.querySelector("#chart-stacked-bar"), options);
-        chart.render();
+        const chartStackedBar = new ApexCharts(document.querySelector("#chart-stacked_bar"), getStackedBarOptions());
+        chartStackedBar.render();
+
+        const chartTreeMap = new ApexCharts(document.querySelector("#chart-tree_map"), getTreeMapOptions());
+        chartTreeMap.render();
 
         $('.btn-time').on('click', function () {
-            updateChart($(this).val())
+            $.ajax({
+                url: `{{ route('statistic.index') }}?time=${$(this).val()}`,
+            }).done(function(e) {
+                chartStackedBar.updateOptions({
+                    series: e['stacked-bar'].series,
+                    xaxis: { categories: e['stacked-bar'].categories }
+                })
+                chartTreeMap.updateOptions({
+                    series: e['tree-map'].series,
+                    colors: e['tree-map'].colors,
+                })
+            })
+            updateChart()
         })
 
-        function updateChart(time)
+        function getTreeMapOptions()
         {
-            $.ajax({
-                url: `{{ route('statistic.index') }}?time=${time}`,
-            }).done(function(e) {
-                chart.updateSeries(e.series)
-                chart.updateOptions({
-                    xaxis: {
-                        categories: e.categories,
+            return {
+                series: [],
+                legend: {
+                    show: false
+                },
+                chart: {
+                    height: 350,
+                    type: 'treemap'
+                },
+                title: {
+                    text: 'Distibuted Treemap (different color for each cell)',
+                    align: 'center'
+                },
+                colors: [],
+                plotOptions: {
+                    treemap: {
+                        distributed: true,
+                        enableShades: false
                     }
-                })
-
-            })
+                }
+            };
         }
 
         function getStackedBarOptions()
