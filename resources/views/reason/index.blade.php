@@ -40,12 +40,20 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <span>{{ $reason->category?->name }}</span>
+                                    @if ($reason->is_group)
+                                        <h5><span class="badge bg-gradient">Grouped</span></h5>
+                                    @else
+                                        <h5><span class="badge bg-buy">{{ $reason->category?->name }}</span></h5>
+                                    @endif
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    {!! ReasonLabel::getBadge($reason->label) !!}
+                                    @if ($reason->is_group)
+                                        <h5><span class="badge bg-gradient">Grouped</span></h5>
+                                    @else
+                                        {!! ReasonLabel::getBadge($reason->label) !!}
+                                    @endif
                                 </div>
                             </td>
                             <td class="dt-body-right sorting_1">

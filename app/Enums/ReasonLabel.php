@@ -17,7 +17,7 @@ final class ReasonLabel extends Enum
             self::MUST_HAVE => '<h5><span class="badge bg-primary">Must Have</span></h5>',
             self::NICE_TO_HAVE => '<h5><span class="badge bg-success">Nice To Have</span></h5>',
             self::WASTE => '<h5><span class="badge bg-danger">Waste</span></h5>',
-            default => '<h5><span class="badge bg-gradient">NULL</span></h5>',
+            default => '',
         };
     }
 
