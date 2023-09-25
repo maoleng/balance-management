@@ -1,4 +1,5 @@
 @php use App\Enums\ReasonLabel; @endphp
+@php use App\Enums\ReasonType; @endphp
 @extends('theme.master')
 
 @section('title')
@@ -42,6 +43,8 @@
                                 <div class="d-flex align-items-center">
                                     @if ($reason->is_group)
                                         <h5><span class="badge bg-gradient">Grouped</span></h5>
+                                    @elseif ($reason->type === ReasonType::EARN)
+                                        <h5><span class="badge bg-gradient">Earn</span></h5>
                                     @else
                                         <h5><span class="badge bg-buy">{{ $reason->category?->name }}</span></h5>
                                     @endif
@@ -51,6 +54,8 @@
                                 <div class="d-flex align-items-center">
                                     @if ($reason->is_group)
                                         <h5><span class="badge bg-gradient">Grouped</span></h5>
+                                    @elseif ($reason->type === ReasonType::EARN)
+                                        <h5><span class="badge bg-gradient">Earn</span></h5>
                                     @else
                                         {!! ReasonLabel::getBadge($reason->label) !!}
                                     @endif
