@@ -29,11 +29,12 @@ class SiteController extends Controller
         ")->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
 
         $cash_balance = Transaction::query()
-            ->selectRaw("SUM(CASE
-                WHEN reasons.type = $spend THEN -price * quantity
-                WHEN reasons.type = $earn THEN price * quantity
-            END) AS cash_balance")
-            ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first()->cash_balance;
+            ->selectRaw("
+                SUM(CASE
+                    WHEN reasons.type = $spend THEN -price * quantity
+                    WHEN reasons.type = $earn THEN price * quantity
+                END) AS cash_balance
+            ")->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first()->cash_balance;
         $stock = (new BalanceController())->getStockBalance();
         $stock_balance = $stock['profit'] + $stock['invest'];
         $percent_stock_balance = $stock_balance * 100 / ($cash_balance + $stock['profit'] + $stock['invest']);
