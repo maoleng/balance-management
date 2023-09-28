@@ -10,7 +10,9 @@ use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
     Route::get('/login', [AuthController::class, 'login'])->name('login');

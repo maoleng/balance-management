@@ -1,4 +1,5 @@
-@php use App\Enums\ReasonLabel; @endphp
+@php use App\Enums\ReasonLabel @endphp
+@php use App\Enums\ReasonType @endphp
 @extends('theme.master')
 
 @section('title')
@@ -41,7 +42,7 @@
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
                                     @endif
                                     <span class="font-weight-bold @if ($transaction->reason->type === 0) 'text-danger' @else 'text-secondary' @endif ">
-                                        @if ($transaction->reason?->is_group)
+                                        @if ($transaction->reason?->type === ReasonType::GROUP)
                                             {!! formatVND($transaction->totalPrice) !!}
                                         @else
                                             {!! formatVND($transaction->price) !!}
@@ -57,7 +58,7 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if ($transaction->reason?->is_group)
+                                    @if ($transaction->reason?->type === ReasonType::GROUP)
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#m-{{ $transaction->id }}" class="btn btn-outline-info text-uppercase">
                                             <i class="icofont-eye-alt text-nowrap"></i>
                                         </a>
@@ -90,7 +91,7 @@
     </div>
 
     @foreach($transactions as $transaction)
-        @if ($transaction->reason?->is_group)
+        @if ($transaction->reason?->type === ReasonType::GROUP)
             <div class="modal fade" id="m-{{ $transaction->id }}" tabindex="-1" aria-labelledby="exampleModalLgLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-xl">
                     <form action="{{ route('transaction.update-group-transaction') }}" method="post" class="modal-content">

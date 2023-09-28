@@ -16,11 +16,10 @@
             <label for="firstname" class="form-label">Reason type</label>
             <br>
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="type" value="1" id="type_1-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === ReasonType::EARN ? 'checked' : '' }}>
-                <label class="btn btn-outline-primary" for="type_1-{{ $reason->id ?? null }}">Earn</label>
-
-                <input type="radio" class="btn-check" name="type" value="0" id="type_2-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === ReasonType::SPEND ? 'checked' : '' }}>
-                <label class="btn btn-outline-primary" for="type_2-{{ $reason->id ?? null }}">Spend</label>
+                @foreach (ReasonType::asArray() as $name => $value)
+                    <input type="radio" class="btn-check" name="type" value="{{ $value }}" id="type_{{ $value }}-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === $value ? 'checked' : '' }}>
+                    <label class="btn btn-outline-primary" for="type_{{ $value }}-{{ $reason->id ?? null }}">{{ $name }}</label>
+                @endforeach
             </div>
         </div>
     </div>
@@ -33,19 +32,6 @@
                     <input type="radio" class="btn-check" name="label" value="{{ $value }}" id="r-{{ $label }}-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->label === $value ? 'checked' : '' }}>
                     <label class="btn btn-outline-primary" for="r-{{ $label }}-{{ $reason->id ?? null }}">{{ $label }}</label>
                 @endforeach
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3 pb-3">
-        <div class="col-md-12">
-            <label for="firstname" class="form-label">Group Reason</label>
-            <br>
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="is_group" value="1" id="is_group_1-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->is_group ? 'checked' : '' }}>
-                <label class="btn btn-outline-primary" for="is_group_1-{{ $reason->id ?? null }}">Yes</label>
-
-                <input type="radio" class="btn-check" name="is_group" value="0" id="is_group_2-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && ! $reason->is_group ? 'checked' : '' }}>
-                <label class="btn btn-outline-primary" for="is_group_2-{{ $reason->id ?? null }}">No</label>
             </div>
         </div>
     </div>

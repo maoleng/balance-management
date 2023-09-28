@@ -20,9 +20,6 @@ class ReasonRequest extends BaseRequest
             'label' => [
                 'nullable',
             ],
-            'is_group' => [
-                'required',
-            ],
             'image' => [
                 'nullable',
                 function () {

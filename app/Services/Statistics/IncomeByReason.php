@@ -4,6 +4,7 @@ namespace App\Services\Statistics;
 
 use App\Enums\ChartType;
 use App\Enums\FilterTime;
+use App\Enums\ReasonType;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
@@ -22,7 +23,7 @@ class IncomeByReason
         };
         $q = DB::table('reasons')
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
-            ->where('reasons.type', '=', 1)
+            ->where('reasons.type', '=', ReasonType::EARN)
             ->whereBetween('transactions.created_at', $ranges)
             ->select(
                 'reasons.id',

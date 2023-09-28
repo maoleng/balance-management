@@ -31,7 +31,6 @@ class ReasonController extends Controller
             'name' => $data['name'],
             'type' => $data['type'],
             'label' => $data['label'] ?? null,
-            'is_group' => $data['is_group'],
             'image' => $request->get('image_path'),
             'category_id' => $data['category_id'] ?? null,
         ]);

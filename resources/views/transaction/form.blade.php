@@ -15,7 +15,7 @@
                         @foreach($reasons as $reason)
                             <a data-type="{{ $reason->type }}" class="badge a-reason border-primary btn">
                                 {{ $reason->name }}
-                                @if ($reason->is_group)
+                                @if ($reason->type === ReasonType::GROUP)
                                     <i class="fa fa-group ms-1"></i>
                                 @elseif ($reason->type === ReasonType::EARN)
                                     <i class="fa fa-plus ms-1"></i>

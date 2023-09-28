@@ -41,7 +41,7 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if ($reason->is_group)
+                                    @if ($reason->type === ReasonType::GROUP)
                                         <h5><span class="badge bg-gradient">Grouped</span></h5>
                                     @elseif ($reason->type === ReasonType::EARN)
                                         <h5><span class="badge bg-gradient">Earn</span></h5>
@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if ($reason->is_group)
+                                    @if ($reason->type === ReasonType::GROUP)
                                         <h5><span class="badge bg-gradient">Grouped</span></h5>
                                     @elseif ($reason->type === ReasonType::EARN)
                                         <h5><span class="badge bg-gradient">Earn</span></h5>

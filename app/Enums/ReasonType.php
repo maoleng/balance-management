@@ -10,5 +10,6 @@ final class ReasonType extends Enum
 
     public const SPEND = 0;
     public const EARN = 1;
+    public const GROUP = 2;
 
 }
