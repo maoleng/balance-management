@@ -6,20 +6,77 @@
     Transaction
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/custom/style/custom.css') }}">
+@endsection
+
 @section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
             {!! showMessage() !!}
-            <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center flex-wrap">
-                <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCoinModal">Create Transaction</button>
-                <div class="modal fade modal-sm" id="addCoinModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
-                            @include('transaction.form')
-                        </form>
+            <div class="col-12">
+                <div class="card overflow-hidden">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-9 col-lg-8 col-md-8">
+                                <div class="form-floating">
+                                    <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createTransactionModal">Create Transaction</button>
+                                    <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exchangeFundModal">Fund Exchange</button>
+                                    <div class="modal fade modal-sm" id="createTransactionModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
+                                                @include('transaction.form')
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade modal-l" id="exchangeFundModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
+                                                @include('transaction.fund-form')
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="p-3">
+                                    <div class="pb-3 text-muted text-uppercase"><i class="fa fa-circle me-2 text-danger"></i>Created At</div>
+                                    <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                                        <li class="nav-item" role="presentation"><a class="active nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">Today</a></li>
+                                        <li class="nav-item" role="presentation"><a class="nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Custom</a></li>
+                                    </ul>
+                                    <input class="mt-3 form-control" type="date">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="p-3">
+                                    <div class="pb-3 text-muted text-uppercase"><i class="fa fa-circle me-2 text-danger"></i>Funding</div>
+                                    <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                                        @foreach (\App\Enums\ReasonMethod::asArray() as $name => $value)
+                                            <li class="nav-item" role="presentation">
+                                                <a class="@if ($loop->first) active @endif nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">{{ $name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="p-3">
+                                    <div class="pb-3 text-muted text-uppercase"></div>
+                                    <div class="pt-4 text-muted text-uppercase">
+                                        <button type="button" class="btn btn-lg btn-primary">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class="card-body">
                 <table id="p2pone" class="priceTable table table-hover custom-table table-bordered align-middle mb-0" style="width:100%">
                     <thead>

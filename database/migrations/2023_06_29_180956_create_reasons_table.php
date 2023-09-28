@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->boolean('type')->nullable();
+            $table->integer('method');
             $table->integer('label')->nullable();
             $table->string('image')->nullable();
             $table->foreignId('category_id')->nullable()->constrained();

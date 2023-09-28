@@ -12,7 +12,7 @@ class Reason extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'type', 'label', 'image', 'category_id',
+        'name', 'type', 'method', 'label', 'image', 'category_id',
     ];
 
     public function transactions(): HasMany
