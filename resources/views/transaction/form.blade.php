@@ -12,7 +12,7 @@
             <div class="card border-0 shadow rounded-2 search-result slidedown">
                 <div class="card-body text-start">
                     <div class=" bg-transparent text-wrap">
-                        @foreach($reasons as $reason)
+                        @foreach($reasons->whereIn('type', ReasonType::getCashReasonTypes()) as $reason)
                             <a data-type="{{ $reason->type }}" class="badge a-reason border-primary btn">
                                 {{ $reason->name }}
                                 @if ($reason->type === ReasonType::GROUP)

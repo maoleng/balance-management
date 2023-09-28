@@ -6,10 +6,6 @@
     Transaction
 @endsection
 
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/custom/style/custom.css') }}">
-@endsection
-
 @section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
@@ -29,7 +25,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="modal fade modal-l" id="exchangeFundModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade modal-sm" id="exchangeFundModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
                                                 @include('transaction.fund-form')
@@ -55,13 +51,13 @@
                             <div class="col-md-4 col-sm-6">
                                 <div class="p-3">
                                     <div class="pb-3 text-muted text-uppercase"><i class="fa fa-circle me-2 text-danger"></i>Funding</div>
-                                    <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                                        @foreach (\App\Enums\ReasonMethod::asArray() as $name => $value)
-                                            <li class="nav-item" role="presentation">
-                                                <a class="@if ($loop->first) active @endif nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">{{ $name }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+{{--                                    <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">--}}
+{{--                                        @foreach (\App\Enums\ReasonMethod::asArray() as $name => $value)--}}
+{{--                                            <li class="nav-item" role="presentation">--}}
+{{--                                                <a class="@if ($loop->first) active @endif nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">{{ $name }}</a>--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+{{--                                    </ul>--}}
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -93,9 +89,9 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if ($transaction->reason->type === 0)
+                                    @if (in_array($transaction->reason->type, [ReasonType::SPEND, ReasonType::GROUP]))
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
-                                    @else ($transaction->reason->type === 1)
+                                    @elseif ($transaction->reason->type === ReasonType::EARN)
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
                                     @endif
                                     <span class="font-weight-bold @if ($transaction->reason->type === 0) 'text-danger' @else 'text-secondary' @endif ">
