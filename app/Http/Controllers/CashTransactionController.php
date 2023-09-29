@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TransactionRequest;
+use App\Enums\ReasonType;
+use App\Http\Requests\CashTransactionRequest;
 use App\Http\Requests\UpdateGroupTransactionRequest;
 use App\Models\Reason;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class TransactionController extends Controller
+class CashTransactionController extends Controller
 {
 
     public function index(): View
     {
-        $transactions = Transaction::query()->whereNull('transaction_id')
-            ->with(['reason', 'transactions.reason'])->orderByDesc('created_at')->paginate(8);
+        $transactions = Transaction::query()->whereNull('transaction_id')->with(['reason', 'transactions.reason'])
+            ->whereHas('reason', function ($q) {
+                $q->whereIn('type', ReasonType::getCashReasonTypes());
+            })
+            ->orderByDesc('created_at')->paginate(8);
         $reasons = Reason::query()->orderBy('name')->get();
 
-        return view('transaction.index', [
+        return view('transaction.cash.index', [
             'transactions' => $transactions,
             'reasons' => $reasons,
         ]);
     }
 
-    public function store(TransactionRequest $request): RedirectResponse
+    public function store(CashTransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $reason_id = Reason::query()->firstOrCreate(

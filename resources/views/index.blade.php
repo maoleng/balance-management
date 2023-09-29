@@ -11,18 +11,25 @@
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">My Wallet</h6>
                         </div>
+
                         <div class="row card-body">
-                            <div class="col-lg-7">
-                                <div>Balance</div>
-                                <h3>{!! formatVND($cash_balance + $stock_balance) !!}</h3>
-                                <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">Stock Market
-                                </div>
-                                <h5>{!! formatVND($stock_balance) !!} ({!! formatVND($stock_profit) !!})</h5>
-                                <div class="mt-3 text-uppercase text-muted small">Cash, Credit, E-Wallet, ...</div>
-                                <h5>{!! formatVND($cash_balance) !!}</h5>
-                            </div>
                             <div class="col-lg-5">
-                                <div id="apex-circle-gradientfuture"></div>
+                                <div>Balance</div>
+                                <h3>
+                                    <span id="t-balance">*************</span>
+                                    <button id="btn-toggle_balance" class="btn btn-outline-primary">
+                                        <i id="i-toggle_balance" style="vertical-align: middle;" class="icofont-eye-alt"></i>
+                                    </button>
+                                </h3>
+                                <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">Cash</div>
+                                <h5><span id="t-cash_balance">*************</span></h5>
+                                <div class="mt-3 text-uppercase text-muted small">Crypto</div>
+                                <h5><span id="t-crypto_balance">*************</span></h5>
+                                <div class="mt-3 text-uppercase text-muted small">ONUS</div>
+                                <h5><span id="t-onus_balance">*************</span></h5>
+                            </div>
+                            <div class="col-lg-7">
+                                <div id="chart"></div>
                             </div>
                         </div>
                     </div>
@@ -77,40 +84,6 @@
                 </div>
             </div>
         </div>
-{{--        <div class="row g-3 mb-3 row-deck">--}}
-{{--            <div class="col-xl-12 col-lg-6 col-md-12">--}}
-{{--                <div class="card mb-3">--}}
-{{--                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">--}}
-{{--                        <h6 class="m-0 fw-bold">Money Spent By Time</h6>--}}
-{{--                    </div>--}}
-{{--                    <div class="card-body">--}}
-{{--                        <div id="apex-chart-line-column"></div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="row g-3 mb-3 row-deck">--}}
-{{--            <div class="col-xl-8 col-lg-6 col-md-12">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">--}}
-{{--                        <h6 class="m-0 fw-bold">Spent In What ?</h6>--}}
-{{--                    </div>--}}
-{{--                    <div class=" row card-body">--}}
-{{--                        <div class="col-lg-6">--}}
-{{--                            <div>Today</div>--}}
-{{--                            <h3>5,156,467,500 VND</h3>--}}
-{{--                            <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">This week</div>--}}
-{{--                            <h5>3,456,748,000 VND</h5>--}}
-{{--                            <div class="mt-3 text-uppercase text-muted small">This month</div>--}}
-{{--                            <h5>2,156,748,000 VND</h5>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-6">--}}
-{{--                            <div id="apex-simple-donutp2p"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 @endsection
 @section('script')
@@ -121,179 +94,79 @@
     <script src="assets/js/page/chart-apex.js"></script>
     <script>
         $(document).ready(function() {
+            $('#btn-toggle_balance').on('click', function () {
+                const cur = $('#i-toggle_balance').hasClass('icofont-eye-alt')
+                if (cur === true) {
+                    $('#i-toggle_balance').removeClass('icofont-eye-alt').addClass('icofont-eye-blocked')
+                    $('#t-balance').html('{!! formatVND($balance) !!}')
+                    $('#t-cash_balance').html('{!! formatVND($cash_balance) !!}')
+                    $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
+                    $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
+                } else {
+                    $('#i-toggle_balance').removeClass('icofont-eye-blocked').addClass('icofont-eye-alt')
+                    $('#t-balance').html('*************')
+                    $('#t-cash_balance').html('*************')
+                    $('#t-crypto_balance').html('*************')
+                    $('#t-onus_balance').html('*************')
+                }
+            })
+
+
             var options = {
+                series: [{{ "$cash_balance, $crypto_balance, $onus_balance" }}],
                 chart: {
-                    height: 300,
-                    type: 'radialBar',
-                    toolbar: {
-                        show: false
-                    }
+                    type: 'donut',
                 },
-                colors: ['var(--chart-color1)'],
-                plotOptions: {
-                    radialBar: {
-                        startAngle: -135,
-                        endAngle: 225,
-                        hollow: {
-                            margin: 0,
-                            size: '70%',
-                            background: '#fff',
-                            image: undefined,
-                            imageOffsetX: 0,
-                            imageOffsetY: 0,
-                            position: 'front',
-
-                            dropShadow: {
-                                enabled: true,
-                                top: 3,
-                                left: 0,
-                                blur: 4,
-                                opacity: 0.24
-                            }
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
                         },
-                        track: {
-                            background: '#fff',
-                            strokeWidth: '67%',
-                            margin: 0, // margin is in pixels
-                            dropShadow: {
-                                enabled: true,
-                                top: -3,
-                                left: 0,
-                                blur: 4,
-                                opacity: 0.35
-                            }
-                        },
-
-                        dataLabels: {
-                            showOn: 'always',
-                            name: {
-                                offsetY: -10,
-                                show: true,
-                                color: '#888',
-                                fontSize: '17px'
-                            },
-                            value: {
-                                formatter: function(val) {
-                                    return parseInt(val);
-                                },
-                                color: '#111',
-                                fontSize: '36px',
-                                show: true,
-                            }
+                        legend: {
+                            position: 'bottom'
                         }
                     }
-                },
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        shade: 'dark',
-                        type: 'horizontal',
-                        shadeIntensity: 0.5,
-                        gradientToColors: ['var(--chart-color2)'],
-                        inverseColors: true,
-                        opacityFrom: 1,
-                        opacityTo: 1,
-                        stops: [0, 100]
+                }],
+                labels: ['Cash', 'Crypto', 'ONUS'],
+                dataLabels: {
+                    textAnchor: 'middle',
+                    distributed: false,
+                    offsetX: 0,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '16px',
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        fontWeight: 600,
+                        colors: ['white']
+                    },
+                    background: {
+                        enabled: true,
+                        foreColor: 'black',
+                        padding: 5,
+                        borderRadius: 2,
+                        borderWidth: 1,
+                        borderColor: '#fff',
+                        opacity: 1,
+                        dropShadow: {
+                            enabled: true,
+                            top: 1,
+                            left: 1,
+                            blur: 1,
+                            color: '#000',
+                            opacity: 1
+                        }
+                    },
+                    dropShadow: {
+                        enabled: false,
                     }
-                },
-                series: [{{ $percent_stock_balance }}],
-                stroke: {
-                    lineCap: 'round'
-                },
-                labels: ['Stock/Balance'],
-            }
+                }
+            };
 
-            var chart = new ApexCharts(
-                document.querySelector("#apex-circle-gradientfuture"),
-                options
-            );
-
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
+
+
         });
-
-        // $(document).ready(function() {
-        //     var options = {
-        //         chart: {
-        //             height: 350,
-        //             type: 'line',
-        //             toolbar: {
-        //                 show: false,
-        //             },
-        //         },
-        //         colors: ['var(--chart-color1)', 'var(--chart-color2)'],
-        //         series: [{
-        //             name: 'Website Blog',
-        //             type: 'column',
-        //             data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
-        //         }, {
-        //             name: 'Social Media',
-        //             type: 'line',
-        //             data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-        //         }],
-        //         stroke: {
-        //             width: [0, 4]
-        //         },
-        //         // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        //         labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
-        //         xaxis: {
-        //             type: 'datetime'
-        //         },
-        //         yaxis: [{
-        //             title: {
-        //                 text: 'Website Blog',
-        //             },
-        //
-        //         }, {
-        //             opposite: true,
-        //             title: {
-        //                 text: 'Social Media'
-        //             }
-        //         }]
-        //     }
-        //     var chart = new ApexCharts(
-        //         document.querySelector("#apex-chart-line-column"),
-        //         options
-        //     );
-        //
-        //     chart.render();
-        // });
-
-        // $(document).ready(function() {
-        //     var options = {
-        //         chart: {
-        //             height: 250,
-        //             type: 'donut',
-        //         },
-        //         dataLabels: {
-        //             enabled: false,
-        //         },
-        //         legend: {
-        //             position: 'right',
-        //             horizontalAlign: 'center',
-        //             show: true,
-        //         },
-        //         colors: ['var(--chart-color5)', 'var(--chart-color4)', 'var(--chart-color3)'],
-        //         series: [44, 55, 41],
-        //         labels: ['Buy', 'Sell', 'Transfer'],
-        //         responsive: [{
-        //             breakpoint: 480,
-        //             options: {
-        //                 chart: {
-        //                     width: 200
-        //                 },
-        //                 legend: {
-        //                     position: 'bottom'
-        //                 }
-        //             }
-        //         }]
-        //     }
-        //
-        //     var chart = new ApexCharts(
-        //         document.querySelector("#apex-simple-donutp2p"),
-        //         options
-        //     );
-        //
-        //     chart.render();
-        // });
     </script>
 @endsection

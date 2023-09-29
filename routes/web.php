@@ -2,17 +2,15 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FinancialManagementController;
-use App\Http\Controllers\InvestController;
+use App\Http\Controllers\CryptoTransactionController;
+use App\Http\Controllers\ONUSTransactionController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StatisticController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CashTransactionController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -25,13 +23,17 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
 
     Route::get('/market', [SiteController::class, 'market'])->name('market.index');
 
-    Route::group(['prefix' => 'invest', 'as' => 'invest.'], static function () {
-        Route::get('/', [InvestController::class, 'index'])->name('index');
-        Route::put('/{notify_coin}', [InvestController::class, 'update'])->name('update');
-    });
+    Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
+        Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);
+        Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
+        Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
 
-    Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'destroy']);
-    Route::put('transaction/group-transaction', [TransactionController::class, 'updateGroupTransaction'])->name('transaction.update-group-transaction');
+        Route::resource('onus', ONUSTransactionController::class)->only(['index', 'store']);
+        Route::delete('onus/{transaction}', [ONUSTransactionController::class, 'destroy'])->name('onus.destroy');
+
+        Route::resource('crypto', CryptoTransactionController::class)->only(['index', 'store']);
+        Route::delete('crypto/{transaction}', [CryptoTransactionController::class, 'destroy'])->name('crypto.destroy');
+    });
 
     Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {
         Route::resource('category', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);

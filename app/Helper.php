@@ -18,6 +18,15 @@ if (! function_exists('formatVND')) {
     }
 }
 
+if (! function_exists('formatCoin')) {
+    function formatCoin($money, $coin): string
+    {
+        [$whole_number, $decimal_part] = explode('.', $money);
+
+        return number_format($whole_number).'.'.$decimal_part.' <small class="text-muted small">'.$coin.'</small>';
+    }
+}
+
 if (! function_exists('getFullPath')) {
     function getFullPath($path): string
     {

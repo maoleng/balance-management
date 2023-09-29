@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\BalanceController;
-use App\Models\NotifyCoin;
+use App\Services\Balance\CryptoFund;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
@@ -18,21 +17,25 @@ class NotifyCoinCommand extends Command
         $client = new Client;
         $endpoint = 'https://api.binance.com/api/v3/ticker/price?symbol=';
 
-        $notify_coins = NotifyCoin::query()->get();
+        $coins = CryptoFund::getCoinsValue();
+        $notify_coins = array_diff(explode(',', env('NOTIFY_COINS') ?? 'BTC'), array_keys($coins));
 
         $content = "=========================\n";
-        foreach ($notify_coins as $notify_coin) {
-            $response = $client->get($endpoint.$notify_coin->coin.'USDT')->getBody()->getContents();
-            $price = json_decode($response)->price;
-            $profit = $notify_coin->coin_amount ?
-                $notify_coin->coin_amount * (new BalanceController)->getRealMoneyOfCoin($notify_coin->coin) - $notify_coin->balance : 0;
-
-            $btf_profit = number_format($profit).' VND';
-            $btf_price = round($price, 8);
-
-            $content .= $notify_coin->coin.'       '.$btf_price.'       '.$btf_profit."\n";
+        foreach ($coins as $coin_name => $coin) {
+            if ($coin['quantity'] > 0) {
+                $price = json_decode($client->get($endpoint.$coin_name.'USDT')->getBody()->getContents())->price;
+                $profit = $coin['quantity'] * CryptoFund::getRealMoneyOfCoin($coin_name) - $coin['price'];
+                $btf_profit = number_format($profit).' VND';
+                $btf_price = round($price, 8);
+                $content .= $coin_name.'       '.$btf_price.'       '.$btf_profit."\n";
+            }
         }
-        $content .= 'USDT       '.number_format((new BalanceController)->getRealMoneyOfCoin('USDT')).' VND';
+        foreach ($notify_coins as $coin_name) {
+            $price = json_decode($client->get($endpoint.$coin_name.'USDT')->getBody()->getContents())->price;
+            $btf_price = round($price, 8);
+            $content .= $coin_name.'       '.$btf_price."\n";
+        }
+        $content .= 'USDT       '.number_format(CryptoFund::getRealMoneyOfCoin('USDT')).' VND';
         (new Client)->post(env('ENDPOINT_TELEGRAM_LOG_MESSAGE'), [
             'verify' => false,
             'headers' => [

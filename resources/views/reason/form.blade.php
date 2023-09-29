@@ -16,7 +16,7 @@
             <label for="firstname" class="form-label">Reason type</label>
             <br>
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                @foreach (ReasonType::asArray() as $name => $value)
+                @foreach (ReasonType::getCashReasonTypes() as $name => $value)
                     <input type="radio" class="btn-check" name="type" value="{{ $value }}" id="type_{{ $value }}-{{ $reason->id ?? null }}" autocomplete="off" {{ isset($reason) && $reason->type === $value ? 'checked' : '' }}>
                     <label class="btn btn-outline-primary" for="type_{{ $value }}-{{ $reason->id ?? null }}">{{ $name }}</label>
                 @endforeach

@@ -1,7 +1,7 @@
 @php use App\Enums\ReasonType; @endphp
 @csrf
 <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalCenterTitle">Exchange Funding</h5>
+    <h5 class="modal-title" id="exampleModalCenterTitle">Create Transaction</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
@@ -11,7 +11,7 @@
             <br>
             <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
                 @foreach (ReasonType::getFundExchangeReasonTypes() as $name => $value)
-                    <input type="radio" class="btn-check" name="from" value="{{ $value }}" id="r-f-{{ $name }}" autocomplete="off">
+                    <input type="radio" class="btn-check" name="type" value="{{ $value }}" id="r-f-{{ $name }}" autocomplete="off">
                     <label class="btn btn-outline-primary" for="r-f-{{ $name }}">{{ $name }}</label>
                 @endforeach
             </div>
@@ -24,7 +24,6 @@
         </div>
     </div>
 </div>
-<input id="i-type" type="hidden" name="type">
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     <button class="btn btn-primary">Create</button>

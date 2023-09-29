@@ -25,4 +25,18 @@ class Reason extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function getCoinLogoAttribute(): string
+    {
+        [, $coin] = explode(' ', strtolower($this->name));
+
+        return "https://assets.coincap.io/assets/icons/$coin@2x.png";
+    }
+
+    public function getCoinNameAttribute(): string
+    {
+        [, $coin] = explode(' ', $this->name);
+
+        return $coin;
+    }
+
 }

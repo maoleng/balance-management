@@ -3,7 +3,7 @@
 @extends('theme.master')
 
 @section('title')
-    Transaction
+    Transaction > Cash
 @endsection
 
 @section('body')
@@ -17,18 +17,10 @@
                             <div class="col-xxl-9 col-lg-8 col-md-8">
                                 <div class="form-floating">
                                     <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createTransactionModal">Create Transaction</button>
-                                    <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exchangeFundModal">Fund Exchange</button>
                                     <div class="modal fade modal-sm" id="createTransactionModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
-                                            <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
-                                                @include('transaction.form')
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade modal-sm" id="exchangeFundModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <form action="{{ route('transaction.store') }}" method="post" class="modal-content">
-                                                @include('transaction.fund-form')
+                                            <form action="{{ route('transaction.cash.store') }}" method="post" class="modal-content">
+                                                @include('transaction.cash.form')
                                             </form>
                                         </div>
                                     </div>
@@ -46,18 +38,6 @@
                                         <li class="nav-item" role="presentation"><a class="nav-link" data-bs-toggle="tab" href="#btn-group" role="tab" aria-selected="false" tabindex="-1">Custom</a></li>
                                     </ul>
                                     <input class="mt-3 form-control" type="date">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="p-3">
-                                    <div class="pb-3 text-muted text-uppercase"><i class="fa fa-circle me-2 text-danger"></i>Funding</div>
-{{--                                    <ul class="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">--}}
-{{--                                        @foreach (\App\Enums\ReasonMethod::asArray() as $name => $value)--}}
-{{--                                            <li class="nav-item" role="presentation">--}}
-{{--                                                <a class="@if ($loop->first) active @endif nav-link" data-bs-toggle="tab" href="#btn-normal" role="tab" aria-selected="true">{{ $name }}</a>--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                    </ul>--}}
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -126,7 +106,7 @@
                                 </div>
                             </td>
                             <td class="dt-body-right sorting_1">
-                                <form action="{{ route('transaction.destroy', ['transaction' => $transaction]) }}" method="post">
+                                <form action="{{ route('transaction.cash.destroy', ['transaction' => $transaction]) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
@@ -147,7 +127,7 @@
         @if ($transaction->reason?->type === ReasonType::GROUP)
             <div class="modal fade" id="m-{{ $transaction->id }}" tabindex="-1" aria-labelledby="exampleModalLgLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog modal-xl">
-                    <form action="{{ route('transaction.update-group-transaction') }}" method="post" class="modal-content">
+                    <form action="{{ route('transaction.cash.update-group-transaction') }}" method="post" class="modal-content">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">

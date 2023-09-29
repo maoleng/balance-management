@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class TransactionRequest extends BaseRequest
+class CashTransactionRequest extends BaseRequest
 {
 
     public function rules(): array
