@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReasonType;
 use App\Http\Requests\ReasonRequest;
 use App\Models\Category;
 use App\Models\Reason;
@@ -14,7 +15,7 @@ class ReasonController extends Controller
 
     public function index(): View
     {
-        $reasons = Reason::query()->with('category')->orderBy('name')->get();
+        $reasons = Reason::query()->whereIn('type', ReasonType::getCashReasonTypes())->with('category')->orderBy('name')->get();
         $categories = Category::query()->get();
 
         return view('reason.index', [
