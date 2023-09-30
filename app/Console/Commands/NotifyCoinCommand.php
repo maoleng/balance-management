@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class NotifyCoinCommand extends Command
 {
 
-    protected $signature = 'notify-coin';
+    protected $signature = 'crypto:notify';
     protected $description = 'Notify coin every 5 mins';
 
     public function handle()
