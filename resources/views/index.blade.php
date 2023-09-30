@@ -6,14 +6,14 @@
     <div class="body d-flex py-3">
         <div class="container-xxl">
             <div class="row g-3 mb-3 row-deck">
-                <div class="col-xl-7 col-lg-6 col-md-12">
+                <div class="col-xl-9 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">My Wallet</h6>
                         </div>
 
                         <div class="row card-body">
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                                 <div>Balance</div>
                                 <h3>
                                     <span id="t-balance">*************</span>
@@ -27,14 +27,16 @@
                                 <h5><span id="t-crypto_balance">*************</span></h5>
                                 <div class="mt-3 text-uppercase text-muted small">ONUS</div>
                                 <h5><span id="t-onus_balance">*************</span></h5>
+                                <div class="mt-3 text-uppercase text-muted small">ONUS Farming</div>
+                                <h5><span id="t-onus_farming_balance">*************</span></h5>
                             </div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-8">
                                 <div id="chart"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-5 col-lg-6 col-md-12">
+                <div class="col-xl-3 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">Earn / Spend</h6>
@@ -102,18 +104,20 @@
                     $('#t-cash_balance').html('{!! formatVND($cash_balance) !!}')
                     $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                     $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
+                    $('#t-onus_farming_balance').html('{!! formatVND($onus_farming_balance) !!}')
                 } else {
                     $('#i-toggle_balance').removeClass('icofont-eye-blocked').addClass('icofont-eye-alt')
                     $('#t-balance').html('*************')
                     $('#t-cash_balance').html('*************')
                     $('#t-crypto_balance').html('*************')
                     $('#t-onus_balance').html('*************')
+                    $('#t-onus_farming_balance').html('*************')
                 }
             })
 
 
             var options = {
-                series: [{{ "$cash_balance, $crypto_balance, $onus_balance" }}],
+                series: [{{ "$cash_balance, $crypto_balance, $onus_balance, $onus_farming_balance" }}],
                 chart: {
                     type: 'donut',
                 },
@@ -128,7 +132,7 @@
                         }
                     }
                 }],
-                labels: ['Cash', 'Crypto', 'ONUS'],
+                labels: ['Cash', 'Crypto', 'ONUS', 'ONUS Farming'],
                 dataLabels: {
                     textAnchor: 'middle',
                     distributed: false,

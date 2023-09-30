@@ -15,9 +15,10 @@ class SiteController extends Controller
         $overview = CashFund::getOverview();
         $cash_balance = CashFund::getBalance();
         $onus_balance = ONUSFund::getBalance();
+        $onus_farming_balance = ONUSFund::getFarmingBalance();
         $crypto_balance = CryptoFund::getBalance();
 
-        $balance = $cash_balance + $crypto_balance + $onus_balance;
+        $balance = $cash_balance + $crypto_balance + $onus_balance + $onus_farming_balance;
 
         return view('index', [
             'overview' => $overview,
@@ -25,6 +26,7 @@ class SiteController extends Controller
             'cash_balance' => $cash_balance,
             'crypto_balance' => $crypto_balance,
             'onus_balance' => $onus_balance,
+            'onus_farming_balance' => $onus_farming_balance,
         ]);
     }
 

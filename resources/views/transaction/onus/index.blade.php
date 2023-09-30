@@ -69,6 +69,8 @@
                                 <div class="d-flex align-items-center">
                                     @if ($transaction->reason->type === ReasonType::ONUS_TO_CASH)
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
+                                    @elseif (in_array($transaction->reason->type, [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS], true))
+                                        <span class="badge bg-buy">~</span>&nbsp; &nbsp;
                                     @else
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
                                     @endif
