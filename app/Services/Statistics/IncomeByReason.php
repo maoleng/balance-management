@@ -23,7 +23,7 @@ class IncomeByReason
         };
         $q = DB::table('reasons')
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
-            ->where('reasons.type', '=', ReasonType::EARN)
+            ->whereIn('reasons.type', [ReasonType::EARN, ReasonType::DAILY_REVENUE_ONUS, ReasonType::FARM_REVENUE_ONUS])
             ->whereBetween('transactions.created_at', $ranges)
             ->select(
                 'reasons.id',
