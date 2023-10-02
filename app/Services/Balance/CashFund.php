@@ -4,7 +4,10 @@ namespace App\Services\Balance;
 
 use App\Enums\ReasonType;
 use App\Models\Transaction;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CashFund
 {
@@ -30,7 +33,7 @@ class CashFund
         ")->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
     }
 
-    public static function getBalance(): float
+    public static function getBalance($until = null): float
     {
         $types = ReasonType::asArray();
 
@@ -42,7 +45,40 @@ class CashFund
                     WHEN reasons.type = {$types['EARN']} OR reasons.type = {$types['ONUS_TO_CASH']} OR reasons.type = {$types['SELL_CRYPTO']} THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
+            ->where('created_at', '<', $until ?? now())
             ->first()->cash_balance ?? 0;
+    }
+
+    public static function getChartOverview(): array
+    {
+        $time = now()->subMonth();
+        $transactions = Transaction::query()->with('reason')->where('created_at', '>=', $time)->get();
+        $init_cash = self::getBalance($time);
+
+        $data = [];
+        $dates = CarbonPeriod::create($transactions->first()->created_at, now());
+        foreach ($dates as $date) {
+            $money = $init_cash;
+            foreach ($transactions as $transaction) {
+                if (Carbon::make($transaction->created_at)->lt($date->endOfDay())) {
+                    $money += match ($transaction->reason->type) {
+                        ReasonType::EARN, ReasonType::ONUS_TO_CASH, ReasonType::SELL_CRYPTO => $transaction->price,
+                        ReasonType::CASH_TO_ONUS, ReasonType::BUY_CRYPTO => -$transaction->price,
+                        ReasonType::SPEND => -$transaction->price * $transaction->quantity,
+                        default => 0,
+                    };
+                }
+            }
+
+            $data[$date->toDateString()] = round($money);
+        }
+
+        return $data;
+    }
+
+    private static function queryBuilderGetBalance()
+    {
+
     }
 
 }

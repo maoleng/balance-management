@@ -5,38 +5,88 @@
 @section('body')
     <div class="body d-flex py-3">
         <div class="container-xxl">
+{{--            <div class="row g-3 mb-3 row-cols-1 row-cols-md-2 row-cols-lg-4">--}}
+{{--                <div class="col">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body d-flex align-items-center">--}}
+{{--                            <div class="flex-fill text-truncate">--}}
+{{--                                <span class="text-uppercase">Cash</span>--}}
+{{--                                <div class="d-flex flex-column">--}}
+{{--                                    <div class="price-block">--}}
+{{--                                        <h3 class="fw-bold color-price-up">--}}
+{{--                                            50,000,000--}}
+{{--                                            <small class="text-muted small">VND</small>--}}
+{{--                                        </h3>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div id="apexspark1"></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="row g-3 mb-3 row-deck">
-                <div class="col-xl-9 col-lg-6 col-md-12">
+                <div class="col-xl-12 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">My Wallet</h6>
                         </div>
 
                         <div class="row card-body">
-                            <div class="col-lg-4">
-                                <div>Balance</div>
-                                <h3>
-                                    <span id="t-balance">*************</span>
-                                    <button id="btn-toggle_balance" class="btn btn-outline-primary">
-                                        <i id="i-toggle_balance" style="vertical-align: middle;" class="icofont-eye-alt"></i>
-                                    </button>
-                                </h3>
-                                <div class="mt-3 pt-3 text-uppercase text-muted border-top pt-2 small">Cash</div>
-                                <h5><span id="t-cash_balance">*************</span></h5>
-                                <div class="mt-3 text-uppercase text-muted small">Crypto</div>
-                                <h5><span id="t-crypto_balance">*************</span></h5>
-                                <div class="mt-3 text-uppercase text-muted small">ONUS</div>
-                                <h5><span id="t-onus_balance">*************</span></h5>
-                                <div class="mt-3 text-uppercase text-muted small">ONUS Farming</div>
-                                <h5><span id="t-onus_farming_balance">*************</span></h5>
+                            <div>Balance</div>
+                            <h3>
+                                <span id="t-balance">*************</span>
+                                <button id="btn-toggle_balance" class="btn btn-outline-primary">
+                                    <i id="i-toggle_balance" style="vertical-align: middle;" class="icofont-eye-alt"></i>
+                                </button>
+                            </h3>
+                            <div class="col-lg-6">
+                                <table class="table table-hover table-bordered">
+                                    <tr>
+                                        <td style="width: 40%">
+                                            <div class="mt-3 text-uppercase text-muted small">Cash</div>
+                                            <h5><span id="t-cash_balance">*************</span></h5>
+                                        </td>
+                                        <td style="width: 60%">
+                                            <div id="apexspark1"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 40%">
+                                            <div class="mt-3 text-uppercase text-muted small">Crypto</div>
+                                            <h5><span id="t-crypto_balance">*************</span></h5>
+                                        </td>
+                                        <td style="width: 60%">
+                                            <div id="apexspark2"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 40%">
+                                            <div class="mt-3 text-uppercase text-muted small">ONUS</div>
+                                            <h5><span id="t-onus_balance">*************</span></h5>
+                                        </td>
+                                        <td style="width: 60%">
+                                            <div id="apexspark3"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 40%">
+                                            <div class="mt-3 text-uppercase text-muted small">ONUS Farming</div>
+                                            <h5><span id="t-onus_farming_balance">*************</span></h5>
+                                        </td>
+                                        <td style="width: 60%">
+                                            <div id="apexspark4"></div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-6">
                                 <div id="chart"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-6 col-md-12">
+                <div class="col-xl-5 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">Earn / Spend</h6>
@@ -92,8 +142,6 @@
     <script src="assets/bundles/libscripts.bundle.js"></script>
     <script src="assets/bundles/apexcharts.bundle.js"></script>
     <script src="assets/js/template.js"></script>
-    <script src="assets/js/page/widget.js"></script>
-    <script src="assets/js/page/chart-apex.js"></script>
     <script>
         $(document).ready(function() {
             $('#btn-toggle_balance').on('click', function () {
@@ -115,11 +163,27 @@
                 }
             })
 
+            const sparkOption1 = getSparkOption([{{ implode(',', $cash_chart) }}])
+            const spark1 = new ApexCharts(document.querySelector("#apexspark1"), sparkOption1)
+            spark1.render()
 
-            var options = {
+            const sparkOption2 = getSparkOption([{{ implode(',', $crypto_chart) }}])
+            const spark2 = new ApexCharts(document.querySelector("#apexspark2"), sparkOption2)
+            spark2.render()
+
+            const sparkOption3 = getSparkOption([{{ implode(',', $onus_chart) }}])
+            const spark3 = new ApexCharts(document.querySelector("#apexspark3"), sparkOption3)
+            spark3.render()
+
+            const sparkOption4 = getSparkOption([{{ implode(',', $onus_farming_chart) }}])
+            const spark4 = new ApexCharts(document.querySelector("#apexspark4"), sparkOption4)
+            spark4.render()
+
+            const options = {
                 series: [{{ "$cash_balance, $crypto_balance, $onus_balance, $onus_farming_balance" }}],
                 chart: {
                     type: 'donut',
+                    height: 400,
                 },
                 responsive: [{
                     options: {
@@ -166,10 +230,60 @@
                 }
             };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            const chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
 
+            function getSparkOption(data)
+            {
+                return {
+                    chart: {
+                        id: 'spark1',
+                        group: 'sparks',
+                        type: 'line',
+                        height: 80,
+                        sparkline: {
+                            enabled: true
+                        },
+                        dropShadow: {
+                            enabled: true,
+                            top: 1,
+                            left: 1,
+                            blur: 2,
+                            opacity: 0.2,
+                        },
 
+                    },
+                    series: [{
+                        data: data
+                    }],
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    markers: {
+                        size: 0,
+                    },
+                    grid: {
+                        padding: {
+                            top: 20,
+                            bottom: 10,
+                        }
+                    },
+                    colors: ['#fff'],
+                    tooltip: {
+                        x: {
+                            show: false
+                        },
+                        y: {
+                            title: {
+                                formatter: function formatter(val) {
+                                    return '';
+                                }
+                            }
+                        },
+                        theme: 'dark',
+                    },
+                }
+            }
         });
     </script>
 @endsection

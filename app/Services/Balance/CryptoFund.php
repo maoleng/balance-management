@@ -4,7 +4,10 @@ namespace App\Services\Balance;
 
 use App\Enums\ReasonType;
 use App\Models\Transaction;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\File;
 
 class CryptoFund
 {
@@ -20,6 +23,13 @@ class CryptoFund
         }
 
         return $balance;
+    }
+
+    public static function getChartOverview(): array
+    {
+        $data = File::json('crypto-history.json');
+
+        return array_slice($data, -30);
     }
 
     public static function getCoinsValue(): array
