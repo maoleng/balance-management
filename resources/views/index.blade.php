@@ -21,7 +21,7 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
-{{--                        <div id="apexspark1"></div>--}}
+{{--                        <div id="sparkBalance1"></div>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--            </div>--}}
@@ -48,7 +48,7 @@
                                             <h5><span id="t-cash_balance">*************</span></h5>
                                         </td>
                                         <td style="width: 60%">
-                                            <div id="apexspark1"></div>
+                                            <div id="sparkBalance1"></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -57,7 +57,7 @@
                                             <h5><span id="t-crypto_balance">*************</span></h5>
                                         </td>
                                         <td style="width: 60%">
-                                            <div id="apexspark2"></div>
+                                            <div id="sparkBalance2"></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -66,7 +66,7 @@
                                             <h5><span id="t-onus_balance">*************</span></h5>
                                         </td>
                                         <td style="width: 60%">
-                                            <div id="apexspark3"></div>
+                                            <div id="sparkBalance3"></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -75,7 +75,7 @@
                                             <h5><span id="t-onus_farming_balance">*************</span></h5>
                                         </td>
                                         <td style="width: 60%">
-                                            <div id="apexspark4"></div>
+                                            <div id="sparkBalance4"></div>
                                         </td>
                                     </tr>
                                 </table>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-5 col-lg-6 col-md-12">
+                <div class="col-xl-6 col-lg-6 col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary border-bottom-0 py-3">
                             <h6 class="card-title mb-0 text-light">Earn / Spend</h6>
@@ -164,19 +164,19 @@
             })
 
             const sparkOption1 = getSparkOption([{{ implode(',', $cash_chart) }}])
-            const spark1 = new ApexCharts(document.querySelector("#apexspark1"), sparkOption1)
+            const spark1 = new ApexCharts(document.querySelector("#sparkBalance1"), sparkOption1)
             spark1.render()
 
             const sparkOption2 = getSparkOption([{{ implode(',', $crypto_chart) }}])
-            const spark2 = new ApexCharts(document.querySelector("#apexspark2"), sparkOption2)
+            const spark2 = new ApexCharts(document.querySelector("#sparkBalance2"), sparkOption2)
             spark2.render()
 
             const sparkOption3 = getSparkOption([{{ implode(',', $onus_chart) }}])
-            const spark3 = new ApexCharts(document.querySelector("#apexspark3"), sparkOption3)
+            const spark3 = new ApexCharts(document.querySelector("#sparkBalance3"), sparkOption3)
             spark3.render()
 
             const sparkOption4 = getSparkOption([{{ implode(',', $onus_farming_chart) }}])
-            const spark4 = new ApexCharts(document.querySelector("#apexspark4"), sparkOption4)
+            const spark4 = new ApexCharts(document.querySelector("#sparkBalance4"), sparkOption4)
             spark4.render()
 
             const options = {

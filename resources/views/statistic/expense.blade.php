@@ -78,8 +78,36 @@
                     </div>
                 </div>
             </div>
+            <div class="card mt-5">
+                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
+                    <h6 class="mb-0 fw-bold">Stacked Expense By Label</h6>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="mb-3 pb-3">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-time-label btn-check" name="type-label" value="today" id="today-label" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="today-label">Today</label>
 
+                                <input type="radio" class="btn-time-label btn-check" name="type-label" value="this-week" id="this-week-label" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="this-week-label">This week</label>
 
+                                <input type="radio" class="btn-time-label btn-check" name="type-label" value="this-month" id="this-month-label" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="this-month-label">This month</label>
+
+                                <input type="radio" class="btn-time-label btn-check" name="type-label" value="this-year" id="this-year-label" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="this-year-label">This year</label>
+
+                                <input type="radio" class="btn-time-label btn-check" name="type-label" value="all" id="all-label" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="all-label">All</label>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="stacked-bar">
+                            <div id="chart-stacked_area"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -101,6 +129,77 @@
 
         const chartTreeMapReason = new ApexCharts(document.querySelector("#chart-tree_map-reason"), getTreeMapOptions());
         chartTreeMapReason.render();
+
+        const options = {
+            chart: {
+                height: 300,
+                type: 'area',
+                stacked: true,
+                toolbar: {
+                    show: false,
+                },
+                events: {
+                    selection: function(chart, e) {
+                        console.log(new Date(e.xaxis.min) )
+                    }
+                },
+            },
+            colors: ['blue', 'yellow', 'red'],
+            dataLabels: {
+                enabled: false
+            },
+
+            series: [],
+
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    opacityFrom: 0.6,
+                    opacityTo: 0.8,
+                }
+            },
+
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                show: true,
+            },
+            xaxis: {
+                type: 'datetime',
+            },
+            grid: {
+                yaxis: {
+                    lines: {
+                        show: false,
+                    }
+                },
+                padding: {
+                    top: 20,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+            },
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                width: 2,
+            },
+        }
+
+        const chartStackedAreaLabel = new ApexCharts(document.querySelector("#chart-stacked_area"), options);
+        chartStackedAreaLabel.render();
+
+
+        $('.btn-time-label').on('click', function () {
+            $.ajax({
+                url: `{{ route('statistic.index') }}?time=${$(this).val()}&type=expense-label`,
+            }).done(function(e) {
+                chartStackedAreaLabel.updateOptions({
+                    series: e['stacked-area'],
+                })
+            })
+        })
 
         $('.btn-time-reason').on('click', function () {
             $.ajax({

@@ -14,18 +14,11 @@ class ExpenseByCategory
 
     public static function getExpenseByCategory($time): array
     {
-        $ranges = match ($time) {
-            FilterTime::TODAY => [now()->startOfDay(), now()],
-            FilterTime::THIS_WEEK => [now()->startOfWeek(), now()],
-            FilterTime::THIS_MONTH => [now()->startOfMonth(), now()],
-            FilterTime::THIS_YEAR => [now()->startOfYear(), now()],
-            default => [now()->startOfCentury(), now()],
-        };
         $q = DB::table('categories')
             ->join('reasons', 'categories.id', '=', 'reasons.category_id')
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
             ->where('reasons.type', '=', ReasonType::SPEND)
-            ->whereBetween('transactions.created_at', $ranges)
+            ->whereBetween('transactions.created_at', FilterTime::getRanges($time))
             ->select(
                 'categories.id',
                 'categories.name as category',
