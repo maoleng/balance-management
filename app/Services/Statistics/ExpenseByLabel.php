@@ -7,11 +7,9 @@ use App\Enums\FilterTime;
 use App\Enums\ReasonLabel;
 use App\Enums\ReasonType;
 use App\Models\Transaction;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 
 class ExpenseByLabel
 {
@@ -38,6 +36,9 @@ class ExpenseByLabel
     public static function getResultForStackedAreaChart(Builder $q): array
     {
         $data = $q->get();
+        if ($data->isEmpty()) {
+            return [];
+        }
         $dates = CarbonPeriod::create($data[0]->date, $data->last()->date)->toArray();
         $result = [];
 
