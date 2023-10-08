@@ -44,6 +44,7 @@ class CashTransactionController extends Controller
         Transaction::query()->create([
             'price' => $data['price'],
             'reason_id' => $reason_id,
+            'is_credit' => $data['is_credit'],
             'created_at' => now(),
         ]);
 
@@ -66,6 +67,7 @@ class CashTransactionController extends Controller
     public function updateGroupTransaction(UpdateGroupTransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $parent_transaction = $request->get('transaction');
 
         Transaction::query()->where('transaction_id', $data['transaction_id'])
             ->whereNotIn('id', $data['transaction_ids'] ?? [])->delete();
@@ -76,8 +78,9 @@ class CashTransactionController extends Controller
                 'price' => $transaction['price'],
                 'quantity' => $transaction['quantity'],
                 'reason_id' => $transaction['reason_id'],
+                'is_credit' => $parent_transaction->is_credit,
                 'transaction_id' => $data['transaction_id'],
-                'created_at' => $request->get('transaction')->created_at,
+                'created_at' => $parent_transaction->created_at,
             ];
 
             Transaction::query()->updateOrInsert(['id' => $transaction['id']], $data);

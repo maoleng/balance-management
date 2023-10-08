@@ -15,7 +15,7 @@ class Transaction extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'price', 'quantity', 'reason_id', 'transaction_id', 'created_at',
+        'price', 'quantity', 'reason_id', 'is_credit', 'transaction_id', 'created_at',
     ];
 
     public function getPrettyCreatedAtAttribute(): string

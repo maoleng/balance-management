@@ -38,6 +38,7 @@ class CashFund
         $types = ReasonType::asArray();
 
         return env('AUTH_INIT_CASH') + Transaction::query()
+            ->where('is_credit', false)
             ->selectRaw(
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
@@ -76,9 +77,19 @@ class CashFund
         return $data;
     }
 
-    private static function queryBuilderGetBalance()
+    public static function getOutstandingCredit($until = null): float
     {
+        $spend = ReasonType::SPEND;
 
+        return Transaction::query()->where('is_credit', true)
+            ->where('created_at', '<', $until ?? now())
+            ->selectRaw(
+                "SUM(CASE
+                    WHEN reasons.type = $spend THEN -price * quantity
+                END) AS cash_balance")
+            ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
+            ->where('created_at', '<', $until ?? now())
+            ->first()->cash_balance ?? 0;
     }
 
 }

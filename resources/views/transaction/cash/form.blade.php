@@ -45,6 +45,19 @@
             </ul>
         </div>
     </div>
+    <div class="row pt-3 pb-3">
+        <div class="col-md-12">
+            <label for="firstname" class="form-label">Is using credit</label>
+            <br>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input value="1" type="radio" class="btn-check" name="is_credit" id="i-is_credit_1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="i-is_credit_1">Yes</label>
+
+                <input value="0" checked type="radio" class="btn-check" name="is_credit" id="i-is_credit_2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="i-is_credit_2">No</label>
+            </div>
+        </div>
+    </div>
 </div>
 <input id="i-type" type="hidden" name="type">
 <div class="modal-footer">

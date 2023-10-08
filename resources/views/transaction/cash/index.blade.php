@@ -60,6 +60,7 @@
                         <th>Amount</th>
                         <th>Reason</th>
                         <th>Label</th>
+                        <th>Method</th>
                         <th>Created At</th>
                         <th>Action</th>
                     </tr>
@@ -98,6 +99,13 @@
                                     @else
                                         {!! ReasonLabel::getBadge($transaction->reason?->label) !!}
                                     @endif
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <h5 class="ps-1">
+                                        @if ($transaction->is_credit) <span class="badge bg-sell">Credit</span> @else <span class="badge bg-buy">Cash</span> @endif
+                                    </h5>
                                 </div>
                             </td>
                             <td>

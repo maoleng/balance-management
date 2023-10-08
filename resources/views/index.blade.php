@@ -33,13 +33,26 @@
                         </div>
 
                         <div class="row card-body">
-                            <div>Balance</div>
-                            <h3>
-                                <span id="t-balance">*************</span>
-                                <button id="btn-toggle_balance" class="btn btn-outline-primary">
-                                    <i id="i-toggle_balance" style="vertical-align: middle;" class="icofont-eye-alt"></i>
-                                </button>
-                            </h3>
+                            <div class="col-lg-7 row">
+                                <div class="col-lg-1">
+                                    <button id="btn-toggle_balance" class="btn btn-outline-primary">
+                                        <i id="i-toggle_balance" style="vertical-align: middle;" class="icofont-eye-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div>Balance</div>
+                                    <h3>
+                                        <span id="t-balance">*************</span>
+                                    </h3>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div>Outstanding Credit</div>
+                                    <h3>
+                                        <span id="t-outstanding_credit">*************</span>
+                                    </h3>
+                                </div>
+                            </div>
+
                             <div class="col-lg-6">
                                 <table class="table table-hover table-bordered">
                                     <tr>
@@ -150,6 +163,7 @@
                     $('#i-toggle_balance').removeClass('icofont-eye-alt').addClass('icofont-eye-blocked')
                     $('#t-balance').html('{!! formatVND($balance) !!}')
                     $('#t-cash_balance').html('{!! formatVND($cash_balance) !!}')
+                    $('#t-outstanding_credit').html('{!! formatVND($outstanding_credit) !!}')
                     $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                     $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
                     $('#t-onus_farming_balance').html('{!! formatVND($onus_farming_balance) !!}')
@@ -157,6 +171,7 @@
                     $('#i-toggle_balance').removeClass('icofont-eye-blocked').addClass('icofont-eye-alt')
                     $('#t-balance').html('*************')
                     $('#t-cash_balance').html('*************')
+                    $('#t-outstanding_credit').html('*************')
                     $('#t-crypto_balance').html('*************')
                     $('#t-onus_balance').html('*************')
                     $('#t-onus_farming_balance').html('*************')

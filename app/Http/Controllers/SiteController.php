@@ -14,6 +14,7 @@ class SiteController extends Controller
     {
         $overview = CashFund::getOverview();
         $cash_balance = CashFund::getBalance();
+        $outstanding_credit = CashFund::getOutstandingCredit();
         $onus_balance = ONUSFund::getBalance();
         $onus_farming_balance = ONUSFund::getFarmingBalance();
         $crypto_balance = CryptoFund::getBalance();
@@ -23,6 +24,7 @@ class SiteController extends Controller
             'overview' => $overview,
             'balance' => $balance,
             'cash_balance' => $cash_balance,
+            'outstanding_credit' => $outstanding_credit,
             'crypto_balance' => $crypto_balance,
             'onus_balance' => $onus_balance,
             'onus_farming_balance' => $onus_farming_balance,
