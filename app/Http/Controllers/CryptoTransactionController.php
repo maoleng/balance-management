@@ -28,14 +28,14 @@ class CryptoTransactionController extends Controller
     public function store(CryptoTransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $name = ((int) $data['type'] === ReasonType::BUY_CRYPTO ? 'BUY' : 'SELL').' '.$data['name'];
+        $reason_name = ReasonType::getDescription((int) $data['type']);
 
         $reason_id = Reason::query()->firstOrCreate(
             [
-                'name' => $name,
+                'name' => $reason_name,
             ],
             [
-                'name' => $name,
+                'name' => $reason_name,
                 'type' => $data['type'],
             ]
         )->id;
@@ -44,6 +44,7 @@ class CryptoTransactionController extends Controller
             'price' => $data['price'],
             'quantity' => $data['quantity'],
             'reason_id' => $reason_id,
+            'external' => ['coin' => $data['name']],
             'created_at' => now(),
         ]);
 

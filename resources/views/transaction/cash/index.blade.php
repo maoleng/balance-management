@@ -104,7 +104,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <h5 class="ps-1">
-                                        @if ($transaction->is_credit) <span class="badge bg-sell">Credit</span> @else <span class="badge bg-buy">Cash</span> @endif
+                                        @if ($transaction->external['is_credit']) <span class="badge bg-sell">Credit</span> @else <span class="badge bg-buy">Cash</span> @endif
                                     </h5>
                                 </div>
                             </td>

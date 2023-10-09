@@ -15,7 +15,11 @@ class Transaction extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'price', 'quantity', 'reason_id', 'is_credit', 'transaction_id', 'created_at',
+        'price', 'quantity', 'reason_id', 'transaction_id', 'external', 'created_at',
+    ];
+
+    protected $casts = [
+        'external' => 'json',
     ];
 
     public function getPrettyCreatedAtAttribute(): string
@@ -38,5 +42,11 @@ class Transaction extends Model
         return $this->transactions->sum(fn($transaction) => $transaction->price * $transaction->quantity);
     }
 
+    public function getCoinLogoAttribute(): string
+    {
+        $coin = strtolower($this->external['coin']);
+
+        return "https://assets.coincap.io/assets/icons/$coin@2x.png";
+    }
 
 }

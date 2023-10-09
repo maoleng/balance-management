@@ -66,11 +66,10 @@
                     </thead>
                     <tbody>
                     @foreach ($transactions as $transaction)
-                        @php ($coin_name = $transaction->reason->coinName)
                         <tr>
                             <td>
-                                <img src="{{ $transaction->reason->coinLogo }}" alt="" class="img-fluid avatar mx-1">
-                                {{ $coin_name }}
+                                <img src="{{ $transaction->coinLogo }}" alt="" class="img-fluid avatar mx-1">
+                                {{ $transaction->external['coin'] }}
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
@@ -87,7 +86,7 @@
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;
                                     @endif
                                     <span class="font-weight-bold @if ($transaction->reason->type === ReasonType::SELL_CRYPTO) 'text-danger' @else 'text-secondary' @endif ">
-                                        {!! formatCoin($transaction->quantity, $coin_name) !!}
+                                        {!! formatCoin($transaction->quantity, $transaction->external['coin']) !!}
                                     </span>
                                 </div>
                             </td>

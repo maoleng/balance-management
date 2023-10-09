@@ -44,7 +44,7 @@ class CashTransactionController extends Controller
         Transaction::query()->create([
             'price' => $data['price'],
             'reason_id' => $reason_id,
-            'is_credit' => $data['is_credit'],
+            'external' => $data['is_credit'] ? ['is_credit' => true] : null,
             'created_at' => now(),
         ]);
 
@@ -78,7 +78,7 @@ class CashTransactionController extends Controller
                 'price' => $transaction['price'],
                 'quantity' => $transaction['quantity'],
                 'reason_id' => $transaction['reason_id'],
-                'is_credit' => $parent_transaction->is_credit,
+                'external' => $parent_transaction->external['is_credit'] ? ['is_credit' => true] : null,
                 'transaction_id' => $data['transaction_id'],
                 'created_at' => $parent_transaction->created_at,
             ];

@@ -38,7 +38,7 @@ class CashFund
         $types = ReasonType::asArray();
 
         return env('AUTH_INIT_CASH') + Transaction::query()
-            ->where('is_credit', false)
+            ->where('external->is_credit', null)
             ->selectRaw(
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
@@ -81,7 +81,8 @@ class CashFund
     {
         $spend = ReasonType::SPEND;
 
-        return Transaction::query()->where('is_credit', true)
+        return Transaction::query()
+            ->where('external->is_credit', true)
             ->where('created_at', '<', $until ?? now())
             ->selectRaw(
                 "SUM(CASE

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->double('price');
             $table->double('quantity')->default(1);
             $table->foreignId('reason_id')->nullable()->constrained();
-            $table->boolean('is_credit');
             $table->foreignId('transaction_id')->nullable()->constrained();
             $table->dateTime('created_at');
             $table->softDeletes();

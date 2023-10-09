@@ -23,7 +23,9 @@ final class ReasonType extends Enum
     public const FARM_REVENUE_ONUS = 7;
     #[Description('Rút tiền ra khỏi ONUS')]
     public const ONUS_TO_CASH = 8;
+    #[Description('Mua tiền mã hóa')]
     public const BUY_CRYPTO = 9;
+    #[Description('Bán tiền mã hóa')]
     public const SELL_CRYPTO = 10;
 
     public static function getCashReasonTypes(): array
