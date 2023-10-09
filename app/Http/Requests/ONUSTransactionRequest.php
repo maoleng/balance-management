@@ -15,6 +15,9 @@ class ONUSTransactionRequest extends BaseRequest
             'type' => [
                 'required',
             ],
+            'coin' => [
+                'nullable',
+            ],
         ];
     }
 

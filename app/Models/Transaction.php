@@ -42,6 +42,11 @@ class Transaction extends Model
         return isset($this->external['is_credit']);
     }
 
+    public function getCoinNameAttribute(): ?string
+    {
+        return $this->external['coin'] ?? null;
+    }
+
     public function getTotalPriceAttribute()
     {
         return $this->transactions->sum(fn($transaction) => $transaction->price * $transaction->quantity);
@@ -49,7 +54,7 @@ class Transaction extends Model
 
     public function getCoinLogoAttribute(): string
     {
-        $coin = strtolower($this->external['coin']);
+        $coin = strtolower($this->coinName);
 
         return "https://assets.coincap.io/assets/icons/$coin@2x.png";
     }

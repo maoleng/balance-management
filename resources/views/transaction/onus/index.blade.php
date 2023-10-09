@@ -58,6 +58,7 @@
                     <tr>
                         <th>Amount</th>
                         <th>Reason</th>
+                        <th>Coin</th>
                         <th>Created At</th>
                         <th>Action</th>
                     </tr>
@@ -82,6 +83,11 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span>{{ $transaction->reason->name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span>{{ $transaction->coinName }}</span>
                                 </div>
                             </td>
                             <td>
@@ -111,5 +117,23 @@
 
 @section('script')
     <script src="{{ asset('assets/js/template.js') }}"></script>
+    <script>
+        $("input[type='radio'][name='type']").on('click', function () {
+            const reasons = '{{ implode(',', [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS, ReasonType::FARM_REVENUE_ONUS]) }}'.split(',')
+            if (reasons.includes($(this).val())) {
+                $('#div-coin').remove()
+                $('.modal-body').append(`
+                    <div id="div-coin" class="row pt-3 pb-3">
+                        <div class="col-md-12">
+                            <label for="firstname" class="form-label">Coin</label>
+                            <input type="text" class="form-control" name="coin" required="">
+                        </div>
+                    </div>
+                `)
+            } else {
+                $('#div-coin').remove()
+            }
+        })
+    </script>
 
 @endsection

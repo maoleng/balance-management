@@ -40,7 +40,7 @@ class CryptoFund
 
         $coins = [];
         foreach ($transactions as $transaction) {
-            $coin_name = $transaction->external['coin'];
+            $coin_name = $transaction->coinName;
             $coins[$coin_name]['quantity'] = ($coins[$coin_name]['quantity'] ?? 0) +
                 ($transaction->reason->type === ReasonType::BUY_CRYPTO ? $transaction->quantity : -$transaction->quantity);
             $coins[$coin_name]['price'] = ($coins[$coin_name]['price'] ?? 0) +
