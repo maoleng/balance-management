@@ -37,6 +37,11 @@ class Transaction extends Model
         return $this->hasMany(__CLASS__);
     }
 
+    public function getIsCreditAttribute(): bool
+    {
+        return isset($this->external['is_credit']);
+    }
+
     public function getTotalPriceAttribute()
     {
         return $this->transactions->sum(fn($transaction) => $transaction->price * $transaction->quantity);

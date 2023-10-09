@@ -78,7 +78,7 @@ class CashTransactionController extends Controller
                 'price' => $transaction['price'],
                 'quantity' => $transaction['quantity'],
                 'reason_id' => $transaction['reason_id'],
-                'external' => $parent_transaction->external['is_credit'] ? ['is_credit' => true] : null,
+                'external' => $parent_transaction->isCredit ? ['is_credit' => true] : null,
                 'transaction_id' => $data['transaction_id'],
                 'created_at' => $parent_transaction->created_at,
             ];
