@@ -41,10 +41,11 @@ class CashTransactionController extends Controller
             ]
         )->id;
 
+        $is_credit = $data['is_credit'] ?? null;
         Transaction::query()->create([
             'price' => $data['price'],
             'reason_id' => $reason_id,
-            'external' => $data['is_credit'] ? ['is_credit' => true] : null,
+            'external' => $is_credit ? ['is_credit' => true] : null,
             'created_at' => now(),
         ]);
 
