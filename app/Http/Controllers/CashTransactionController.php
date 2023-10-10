@@ -69,9 +69,6 @@ class CashTransactionController extends Controller
         $data = $request->validated();
         $parent_transaction = $request->get('transaction');
 
-        Transaction::query()->where('transaction_id', $data['transaction_id'])
-            ->whereNotIn('id', $data['transaction_ids'] ?? [])->delete();
-
         $transactions = $request->get('transactions') ?? [];
         foreach ($transactions as $transaction) {
             $data = [
@@ -83,7 +80,7 @@ class CashTransactionController extends Controller
                 'created_at' => $parent_transaction->created_at,
             ];
 
-            Transaction::query()->updateOrInsert(['id' => $transaction['id']], $data);
+            Transaction::query()->updateOrCreate(['id' => $transaction['id']], $data);
         }
 
         return back()->with('success', 'Update transaction successfully');
