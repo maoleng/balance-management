@@ -38,10 +38,11 @@ class ONUSTransactionController extends Controller
             ]
         )->id;
 
+        $coin = $data['coin'] ?? null;
         Transaction::query()->create([
             'price' => $data['price'],
             'reason_id' => $reason_id,
-            'external' => $data['coin'] ? ['coin' => $data['coin']] : null,
+            'external' => $coin ? ['coin' => $coin] : null,
             'created_at' => now(),
         ]);
 
