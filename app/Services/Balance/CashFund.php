@@ -53,7 +53,10 @@ class CashFund
     public static function getChartOverview(): array
     {
         $time = now()->subMonth();
-        $transactions = Transaction::query()->with('reason')->where('created_at', '>=', $time)->get();
+        $transactions = Transaction::query()->with('reason')
+            ->where('external->is_credit', null)
+            ->where('created_at', '>=', $time)
+            ->get();
         $init_cash = self::getBalance($time);
 
         $data = [];
