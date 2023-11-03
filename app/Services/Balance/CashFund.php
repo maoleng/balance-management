@@ -42,8 +42,8 @@ class CashFund
             ->selectRaw(
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
-                    WHEN reasons.type = {$types['CASH_TO_ONUS']} OR reasons.type = {$types['BUY_CRYPTO']} THEN -price
-                    WHEN reasons.type = {$types['EARN']} OR reasons.type = {$types['ONUS_TO_CASH']} OR reasons.type = {$types['SELL_CRYPTO']} THEN price
+                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['CREDIT_SETTLEMENT']}, {$types['BUY_CRYPTO']}) THEN -price
+                    WHEN reasons.type IN ({$types['EARN']}, {$types['ONUS_TO_CASH']}, {$types['SELL_CRYPTO']}) THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
             ->where('created_at', '<', $until ?? now())
@@ -67,7 +67,7 @@ class CashFund
                 if (Carbon::make($transaction->created_at)->lt($date->endOfDay())) {
                     $money += match ($transaction->reason->type) {
                         ReasonType::EARN, ReasonType::ONUS_TO_CASH, ReasonType::SELL_CRYPTO => $transaction->price,
-                        ReasonType::CASH_TO_ONUS, ReasonType::BUY_CRYPTO => -$transaction->price,
+                        ReasonType::CASH_TO_ONUS, ReasonType::BUY_CRYPTO, ReasonType::CREDIT_SETTLEMENT => -$transaction->price,
                         ReasonType::SPEND => -$transaction->price * $transaction->quantity,
                         default => 0,
                     };
@@ -82,17 +82,21 @@ class CashFund
 
     public static function getOutstandingCredit($until = null): float
     {
-        $spend = ReasonType::SPEND;
+        $types = ReasonType::asArray();
 
         return Transaction::query()
-            ->where('external->is_credit', true)
+            ->where(function ($q) {
+                $q->where('external->is_credit', true)->orWhereHas('reason', function ($q) {
+                    $q->where('type', ReasonType::CREDIT_SETTLEMENT);
+                });
+            })
             ->where('created_at', '<', $until ?? now())
             ->selectRaw(
                 "SUM(CASE
-                    WHEN reasons.type = $spend THEN -price * quantity
+                    WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
+                    WHEN reasons.type = {$types['CREDIT_SETTLEMENT']} THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
-            ->where('created_at', '<', $until ?? now())
             ->first()->cash_balance ?? 0;
     }
 

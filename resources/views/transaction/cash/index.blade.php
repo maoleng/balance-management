@@ -24,6 +24,32 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <button type="button" class="ms-3 btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#creditSettlement">Credit Settlement</button>
+                                    <div class="modal fade modal-sm" id="creditSettlement" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <form action="{{ route('transaction.cash.store', ['type' => ReasonType::CREDIT_SETTLEMENT, 'is_credit' => false]) }}" method="post" class="modal-content">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Add Transaction</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="row pt-3 pb-3">
+                                                            <div class="col-md-12">
+                                                                <label for="firstname" class="form-label">Amount</label>
+                                                                <input type="number" class="form-control" name="price" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-primary">Create</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +96,7 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if (in_array($transaction->reason->type, [ReasonType::SPEND, ReasonType::GROUP]))
+                                    @if (in_array($transaction->reason->type, [ReasonType::SPEND, ReasonType::GROUP, ReasonType::CREDIT_SETTLEMENT], true))
                                         <span class="badge bg-danger">-</span>&nbsp; &nbsp;
                                     @elseif ($transaction->reason->type === ReasonType::EARN)
                                         <span class="badge bg-secondary">+</span>&nbsp; &nbsp;

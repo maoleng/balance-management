@@ -17,7 +17,6 @@ class CashTransactionRequest extends BaseRequest
             ],
             'reason' => [
                 'nullable',
-                'required',
             ],
             'is_credit' => [
                 'required',

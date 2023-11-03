@@ -17,7 +17,7 @@ class CashTransactionController extends Controller
     {
         $transactions = Transaction::query()->whereNull('transaction_id')->with(['reason', 'transactions.reason'])
             ->whereHas('reason', function ($q) {
-                $q->whereIn('type', ReasonType::getCashReasonTypes());
+                $q->whereIn('type', array_merge(ReasonType::getCashReasonTypes(), [ReasonType::CREDIT_SETTLEMENT]));
             })
             ->orderByDesc('created_at')->paginate(8);
         $reasons = Reason::query()->orderBy('name')->get();
@@ -31,12 +31,13 @@ class CashTransactionController extends Controller
     public function store(CashTransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $name = $data['reason'] ?? ReasonType::getDescription((int) $data['type']);
         $reason_id = Reason::query()->firstOrCreate(
             [
-                'name' => $data['reason']
+                'name' => $name,
             ],
             [
-                'name' => $data['reason'],
+                'name' => $name,
                 'type' => $data['type'],
             ]
         )->id;
