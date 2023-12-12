@@ -91,6 +91,15 @@
                                             <div id="sparkBalance4"></div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td style="width: 40%">
+                                            <div class="mt-3 text-uppercase text-muted small">ONUS Future</div>
+                                            <h5><span id="t-onus_future_balance">*************</span></h5>
+                                        </td>
+                                        <td style="width: 60%">
+                                            <div id="sparkBalance5"></div>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                             <div class="col-lg-6">
@@ -167,6 +176,7 @@
                     $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                     $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
                     $('#t-onus_farming_balance').html('{!! formatVND($onus_farming_balance) !!}')
+                    $('#t-onus_future_balance').html('{!! formatVND($onus_future_balance) !!}')
                 } else {
                     $('#i-toggle_balance').removeClass('icofont-eye-blocked').addClass('icofont-eye-alt')
                     $('#t-balance').html('*************')
@@ -175,6 +185,7 @@
                     $('#t-crypto_balance').html('*************')
                     $('#t-onus_balance').html('*************')
                     $('#t-onus_farming_balance').html('*************')
+                    $('#t-onus_future_balance').html('*************')
                 }
             })
 
@@ -194,8 +205,12 @@
             const spark4 = new ApexCharts(document.querySelector("#sparkBalance4"), sparkOption4)
             spark4.render()
 
+            const sparkOption5 = getSparkOption([{{ implode(',', $onus_farming_chart) }}])
+            const spark5 = new ApexCharts(document.querySelector("#sparkBalance5"), sparkOption5)
+            spark5.render()
+
             const options = {
-                series: [{{ "$cash_balance, $crypto_balance, $onus_balance, $onus_farming_balance" }}],
+                series: [{{ "$cash_balance, $crypto_balance, $onus_balance, $onus_farming_balance, $onus_future_balance" }}],
                 chart: {
                     type: 'donut',
                     height: 400,
@@ -210,7 +225,7 @@
                         }
                     }
                 }],
-                labels: ['Cash', 'Crypto', 'ONUS', 'ONUS Farming'],
+                labels: ['Cash', 'Crypto', 'ONUS', 'ONUS Farming', 'ONUS Future'],
                 dataLabels: {
                     textAnchor: 'middle',
                     distributed: false,

@@ -17,8 +17,9 @@ class SiteController extends Controller
         $outstanding_credit = CashFund::getOutstandingCredit();
         $onus_balance = ONUSFund::getBalance();
         $onus_farming_balance = ONUSFund::getFarmingBalance();
+        $onus_future_balance = ONUSFund::getFutureBalance();
         $crypto_balance = CryptoFund::getBalance();
-        $balance = $cash_balance + $crypto_balance + $onus_balance + $onus_farming_balance;
+        $balance = $cash_balance + $crypto_balance + $onus_balance + $onus_farming_balance + $onus_future_balance;
 
         return view('index', [
             'overview' => $overview,
@@ -28,10 +29,12 @@ class SiteController extends Controller
             'crypto_balance' => $crypto_balance,
             'onus_balance' => $onus_balance,
             'onus_farming_balance' => $onus_farming_balance,
+            'onus_future_balance' => $onus_future_balance,
             'cash_chart' => CashFund::getChartOverview(),
             'crypto_chart' => CryptoFund::getChartOverview(),
             'onus_chart' => ONUSFund::getONUSChartOverview(),
             'onus_farming_chart' => ONUSFund::getONUSFarmingChartOverview(),
+            'onus_future_chart' => ONUSFund::getONUSFutureChartOverview(),
         ]);
 
     }

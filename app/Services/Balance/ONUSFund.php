@@ -17,8 +17,8 @@ class ONUSFund
         return Transaction::query()
             ->selectRaw(
                 "SUM(CASE
-                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['DAILY_REVENUE_ONUS']}, {$types['FARM_REVENUE_ONUS']}, {$types['ONUS_FARMING_TO_ONUS']}) THEN price
-                    WHEN reasons.type IN ({$types['ONUS_TO_CASH']}, {$types['ONUS_TO_ONUS_FARMING']}) THEN -price
+                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['DAILY_REVENUE_ONUS']}, {$types['FARM_REVENUE_ONUS']}, {$types['ONUS_FARMING_TO_ONUS']}, {$types['ONUS_FUTURE_TO_ONUS']}) THEN price
+                    WHEN reasons.type IN ({$types['ONUS_TO_CASH']}, {$types['ONUS_TO_ONUS_FARMING']}, {$types['ONUS_TO_ONUS_FUTURE']}) THEN -price
                 END) AS onus_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
             ->where('created_at', '<', $time ?? now())
@@ -39,6 +39,20 @@ class ONUSFund
             ->first()->onus_farming_balance ?? 0;
     }
 
+    public static function getFutureBalance()
+    {
+        $types = ReasonType::asArray();
+
+        return Transaction::query()
+            ->selectRaw(
+                "SUM(CASE
+                    WHEN reasons.type IN ({$types['ONUS_TO_ONUS_FUTURE']}, {$types['FUTURE_REVENUE_ONUS']}) THEN price
+                    WHEN reasons.type = {$types['ONUS_FUTURE_TO_ONUS']} THEN -price
+                END) AS onus_future_balance")
+            ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
+            ->first()->onus_future_balance ?? 0;
+    }
+
     public static function getONUSChartOverview(): array
     {
         return static::getChartOverview('ONUS');
@@ -48,6 +62,11 @@ class ONUSFund
     public static function getONUSFarmingChartOverview(): array
     {
         return static::getChartOverview('ONUS Farming');
+    }
+
+    public static function getONUSFutureChartOverview(): array
+    {
+        return static::getChartOverview('ONUS Future');
     }
 
     public static function getChartOverview($type): array
@@ -64,8 +83,14 @@ class ONUSFund
                 if (Carbon::make($transaction->created_at)->lt($date->endOfDay())) {
                     if ($type === 'ONUS') {
                         $money += match ($transaction->reason->type) {
-                            ReasonType::CASH_TO_ONUS, ReasonType::DAILY_REVENUE_ONUS, ReasonType::FARM_REVENUE_ONUS, ReasonType::ONUS_FARMING_TO_ONUS => $transaction->price,
-                            ReasonType::ONUS_TO_CASH, ReasonType::ONUS_TO_ONUS_FARMING => -$transaction->price,
+                            ReasonType::CASH_TO_ONUS, ReasonType::DAILY_REVENUE_ONUS, ReasonType::FARM_REVENUE_ONUS, ReasonType::ONUS_FARMING_TO_ONUS, ReasonType::ONUS_FUTURE_TO_ONUS => $transaction->price,
+                            ReasonType::ONUS_TO_CASH, ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_TO_ONUS_FUTURE => -$transaction->price,
+                            default => 0,
+                        };
+                    } elseif ($type === 'ONUS Future') {
+                        $money += match ($transaction->reason->type) {
+                            ReasonType::ONUS_TO_ONUS_FUTURE, ReasonType::FUTURE_REVENUE_ONUS => $transaction->price,
+                            ReasonType::ONUS_FUTURE_TO_ONUS => -$transaction->price,
                             default => 0,
                         };
                     } else {
