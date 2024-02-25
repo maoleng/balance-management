@@ -93,7 +93,7 @@
                 $('#t-onus_future_balance').html('**********')
             }
         })
-        const options = {
+        var options = {
             series: [{{ "$cash_balance, $onus_balance, $onus_farming_balance, $crypto_balance, $onus_future_balance" }}],
             chart: {
                 type: 'donut',
@@ -137,7 +137,7 @@
             colors: ['#28a745', '#6c757d', '#17a2b8', '#ffc107', '#dc3545'],
         };
 
-        const chart = new ApexCharts(document.querySelector("#chart"), options);
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
     </script>
 @endpush
