@@ -57,6 +57,9 @@ class CashFund
             ->where('external->is_credit', null)
             ->where('created_at', '>=', $time)
             ->get();
+        if ($transactions->isEmpty()) {
+            return [];
+        }
         $init_cash = self::getBalance($time);
 
         $data = [];

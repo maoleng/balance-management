@@ -73,6 +73,9 @@ class ONUSFund
     {
         $time = now()->subMonth();
         $transactions = Transaction::query()->with('reason')->where('created_at', '>=', $time)->get();
+        if ($transactions->isEmpty()) {
+            return [];
+        }
         $init_cash = self::getBalance($time);
 
         $data = [];
