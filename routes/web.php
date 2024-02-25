@@ -5,11 +5,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CryptoTransactionController;
 use App\Http\Controllers\ONUSTransactionController;
 use App\Http\Controllers\ReasonController;
-use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\CashTransactionController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
+use App\Livewire\SiteComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
@@ -19,9 +19,8 @@ Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], stat
 });
 
 Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
-    Route::get('/', [SiteController::class, 'index'])->name('index');
-
-    Route::get('/market', [SiteController::class, 'market'])->name('market.index');
+    Route::get('/', SiteComponent::class)->name('index');
+    Route::get('/market', [SiteComponent::class, 'market'])->name('market');
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
         Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);

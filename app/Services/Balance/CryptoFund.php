@@ -25,13 +25,6 @@ class CryptoFund
         return $balance;
     }
 
-    public static function getChartOverview(): array
-    {
-        $data = File::json('crypto-history.json');
-
-        return array_slice($data, -30);
-    }
-
     public static function getCoinsValue(): array
     {
         $transactions = Transaction::query()->whereHas('reason', function ($q) {

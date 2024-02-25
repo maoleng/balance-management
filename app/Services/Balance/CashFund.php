@@ -50,39 +50,6 @@ class CashFund
             ->first()->cash_balance ?? 0;
     }
 
-    public static function getChartOverview(): array
-    {
-        $time = now()->subMonth();
-        $transactions = Transaction::query()->with('reason')
-            ->where('external->is_credit', null)
-            ->where('created_at', '>=', $time)
-            ->get();
-        if ($transactions->isEmpty()) {
-            return [];
-        }
-        $init_cash = self::getBalance($time);
-
-        $data = [];
-        $dates = CarbonPeriod::create($transactions->first()->created_at, now());
-        foreach ($dates as $date) {
-            $money = $init_cash;
-            foreach ($transactions as $transaction) {
-                if (Carbon::make($transaction->created_at)->lt($date->endOfDay())) {
-                    $money += match ($transaction->reason->type) {
-                        ReasonType::EARN, ReasonType::ONUS_TO_CASH, ReasonType::SELL_CRYPTO => $transaction->price,
-                        ReasonType::CASH_TO_ONUS, ReasonType::BUY_CRYPTO, ReasonType::CREDIT_SETTLEMENT => -$transaction->price,
-                        ReasonType::SPEND => -$transaction->price * $transaction->quantity,
-                        default => 0,
-                    };
-                }
-            }
-
-            $data[$date->toDateString()] = round($money);
-        }
-
-        return $data;
-    }
-
     public static function getOutstandingCredit($until = null): float
     {
         $types = ReasonType::asArray();
