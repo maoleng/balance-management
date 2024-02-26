@@ -27,9 +27,9 @@
                         <form wire:submit="store">
                             <div class="pb-3">
                                 @foreach($this->reasons->whereIn('type', ReasonType::getCashReasonTypes()) as $reason)
-                                    <span data-type="{{ $reason->type }}" class="s-reason badge badge-{{ $reason->type === ReasonType::EARN ? 'primary' : 'danger' }}">
-                                        {{ $reason->name }}
-                                    </span>
+                                    <div data-type="{{ $reason->type }}" class="s-reason chip chip-outline chip-{{ $reason->type === ReasonType::EARN ? 'primary' : 'danger' }} ms-05 mb-05">
+                                        <span class="chip-label">{{ $reason->name }}</span>
+                                    </div>
                                 @endforeach
                                 <span data-type="{{ ReasonType::GROUP }}" class="s-reason badge badge-warning">{{ ReasonType::getDescription(ReasonType::GROUP) }}</span>
                                 <span data-type="{{ ReasonType::CREDIT_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::CREDIT_SETTLEMENT) }}</span>
