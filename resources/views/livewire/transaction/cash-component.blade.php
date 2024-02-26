@@ -76,7 +76,6 @@
                                 <button id="btn-add" type="submit" class="btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">Thêm</button>
                             </div>
                         </form>
-                        {{$errors->first()}}
                     </div>
                 </div>
             </div>
