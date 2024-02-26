@@ -52,7 +52,7 @@ class CashGroupTransactionForm extends Form
 
         $transaction = Transaction::query()->create([
             'price' => $data['price'],
-            'quantity' => $transaction['quantity'],
+            'quantity' => $data['quantity'],
             'reason_id' => $reason_id,
             'external' => $transaction->is_credit ? ['is_credit' => true] : null,
             'transaction_id' => $transaction->id,
