@@ -1,5 +1,6 @@
+@php use Illuminate\Support\Facades; @endphp
 <div class="appBottomMenu">
-    <a wire:navigate href="/" class="item active">
+    <a wire:navigate href="{{ route('index') }}" class="item {{ Route::is('index') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="storefront-outline"></ion-icon>
             <strong>Tổng quan</strong>
@@ -11,7 +12,7 @@
             <strong>Thị trường</strong>
         </div>
     </a>
-    <a href="app-components.html" class="item">
+    <a wire:navigate href="{{ route('transaction.index') }}" class="item {{ Route::is('transaction.*') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="cash-outline"></ion-icon>
             <strong>Giao dịch</strong>
