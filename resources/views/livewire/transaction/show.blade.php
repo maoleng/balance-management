@@ -82,63 +82,64 @@
                 </li>
             </ul>
         </div>
-        <div class="section mt-5 mb-2">
-            <div class="section-title">Chi tiết
-                <a href="#" class="ps-1" data-bs-toggle="modal" data-bs-target="#dialog-add">
-                    Thêm
-                </a>
-            </div>
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Tên</th>
-                            <th scope="col">SL</th>
-                            <th scope="col" class="text-end">Đơn giá</th>
-                            <th scope="col" class="text-end">Tổng</th>
-                            <th scope="col" >Xóa</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($transactions as $transaction)
+        @if ($transaction->reason->type === ReasonType::GROUP)
+            <div class="section mt-5 mb-2">
+                <div class="section-title">Chi tiết
+                    <a href="#" class="ps-1" data-bs-toggle="modal" data-bs-target="#dialog-add">
+                        Thêm
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
                             <tr>
-                                <th scope="row">{{ $transaction->reason->name }}</th>
-                                <td class="text-center">{{ $transaction->quantity }}</td>
-                                <td class="text-end">{!! formatVND($transaction->price) !!}</td>
-                                <td class="text-end">{!! formatVND($transaction->price * $transaction->quantity) !!}</td>
-                                <td>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $transaction->id }}" type="button" class="btn btn-icon btn-danger">
-                                        <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="trash outline"></ion-icon>
-                                    </button>
-                                </td>
+                                <th scope="col">Tên</th>
+                                <th scope="col">SL</th>
+                                <th scope="col" class="text-end">Đơn giá</th>
+                                <th scope="col" class="text-end">Tổng</th>
+                                <th scope="col" >Xóa</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($transactions as $transaction)
+                                <tr>
+                                    <th scope="row">{{ $transaction->reason->name }}</th>
+                                    <td class="text-center">{{ $transaction->quantity }}</td>
+                                    <td class="text-end">{!! formatVND($transaction->price) !!}</td>
+                                    <td class="text-end">{!! formatVND($transaction->price * $transaction->quantity) !!}</td>
+                                    <td>
+                                        <button data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $transaction->id }}" type="button" class="btn btn-icon btn-danger">
+                                            <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="trash outline"></ion-icon>
+                                        </button>
+                                    </td>
+                                </tr>
 
-                            <div class="modal fade dialogbox" id="modal-delete-{{ $transaction->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Xóa {{ $transaction->reason->name }}</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            Bạn chắc chứ?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="btn-inline">
-                                                <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
-                                                <button wire:click="destroyGroup({{ $transaction->id }})" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                                <div class="modal fade dialogbox" id="modal-delete-{{ $transaction->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Xóa {{ $transaction->reason->name }}</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn chắc chứ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="btn-inline">
+                                                    <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
+                                                    <button wire:click="destroyGroup({{ $transaction->id }})" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade action-sheet" id="dialog-add" tabindex="-1" role="dialog">
+            <div class="modal fade action-sheet" id="dialog-add" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -190,6 +191,7 @@
                 </div>
             </div>
         </div>
+        @endif
     @endif
 
     @if ($page === 'crypto')
@@ -251,7 +253,7 @@
     @endif
 
 </div>
-@if ($page === 'cash') @push('script')
+@if ($transaction->reason->type === ReasonType::GROUP) @push('script')
     <script>
         $('#btn-add').on('click', function (e) {
             if ($('#i-price').val().trim() === '' || $('#i-reason').val().trim() === '' || $('#i-quantity').val().trim() === '') {
