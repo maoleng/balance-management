@@ -37,7 +37,7 @@ class ONUSComponent extends BaseComponent
             ->limit(10 * $p)
             ->get()
             ->groupBy(function ($transaction) {
-                return $transaction->created_at->isToday() ? 'Hôm nay' : Str::ucfirst($transaction->created_at->isoFormat('dddd')).', '.$transaction->created_at->format('d-m-Y');
+                return $transaction->created_at->isToday() ? 'Hôm nay' : $transaction->prettyCreatedAt;
             })->each(fn($transactions) => $transactions->each(fn($transaction) => $transaction->appendONUSData()))->toArray();
     }
 }

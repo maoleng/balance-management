@@ -3,28 +3,31 @@
 namespace App\Livewire\Transaction;
 
 use App\Enums\ReasonType;
-use App\Livewire\Forms\CashTransactionForm;
 use App\Livewire\Forms\CryptoTransactionForm;
-use App\Models\Reason;
 use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
-use Livewire\Component;
 
 class CryptoComponent extends BaseComponent
 {
 
+    public ?Transaction $transaction = null;
     public CryptoTransactionForm $form;
 
     public function render(): View
     {
-        return view('livewire.transaction.crypto-component');
+        return $this->transaction
+            ? view('livewire.transaction.show', ['page' => 'crypto'])
+            : view('livewire.transaction.crypto-component');
     }
 
-    public function mount(): void
+    public function mount(Transaction $transaction): void
     {
-        $this->loadMore();
+        if ($transaction->exists) {
+            $this->transaction = $transaction->load('reason');
+        } else {
+            $this->loadMore();
+        }
     }
 
     protected function getMoreTransactions($p): array
@@ -37,7 +40,7 @@ class CryptoComponent extends BaseComponent
             ->limit(10 * $p)
             ->get()
             ->groupBy(function ($transaction) {
-                return $transaction->created_at->isToday() ? 'Hôm nay' : Str::ucfirst($transaction->created_at->isoFormat('dddd')).', '.$transaction->created_at->format('d-m-Y');
+                return $transaction->created_at->isToday() ? 'Hôm nay' : $transaction->prettyCreatedAt;
             })->each(fn($transactions) => $transactions->each(fn($transaction) => $transaction->appendCryptoData()))->toArray();
     }
 }
