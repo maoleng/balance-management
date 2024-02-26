@@ -33,7 +33,7 @@ if (! function_exists('formatCoin')) {
 if (! function_exists('getFullPath')) {
     function getFullPath($path): string
     {
-        return asset('/storage/'.$path);
+        return $path ? asset('/storage/'.$path) : asset('assets/img/sample/avatar/avatar1.jpg');
     }
 }
 
