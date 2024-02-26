@@ -18,12 +18,12 @@
         </a>
     </div>
     <div class="section mt-2">
-        <div class="card bg-dark text-white">
+        <a wire:navigate href="{{ route('transaction.onus') }}" class="card bg-dark text-white">
             <img src="https://img.vietnamfinance.vn/webp-jpg/600x391/upload/news/thanhhang/2018/10/1/vnf-tien-mat-la-gi.webp" class="card-img overlay-img" alt="image">
             <div class="card-img-overlay">
                 <h2 class="card-title">Tiền tiết kiệm</h2>
             </div>
-        </div>
+        </a>
     </div>
     <div class="section mt-2 mb-2">
         <div class="card bg-dark text-white">

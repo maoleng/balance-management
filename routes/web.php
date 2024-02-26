@@ -26,11 +26,12 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
         Route::get('/', Transaction\IndexComponent::class)->name('index');
         Route::get('/cash', Transaction\CashComponent::class)->name('cash');
+        Route::get('/onus', Transaction\ONUSComponent::class)->name('onus');
 //        Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);
         Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
         Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
 
-        Route::resource('onus', ONUSTransactionController::class)->only(['index', 'store']);
+//        Route::resource('onus', ONUSTransactionController::class)->only(['index', 'store']);
         Route::delete('onus/{transaction}', [ONUSTransactionController::class, 'destroy'])->name('onus.destroy');
 
         Route::resource('crypto', CryptoTransactionController::class)->only(['index', 'store']);

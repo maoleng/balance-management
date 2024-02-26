@@ -70,4 +70,9 @@ class Transaction extends Model
         $this->reason->append('shortName');
     }
 
+    public function appendONUSData(): void
+    {
+        $this->append('coinName');
+    }
+
 }
