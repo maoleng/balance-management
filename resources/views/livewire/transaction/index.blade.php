@@ -1,7 +1,7 @@
 @section('header')
     <div class="appHeader">
         <div class="left">
-            <a href="#" class="headerButton goBack">
+            <a wire:navigate href="{{ route('index') }}" class="headerButton goBack">
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>

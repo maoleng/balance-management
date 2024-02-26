@@ -3,11 +3,11 @@
 @section('header')
     <div class="appHeader">
         <div class="left">
-            <a href="#" class="headerButton goBack">
+            <a wire:navigate href="{{ route('transaction.index') }}" class="headerButton goBack">
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>
-        <div class="pageTitle">Giao dịch</div>
+        <div class="pageTitle">Giao dịch tiền mặt</div>
         <div class="right">
             <a href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#modal-create">
                 <ion-icon name="add-outline"></ion-icon>
