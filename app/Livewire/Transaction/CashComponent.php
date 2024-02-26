@@ -11,10 +11,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class CashComponent extends Component
+class CashComponent extends BaseComponent
 {
-    public array $gr_transactions = [];
-    public $cur_page = 1;
+
     public Collection $reasons;
     public CashTransactionForm $form;
 
@@ -23,29 +22,13 @@ class CashComponent extends Component
         return view('livewire.transaction.cash-component');
     }
 
-    public function loadMore(): void
-    {
-        $this->gr_transactions = $this->getMoreTransactions($this->cur_page);
-        $this->cur_page++;
-    }
-
     public function mount(): void
     {
         $this->loadMore();
         $this->reasons = Reason::query()->orderBy('name')->get();
     }
 
-    public function store(): void
-    {
-        $transaction = $this->form->store();
-        if (empty($this->gr_transactions['Hôm nay'])) {
-            $this->gr_transactions = ['Hôm nay' => [$transaction]] + $this->gr_transactions;
-        } else {
-            array_unshift($this->gr_transactions['Hôm nay'], $transaction);
-        }
-    }
-
-    private function getMoreTransactions($p): array
+    protected function getMoreTransactions($p): array
     {
         return Transaction::query()
             ->whereNull('transaction_id')
@@ -60,4 +43,5 @@ class CashComponent extends Component
                 return $transaction->created_at->isToday() ? 'Hôm nay' : Str::ucfirst($transaction->created_at->isoFormat('dddd')).', '.$transaction->created_at->format('d-m-Y');
             })->each(fn($transactions) => $transactions->each(fn($transaction) => $transaction->appendCashData()))->toArray();
     }
+
 }

@@ -12,10 +12,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class ONUSComponent extends Component
+class ONUSComponent extends BaseComponent
 {
-    public array $gr_transactions = [];
-    public $cur_page = 1;
+
     public ONUSTransactionForm $form;
 
     public function render(): View
@@ -23,28 +22,12 @@ class ONUSComponent extends Component
         return view('livewire.transaction.onus-component');
     }
 
-    public function loadMore(): void
-    {
-        $this->gr_transactions = $this->getMoreTransactions($this->cur_page);
-        $this->cur_page++;
-    }
-
     public function mount(): void
     {
         $this->loadMore();
     }
 
-    public function store(): void
-    {
-        $transaction = $this->form->store();
-        if (empty($this->gr_transactions['Hôm nay'])) {
-            $this->gr_transactions = ['Hôm nay' => [$transaction]] + $this->gr_transactions;
-        } else {
-            array_unshift($this->gr_transactions['Hôm nay'], $transaction);
-        }
-    }
-
-    private function getMoreTransactions($p): array
+    protected function getMoreTransactions($p): array
     {
         return Transaction::query()->whereNull('transaction_id')->with('reason')
             ->whereHas('reason', function ($q) {
