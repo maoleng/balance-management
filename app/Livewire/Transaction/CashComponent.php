@@ -39,9 +39,10 @@ class CashComponent extends Component
     {
         $transaction = $this->form->store();
         if (empty($this->gr_transactions['Hôm nay'])) {
-            $this->gr_transactions['Hôm nay'] = [$transaction];
+            $this->gr_transactions = ['Hôm nay' => [$transaction]] + $this->gr_transactions;
+        } else {
+            array_unshift($this->gr_transactions['Hôm nay'], $transaction);
         }
-        array_unshift($this->gr_transactions['Hôm nay'], $transaction);
     }
 
     private function getMoreTransactions($p): array
