@@ -1,11 +1,5 @@
 @section('header')
     <div class="appHeader bg-primary text-light">
-        <div class="left">
-            <div class="form-check form-switch  ms-2">
-                <input class="form-check-input dark-mode-switch" type="checkbox" id="darkmodeSwitch">
-                <label class="form-check-label" for="darkmodeSwitch"></label>
-            </div>
-        </div>
         <div class="pageTitle">
             <img src="assets/img/logo.png" alt="logo" class="logo">
         </div>
