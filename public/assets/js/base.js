@@ -61,19 +61,6 @@ if (Maolance.PWA.enable) {
 }
 //-----------------------------------------------------------------------
 
-
-//-----------------------------------------------------------------------
-// Page Loader with preload
-//----------------------------------------------------------------------
-setTimeout(() => {
-    loader.setAttribute("style", "pointer-events: none; opacity: 0; transition: 0.2s ease-in-out;");
-    setTimeout(() => {
-        loader.setAttribute("style", "display: none;")
-    }, 1000);
-}, 450);
-//-----------------------------------------------------------------------
-
-
 //-----------------------------------------------------------------------
 // Go Back Animation
 function goBackAnimation() {
@@ -488,67 +475,67 @@ function AddtoHome(time, once) {
 
 //-----------------------------------------------------------------------
 // Dark Mode
-var checkDarkModeStatus = localStorage.getItem("MaolanceDarkmode");
-var switchDarkMode = document.querySelectorAll(".dark-mode-switch");
-var pageBodyActive = pageBody.classList.contains("dark-mode");
-
-// Check if enable as default
-if (Maolance.Dark_Mode.default) {
-    pageBody.classList.add("dark-mode");
-}
-
-// Local Dark Mode
-if (Maolance.Dark_Mode.local_mode.enable) {
-    var nightStart = Maolance.Dark_Mode.local_mode.start_time;
-    var nightEnd = Maolance.Dark_Mode.local_mode.end_time;
-    var currentDate = new Date();
-    var currentHour = currentDate.getHours();
-    if (currentHour >= nightStart || currentHour < nightEnd) {
-        // It is night time
-        pageBody.classList.add("dark-mode");
-    }
-}
-
-// Auto Detect Dark Mode
-if (Maolance.Dark_Mode.auto_detect.enable)
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        pageBody.classList.add("dark-mode");
-    }
-
-function switchDarkModeCheck(value) {
-    switchDarkMode.forEach(function (el) {
-        el.checked = value
-    })
-}
-// if dark mode on
-if (checkDarkModeStatus === 1 || checkDarkModeStatus === "1" || pageBody.classList.contains('dark-mode')) {
-    switchDarkModeCheck(true);
-    if (pageBodyActive) {
-        // dark mode already activated
-    }
-    else {
-        pageBody.classList.add("dark-mode")
-    }
-}
-else {
-    switchDarkModeCheck(false);
-}
-switchDarkMode.forEach(function (el) {
-    el.addEventListener("click", function () {
-        var darkmodeCheck = localStorage.getItem("MaolanceDarkmode");
-        var bodyCheck = pageBody.classList.contains('dark-mode');
-        if (darkmodeCheck === 1 || darkmodeCheck === "1" || bodyCheck) {
-            pageBody.classList.remove("dark-mode");
-            localStorage.setItem("MaolanceDarkmode", "0");
-            switchDarkModeCheck(false);
-        }
-        else {
-            pageBody.classList.add("dark-mode")
-            switchDarkModeCheck(true);
-            localStorage.setItem("MaolanceDarkmode", "1");
-        }
-    })
-})
+// var checkDarkModeStatus = localStorage.getItem("MaolanceDarkmode");
+// var switchDarkMode = document.querySelectorAll(".dark-mode-switch");
+// var pageBodyActive = pageBody.classList.contains("dark-mode");
+//
+// // Check if enable as default
+// if (Maolance.Dark_Mode.default) {
+//     pageBody.classList.add("dark-mode");
+// }
+//
+// // Local Dark Mode
+// if (Maolance.Dark_Mode.local_mode.enable) {
+//     var nightStart = Maolance.Dark_Mode.local_mode.start_time;
+//     var nightEnd = Maolance.Dark_Mode.local_mode.end_time;
+//     var currentDate = new Date();
+//     var currentHour = currentDate.getHours();
+//     if (currentHour >= nightStart || currentHour < nightEnd) {
+//         // It is night time
+//         pageBody.classList.add("dark-mode");
+//     }
+// }
+//
+// // Auto Detect Dark Mode
+// if (Maolance.Dark_Mode.auto_detect.enable)
+//     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+//         pageBody.classList.add("dark-mode");
+//     }
+//
+// function switchDarkModeCheck(value) {
+//     switchDarkMode.forEach(function (el) {
+//         el.checked = value
+//     })
+// }
+// // if dark mode on
+// if (checkDarkModeStatus === 1 || checkDarkModeStatus === "1" || pageBody.classList.contains('dark-mode')) {
+//     switchDarkModeCheck(true);
+//     if (pageBodyActive) {
+//         // dark mode already activated
+//     }
+//     else {
+//         pageBody.classList.add("dark-mode")
+//     }
+// }
+// else {
+//     switchDarkModeCheck(false);
+// }
+// switchDarkMode.forEach(function (el) {
+//     el.addEventListener("click", function () {
+//         var darkmodeCheck = localStorage.getItem("MaolanceDarkmode");
+//         var bodyCheck = pageBody.classList.contains('dark-mode');
+//         if (darkmodeCheck === 1 || darkmodeCheck === "1" || bodyCheck) {
+//             pageBody.classList.remove("dark-mode");
+//             localStorage.setItem("MaolanceDarkmode", "0");
+//             switchDarkModeCheck(false);
+//         }
+//         else {
+//             pageBody.classList.add("dark-mode")
+//             switchDarkModeCheck(true);
+//             localStorage.setItem("MaolanceDarkmode", "1");
+//         }
+//     })
+// })
 //-----------------------------------------------------------------------
 
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
+use App\Livewire\MeComponent;
 use App\Livewire\SiteComponent;
 use App\Livewire\Transaction;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], stat
 
 Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     Route::get('/', SiteComponent::class)->name('index');
+    Route::get('/me', MeComponent::class)->name('me');
     Route::get('/market', [SiteComponent::class, 'market'])->name('market');
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {

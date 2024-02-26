@@ -1,10 +1,8 @@
+@php use \Illuminate\Support\Facades\Cache; @endphp
 <!doctype html>
 <html lang="en">
 @include('components.layouts.head-tag')
-<body class="@yield('bg-class')">
-<div id="loader">
-    <img src="{{ asset('assets/img/loading-icon.png') }}" alt="icon" class="loading-icon">
-</div>
+<body class="{{ Cache::get('dark-mode') }} @yield('bg-class')">
 @yield('header')
 {{ $slot }}
 @include('components.layouts.bottom-menu')
@@ -38,6 +36,12 @@
 <script src="{{ asset('assets/js/base.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
+    if ($('body').hasClass('dark-mode')) {
+        $('#darkmodeSwitch').prop('checked', true);
+    }
+    $('#darkmodeSwitch').on('click', function () {
+        $('body').toggleClass('dark-mode');
+    })
     function showErrorDialog(msg)
     {
         const modal = $('#errorDialog')
