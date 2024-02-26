@@ -90,27 +90,27 @@
                 @foreach($transactions as $transaction)
                     <a href="app-transaction-detail.html" class="item">
                         <div class="detail">
-                            <img src="{{ getFullPath($transaction->reason->image) }}" alt="img" class="image-block imaged w48">
+                            <img src="{{ getFullPath($transaction['reason']['image']) }}" alt="img" class="image-block imaged w48">
                             <div>
-                                <strong>{{ $transaction->reason->shortName }}</strong>
-                                @if($transaction->isCredit)
+                                <strong>{{ $transaction['reason']['shortName'] }}</strong>
+                                @if($transaction['isCredit'])
                                     <span class="badge badge-danger">Tín dụng</span>
                                 @else
                                     <span class="badge badge-secondary">Tiền mặt</span>
                                 @endif
-                                @if ($transaction->reason->type === ReasonType::SPEND)
-                                    {!! ReasonLabel::getBadge($transaction->reason?->label) !!}
+                                @if ($transaction['reason']['type'] === ReasonType::SPEND)
+                                    {!! ReasonLabel::getBadge($transaction['reason']['label']) !!}
                                 @endif
                             </div>
                         </div>
                         <div class="right">
-                            <div class="price {{ $transaction->reason->type === ReasonType::EARN ? 'text-secondary' : 'text-danger' }}">
-                                @if ($transaction->reason->type === ReasonType::EARN)
-                                    + {!! formatVND($transaction->price) !!}
-                                @elseif ($transaction->reason->type === ReasonType::GROUP)
-                                    + {!! formatVND($transaction->totalPrice, 'danger') !!}
+                            <div class="price {{ $transaction['reason']['type'] === ReasonType::EARN ? 'text-secondary' : 'text-danger' }}">
+                                @if ($transaction['reason']['type'] === ReasonType::EARN)
+                                    + {!! formatVND($transaction['price']) !!}
+                                @elseif ($transaction['reason']['type'] === ReasonType::GROUP)
+                                    + {!! formatVND($transaction['totalPrice'], 'danger') !!}
                                 @else
-                                    - {!! formatVND($transaction->price, 'danger') !!}
+                                    - {!! formatVND($transaction['price'], 'danger') !!}
                                 @endif
                             </div>
                         </div>
@@ -120,17 +120,18 @@
         </div>
     @endforeach
 
-
-    <div class="section mt-2 mb-2" >
-        <a href="#" class="btn btn-primary btn-block btn-lg">Load More</a>
+    <div class="section mt-2 mb-2">
+        <button wire:click="loadMore" id="btn-load" data-p="1" class="btn btn-primary btn-block btn-lg">Tải thêm</button>
     </div>
-
 
 </div>
 @push('script')
     <script>
-        toastbox()
+        $('#btn-load').on('click', function () {
+            $(this).data("p", parseInt($(this).data("p")) + 1);
+        })
         $('#btn-add').on('click', function (e) {
+
             if ($('#i-price').val() == null || $('#i-reason').val() == null || $('input[type="radio"][name="type"]:checked').length === 0) {
                 e.preventDefault()
                 showErrorDialog('Vui lòng điền đầy đủ thông tin')
