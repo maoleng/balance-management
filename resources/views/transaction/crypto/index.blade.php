@@ -69,7 +69,9 @@
                         <tr>
                             <td>
                                 <img src="{{ $transaction->coinLogo }}" alt="" class="img-fluid avatar mx-1">
-                                {{ $transaction->coinName }}
+                                <div>
+                                    <strong>{{ $transaction->coinName }}</strong>
+                                </div>
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">

@@ -75,4 +75,9 @@ class Transaction extends Model
         $this->append('coinName');
     }
 
+    public function appendCryptoData(): void
+    {
+        $this->append(['coinLogo', 'coinName']);
+    }
+
 }

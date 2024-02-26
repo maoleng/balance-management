@@ -26,11 +26,11 @@
         </a>
     </div>
     <div class="section mt-2 mb-2">
-        <div class="card bg-dark text-white">
+        <a wire:navigate href="{{ route('transaction.crypto') }}" class="card bg-dark text-white">
             <img src="https://image.luatvietnam.vn/uploaded/twebp/images/original/2023/08/09/tien-dien-tu-la-tien-duoc-ma-hoa_0908151554.jpg" class="card-img overlay-img" alt="image">
             <div class="card-img-overlay">
                 <h2 class="card-title">Tiền điện tử</h2>
             </div>
-        </div>
+        </a>
     </div>
 </div>
