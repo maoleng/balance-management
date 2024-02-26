@@ -158,7 +158,7 @@
                 const reasonText = $(this).text().trim();
                 if (reasonText === reason) {
                     typeBtn.prop('checked', true)
-                    console.log(123)
+                    return false
                 } else {
                     typeBtn.prop('checked', false)
                 }
