@@ -14,13 +14,16 @@ if (!function_exists('c')) {
 if (! function_exists('formatVND')) {
     function formatVND($money, $type = 'muted'): string
     {
-        return number_format($money)." <small class=\"text-$type small\">đ</small>";
+        return number_format($money)."<small class=\"text-$type small\">đ</small>";
     }
 }
 
 if (! function_exists('formatCoin')) {
     function formatCoin($money, $coin): string
     {
+        if (! str_contains($money, '.')) {
+            $money .= '.0';
+        }
         [$whole_number, $decimal_part] = explode('.', $money);
 
         return number_format($whole_number).'.'.$decimal_part.' <small class="text-muted small">'.$coin.'</small>';
