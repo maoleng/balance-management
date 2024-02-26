@@ -25,7 +25,7 @@ class CashTransactionForm extends Form
                 'numeric',
             ],
             'type' => [
-                'required',
+                'nullable',
             ],
             'reason' => [
                 'required',
