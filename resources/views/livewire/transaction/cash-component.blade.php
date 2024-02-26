@@ -108,7 +108,7 @@
                                 @if ($transaction['reason']['type'] === ReasonType::EARN)
                                     + {!! formatVND($transaction['price']) !!}
                                 @elseif ($transaction['reason']['type'] === ReasonType::GROUP)
-                                    + {!! formatVND($transaction['totalPrice'], 'danger') !!}
+                                    - {!! formatVND($transaction['totalPrice'], 'danger') !!}
                                 @else
                                     - {!! formatVND($transaction['price'], 'danger') !!}
                                 @endif
