@@ -5,7 +5,7 @@
         </div>
         <div class="right">
             <a wire:navigate href="{{ route('me') }}" class="headerButton">
-                <img src="{{ authed()->avatar }}" alt="image" class="imaged w32">
+                <img src="{{ asset('assets/img/avatar.jpg') }}" alt="image" class="imaged w32">
             </a>
         </div>
     </div>

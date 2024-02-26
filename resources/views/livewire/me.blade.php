@@ -14,7 +14,7 @@
     <div class="section mt-3 text-center">
         <div class="avatar-section">
             <a href="#">
-                <img src="{{ authed()->avatar }}" alt="avatar" class="imaged w100 rounded">
+                <img src="{{ asset('assets/img/avatar.jpg') }}" alt="avatar" class="imaged w100 rounded">
             </a>
         </div>
     </div>
