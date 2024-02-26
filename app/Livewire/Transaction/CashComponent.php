@@ -37,7 +37,11 @@ class CashComponent extends Component
 
     public function store(): void
     {
-        $this->form->store();
+        $transaction = $this->form->store();
+        if (empty($this->gr_transactions['Hôm nay'])) {
+            $this->gr_transactions['Hôm nay'] = [$transaction];
+        }
+        array_unshift($this->gr_transactions['Hôm nay'], $transaction);
     }
 
     private function getMoreTransactions($p): array
@@ -52,15 +56,7 @@ class CashComponent extends Component
             ->limit(10 * $p)
             ->get()
             ->groupBy(function ($transaction) {
-                return $transaction->created_at->isToday() ? 'Hôm nay' : Str::ucfirst($transaction->created_at->isoFormat('dddd')) . ', ' . $transaction->created_at->format('d-m-Y');
-            })->each(function ($transactions) {
-                $transactions->each(function ($transaction) {
-                    $transaction->append('isCredit');
-                    if ($transaction->reason->type === ReasonType::GROUP) {
-                        $transaction->append('totalPrice');
-                    }
-                    $transaction->reason->append('shortName');
-                });
-            })->toArray();
+                return $transaction->created_at->isToday() ? 'Hôm nay' : Str::ucfirst($transaction->created_at->isoFormat('dddd')).', '.$transaction->created_at->format('d-m-Y');
+            })->each(fn($transactions) => $transactions->each(fn($transaction) => $transaction->appendCashData()))->toArray();
     }
 }

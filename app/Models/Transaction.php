@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReasonType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,6 +59,15 @@ class Transaction extends Model
         $coin = strtolower($this->coinName);
 
         return "https://assets.coincap.io/assets/icons/$coin@2x.png";
+    }
+
+    public function appendCashData(): void
+    {
+        $this->append('isCredit');
+        if ($this->reason->type === ReasonType::GROUP) {
+            $this->append('totalPrice');
+        }
+        $this->reason->append('shortName');
     }
 
 }

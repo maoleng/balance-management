@@ -36,7 +36,7 @@ class CashTransactionForm extends Form
         ];
     }
 
-    public function store(): void
+    public function store(): array
     {
         $this->validate();
 
@@ -53,7 +53,7 @@ class CashTransactionForm extends Form
             ]
         )->id;
 
-        Transaction::query()->create([
+        $transaction = Transaction::query()->create([
             'price' => $data['price'],
             'reason_id' => $reason_id,
             'external' => $data['is_credit'] ? ['is_credit' => true] : null,
@@ -61,6 +61,10 @@ class CashTransactionForm extends Form
         ]);
 
         $this->reset();
+
+        $transaction->load(['reason', 'transactions.reason'])->appendCashData();
+
+        return $transaction->toArray();
     }
 
 }
