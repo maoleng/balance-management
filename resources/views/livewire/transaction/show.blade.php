@@ -4,7 +4,7 @@
 @section('header')
     <div class="appHeader">
         <div class="left">
-            <a wire:navigate href="{{ route('transaction.cash') }}" class="headerButton goBack">
+            <a wire:navigate href="{{ route("transaction.$page") }}" class="headerButton goBack">
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>
@@ -31,7 +31,7 @@
                 <div class="modal-footer">
                     <div class="btn-inline">
                         <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
-                        <button wire:click="destroy({{ $transaction }}, 'transaction.cash')" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                        <button wire:click="destroy({{ $transaction }}, 'transaction.{{ $page }}')" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
                     </div>
                 </div>
             </div>

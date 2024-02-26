@@ -19,7 +19,7 @@ class CashComponent extends BaseComponent
     public function render(): View
     {
         return $this->transaction
-            ? view('livewire.transaction.cash-show')
+            ? view('livewire.transaction.show', ['page' => 'cash'])
             : view('livewire.transaction.cash-component');
     }
 
