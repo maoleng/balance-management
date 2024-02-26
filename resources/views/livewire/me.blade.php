@@ -31,6 +31,13 @@
                 </div>
             </div>
         </li>
+        <li>
+            <a href="{{ route('me') }}" class="item">
+                <div class="in">
+                    <div>Tải lại trang</div>
+                </div>
+            </a>
+        </li>
     </ul>
     <div class="listview-title mt-1">Bảo mật</div>
     <ul class="listview image-listview text mb-2 inset">
