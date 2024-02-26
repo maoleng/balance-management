@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 @include('components.layouts.head-tag')
-<body>
+<body class="@yield('bg-class')">
 <div id="loader">
     <img src="{{ asset('assets/img/loading-icon.png') }}" alt="icon" class="loading-icon">
 </div>

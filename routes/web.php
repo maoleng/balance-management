@@ -25,18 +25,14 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
         Route::get('/', Transaction\IndexComponent::class)->name('index');
-        Route::get('/cash', Transaction\CashComponent::class)->name('cash');
+        Route::get('/cash/{transaction?}', Transaction\CashComponent::class)->name('cash');
         Route::get('/onus', Transaction\ONUSComponent::class)->name('onus');
         Route::get('/crypto', Transaction\CryptoComponent::class)->name('crypto');
-//        Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);
-        Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
-        Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
 
-//        Route::resource('onus', ONUSTransactionController::class)->only(['index', 'store']);
-        Route::delete('onus/{transaction}', [ONUSTransactionController::class, 'destroy'])->name('onus.destroy');
-
-//        Route::resource('crypto', CryptoTransactionController::class)->only(['index', 'store']);
-        Route::delete('crypto/{transaction}', [CryptoTransactionController::class, 'destroy'])->name('crypto.destroy');
+//        Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
+//        Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
+//        Route::delete('onus/{transaction}', [ONUSTransactionController::class, 'destroy'])->name('onus.destroy');
+//        Route::delete('crypto/{transaction}', [CryptoTransactionController::class, 'destroy'])->name('crypto.destroy');
     });
 
     Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {

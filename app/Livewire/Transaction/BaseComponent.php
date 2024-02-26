@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Transaction;
 
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -25,6 +26,13 @@ abstract class BaseComponent extends Component
         } else {
             array_unshift($this->gr_transactions['Hôm nay'], $transaction);
         }
+    }
+
+    public function destroy(Transaction $transaction, $route): void
+    {
+        $transaction->transactions()->delete();
+        $transaction->delete();
+        $this->redirectRoute($route, navigate: true);
     }
 
     abstract protected function getMoreTransactions($p): array;

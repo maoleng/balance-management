@@ -8,7 +8,9 @@ use BenSampo\Enum\Enum;
 final class ReasonType extends Enum
 {
 
+    #[Description('Chi tiêu')]
     public const SPEND = 0;
+    #[Description('Thu nhập')]
     public const EARN = 1;
     #[Description('Siêu thị')]
     public const GROUP = 2;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Transaction extends Model
 {
@@ -21,12 +22,17 @@ class Transaction extends Model
 
     protected $casts = [
         'external' => 'json',
-        'created_at' => 'date',
+        'created_at' => 'datetime',
     ];
 
     public function getPrettyCreatedAtAttribute(): string
     {
-        return Carbon::make($this->created_at)->format('d-m-y H:i:s');
+        return Str::ucfirst($this->created_at->isoFormat('dddd')).', '.$this->created_at->format('d-m-Y');
+    }
+
+    public function getPrettyCreatedAtWithTimeAttribute(): string
+    {
+        return $this->prettyCreatedAt.' - '.$this->created_at->format('H:i');
     }
 
     public function reason(): BelongsTo
@@ -61,23 +67,29 @@ class Transaction extends Model
         return "https://assets.coincap.io/assets/icons/$coin@2x.png";
     }
 
-    public function appendCashData(): void
+    public function appendCashData(): Transaction
     {
         $this->append('isCredit');
         if ($this->reason->type === ReasonType::GROUP) {
             $this->append('totalPrice');
         }
         $this->reason->append('shortName');
+
+        return $this;
     }
 
-    public function appendONUSData(): void
+    public function appendONUSData(): Transaction
     {
         $this->append('coinName');
+
+        return $this;
     }
 
-    public function appendCryptoData(): void
+    public function appendCryptoData(): Transaction
     {
         $this->append(['coinLogo', 'coinName']);
+
+        return $this;
     }
 
 }

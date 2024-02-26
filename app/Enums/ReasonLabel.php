@@ -2,13 +2,17 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Attributes\Description;
 use BenSampo\Enum\Enum;
 
 final class ReasonLabel extends Enum
 {
 
+    #[Description('Chi tiêu bắt buộc')]
     public const MUST_HAVE = 0;
+    #[Description('Chi tiêu linh hoạt')]
     public const NICE_TO_HAVE = 1;
+    #[Description('Chi tiêu lãng phí')]
     public const WASTE = 2;
 
     public static function getBadge($label): string
