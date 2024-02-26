@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Reason extends Model
 {
@@ -23,6 +24,14 @@ class Reason extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getShortNameAttribute()
+    {
+        $len = Str::length($this->name);
+
+        return $len >= 12 ? Str::limit($this->name, 12) : $this->name;
+
     }
 
 }

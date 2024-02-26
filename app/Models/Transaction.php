@@ -20,6 +20,7 @@ class Transaction extends Model
 
     protected $casts = [
         'external' => 'json',
+        'created_at' => 'date',
     ];
 
     public function getPrettyCreatedAtAttribute(): string

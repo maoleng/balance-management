@@ -14,9 +14,9 @@ final class ReasonLabel extends Enum
     public static function getBadge($label): string
     {
         return match ($label) {
-            self::MUST_HAVE => '<h5><span class="badge bg-primary">Must Have</span></h5>',
-            self::NICE_TO_HAVE => '<h5><span class="badge bg-success">Nice To Have</span></h5>',
-            self::WASTE => '<h5><span class="badge bg-danger">Waste</span></h5>',
+            self::MUST_HAVE => '<span class="badge badge-primary">Must</span>',
+            self::NICE_TO_HAVE => '<span class="badge badge-success">Nice</span>',
+            self::WASTE => '<span class="badge badge-danger">Waste</span>',
             default => '',
         };
     }

@@ -1,15 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashTransactionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CryptoTransactionController;
 use App\Http\Controllers\ONUSTransactionController;
 use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatisticController;
-use App\Http\Controllers\CashTransactionController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
 use App\Livewire\SiteComponent;
+use App\Livewire\Transaction\Cash;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
@@ -23,7 +24,8 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     Route::get('/market', [SiteComponent::class, 'market'])->name('market');
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
-        Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);
+        Route::get('/cash', \App\Livewire\Transaction\CashComponent::class)->name('cash');
+//        Route::resource('cash', CashTransactionController::class)->only(['index', 'store']);
         Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
         Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
 

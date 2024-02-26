@@ -13,41 +13,9 @@ use Illuminate\View\View;
 class CashTransactionController extends Controller
 {
 
-    public function index(): View
-    {
-        $transactions = Transaction::query()->whereNull('transaction_id')->with(['reason', 'transactions.reason'])
-            ->whereHas('reason', function ($q) {
-                $q->whereIn('type', array_merge(ReasonType::getCashReasonTypes(), [ReasonType::CREDIT_SETTLEMENT]));
-            })
-            ->orderByDesc('created_at')->paginate(8);
-        $reasons = Reason::query()->orderBy('name')->get();
-
-        return view('transaction.cash.index', [
-            'transactions' => $transactions,
-            'reasons' => $reasons,
-        ]);
-    }
-
     public function store(CashTransactionRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        $name = $data['reason'] ?? ReasonType::getDescription((int) $data['type']);
-        $reason_id = Reason::query()->firstOrCreate(
-            [
-                'name' => $name,
-            ],
-            [
-                'name' => $name,
-                'type' => $data['type'],
-            ]
-        )->id;
 
-        Transaction::query()->create([
-            'price' => $data['price'],
-            'reason_id' => $reason_id,
-            'external' => $data['is_credit'] ? ['is_credit' => true] : null,
-            'created_at' => now(),
-        ]);
 
         return back()->with('success', 'Create transaction successfully');
     }

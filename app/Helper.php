@@ -12,9 +12,9 @@ if (!function_exists('c')) {
 }
 
 if (! function_exists('formatVND')) {
-    function formatVND($money): string
+    function formatVND($money, $type = 'muted'): string
     {
-        return number_format($money).' <small class="text-muted small">VND</small>';
+        return number_format($money)." <small class=\"text-$type small\">đ</small>";
     }
 }
 

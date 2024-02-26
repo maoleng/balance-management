@@ -10,6 +10,7 @@ final class ReasonType extends Enum
 
     public const SPEND = 0;
     public const EARN = 1;
+    #[Description('Siêu thị')]
     public const GROUP = 2;
     #[Description('Trả nợ tín dụng')]
     public const CREDIT_SETTLEMENT = 11;
@@ -44,7 +45,6 @@ final class ReasonType extends Enum
         return [
             'SPEND' => self::SPEND,
             'EARN' => self::EARN,
-            'GROUP' => self::GROUP,
         ];
     }
 
