@@ -65,4 +65,13 @@ final class ReasonType extends Enum
         ];
     }
 
+    public static function classifyONUSType($type): ?bool
+    {
+        return match ($type) {
+            self::CASH_TO_ONUS, self::DAILY_REVENUE_ONUS, self::FARM_REVENUE_ONUS, self::FUTURE_REVENUE_ONUS => true,
+            self::ONUS_TO_CASH => false,
+            default => null,
+        };
+    }
+
 }

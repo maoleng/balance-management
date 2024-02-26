@@ -61,11 +61,9 @@
             <div class="section-title">{{ $date }}</div>
             <div class="transactions">
                 @foreach($transactions as $transaction)
-                    <a href="app-transaction-detail.html" class="item">
+                    <a wire:navigate href="{{ route('transaction.onus', ['transaction' => $transaction['id']]) }}" class="item">
                         <div class="detail">
                             <div>
-
-
                                 <strong>{{ $transaction['reason']['name'] }}</strong>
                             </div>
                         </div>

@@ -15,16 +15,23 @@ use Livewire\Component;
 class ONUSComponent extends BaseComponent
 {
 
+    public ?Transaction $transaction = null;
     public ONUSTransactionForm $form;
 
     public function render(): View
     {
-        return view('livewire.transaction.onus-component');
+        return $this->transaction
+            ? view('livewire.transaction.show', ['page' => 'onus'])
+            : view('livewire.transaction.onus-component');
     }
 
-    public function mount(): void
+    public function mount(Transaction $transaction): void
     {
-        $this->loadMore();
+        if ($transaction->exists) {
+            $this->transaction = $transaction->load('reason');
+        } else {
+            $this->loadMore();
+        }
     }
 
     protected function getMoreTransactions($p): array

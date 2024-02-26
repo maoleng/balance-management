@@ -106,4 +106,38 @@
             </ul>
         </div>
     @endif
+
+    @if ($page === 'onus')
+        <div class="section mt-2 mb-2">
+            <div class="listed-detail mt-3">
+                <div class="icon-wrapper">
+                    <div class="iconbox">
+                        @if ($type = ReasonType::classifyONUSType($transaction->reason->type))
+                            <ion-icon name="arrow-down-outline"></ion-icon>
+                        @elseif ($type === false)
+                            <ion-icon name="arrow-up-outline"></ion-icon>
+                        @else
+                            <ion-icon name="infinite-outline"></ion-icon>
+                        @endif
+                    </div>
+                </div>
+                <h3 class="text-center mt-2">{{ $transaction->reason->name }}</h3>
+                <h2 class="text-center text-secondary mt-2">{!! formatVND($transaction->price) !!}</h2>
+            </div>
+
+            <ul class="listview flush transparent simple-listview no-space mt-3">
+                @if ($transaction->coinName)
+                    <li>
+                        <strong>Mã tiền</strong>
+                        <span>{{ $transaction->coinName }}</span>
+                    </li>
+                @endif
+                <li>
+                    <strong>Thời gian</strong>
+                    <span>{{ $transaction->prettyCreatedAtWithTime }}</span>
+                </li>
+            </ul>
+        </div>
+    @endif
+
 </div>
