@@ -253,7 +253,7 @@
     @endif
 
 </div>
-@if ($transaction->reason->type === ReasonType::GROUP) @push('script')
+@if ($transaction->reason->type === ReasonType::GROUP) @script
     <script>
         $('#btn-add').on('click', function (e) {
             if ($('#i-price').val().trim() === '' || $('#i-reason').val().trim() === '' || $('#i-quantity').val().trim() === '') {
@@ -289,4 +289,4 @@
             })
         })
     </script>
-@endpush @endif
+@endscript @endif

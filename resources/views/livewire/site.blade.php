@@ -80,8 +80,10 @@
         </div>
     </div>
 </div>
-@push('script')
-    <script src="{{ asset('assets/js/plugins/apexcharts/apexcharts.min.js') }}"></script>
+@assets
+    <script src="{{ asset('assets/js/plugins/apexcharts/apexcharts.min.js') }}" defer></script>
+@endassets
+@script
     <script>
         $('#btn-toggle_show').on('click', function () {
             const iconToggle = $(this).find('ion-icon')
@@ -152,4 +154,4 @@
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
     </script>
-@endpush
+@endscript

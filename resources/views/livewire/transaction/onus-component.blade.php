@@ -93,7 +93,7 @@
     </div>
 
 </div>
-@push('script')
+@script
     <script>
         $('#btn-load').on('click', function () {
             $(this).data("p", parseInt($(this).data("p")) + 1);
@@ -127,4 +127,4 @@
         })
     </script>
 
-@endpush
+@endscript
