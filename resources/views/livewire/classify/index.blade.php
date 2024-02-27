@@ -82,7 +82,27 @@
         $('.btn-destroy-category').on('click', function () {
             const form = $(this).closest('form')
             form.closest('.modal').modal('toggle')
-            $(`#modal-delete-${form.data('category_id')}`).modal('toggle')
+            $(`#modal-delete-category-${form.data('category_id')}`).modal('toggle')
+        })
+        $('.btn-destroy-reason').on('click', function () {
+            const form = $(this).closest('form')
+            form.closest('.modal').modal('toggle')
+
+            $.ajax({
+                type: 'DELETE',
+                url: '{{ route('classify.reason.destroy') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: form.data('reason_id'),
+                },
+                success: function (e) {
+                    if (e.status) {
+                        $(`#modal-delete-reason-${form.data('reason_id')}`).modal('toggle')
+                    } else {
+                        showErrorDialog(e.message)
+                    }
+                }
+            })
         })
         $('.btn-confirm-destroy-category').on('click', function () {
             $.ajax({
@@ -93,12 +113,17 @@
                     id: $(this).data('id'),
                 },
                 success: function (e) {
-                    $wire.$call('loadCategories')
+                    if (e.status) {
+                        $wire.$call('loadCategories')
+                    }
                     e.status === true
                         ? showSuccessDialog(e.message)
                         : showErrorDialog(e.message)
                 }
             })
+        })
+        $('.btn-confirm-destroy-reason').on('click', function () {
+            $wire.$call('loadReasons').then(() => refreshTab())
         })
         $('.btn-save-category').on('click', function () {
             const form = $(this).closest('form')
@@ -123,9 +148,7 @@
                         nameInput.val('')
                         moneyInput.val('')
                     }
-                    $wire.$call('loadCategories').then(function () {
-                        Livewire.navigate('{{ route('classify.index') }}')
-                    })
+                    $wire.$call('loadCategories')
                 },
             })
         })

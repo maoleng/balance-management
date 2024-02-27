@@ -71,9 +71,18 @@
                             <input type="hidden" name="image" value="{{ $reason->image }}">
                         @endif
                         <div class="form-group basic">
-                            <button type="button" class="btn-save-reason btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">
-                                {{ isset($reason) ? 'Sửa' : 'Thêm' }}
-                            </button>
+                            <div class="row">
+                                @isset($category)
+                                    <div class="col">
+                                        <button type="button" class="btn-destroy-reason btn btn-danger btn-block btn-lg" data-bs-dismiss="modal">Xóa</button>
+                                    </div>
+                                @endisset
+                                <div class="col">
+                                    <button type="button" class="btn-save-reason btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">
+                                        {{ isset($reason) ? 'Sửa' : 'Thêm' }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -81,3 +90,24 @@
         </div>
     </div>
 </div>
+
+@isset($reason)
+    <div class="modal fade dialogbox" id="modal-delete-reason-{{ $reason->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa {{ $reason->name }}</h5>
+                </div>
+                <div class="modal-body">
+                    Bạn chắc chứ?
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-inline">
+                        <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
+                        <button wire:click="deleteReason({{ $reason }})" class="btn-confirm-destroy-reason btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endisset

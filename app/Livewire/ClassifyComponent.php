@@ -76,6 +76,26 @@ class ClassifyComponent extends Component
         return ['status' => true, 'message' => 'Xóa thành công'];
     }
 
+    public function destroyReason(Request $request): array
+    {
+        $reason = Reason::query()->find($request->get('id'));
+        if ($reason === null) {
+            return ['status' => false, 'message' => 'Không tìm thấy nguyên nhân'];
+        }
+        if ($reason->transactions->isNotEmpty()) {
+            return ['status' => false, 'message' => 'Vẫn còn giao dịch liên quan đến lí do này'];
+        }
+
+        return ['status' => true, 'message' => 'Xóa thành công'];
+    }
+
+    public function deleteReason(Reason $reason)
+    {
+        $reason->delete();
+        Storage::disk('local')->delete('public/'.$reason->image);
+        $this->loadReasons();
+    }
+
     public function loadCategories(): void
     {
         $this->categories = Category::query()->with(['reasons' => function ($q) {

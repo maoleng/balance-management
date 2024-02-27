@@ -47,7 +47,7 @@
 </div>
 
 @isset($category)
-    <div class="modal fade dialogbox" id="modal-delete-{{ $category->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal fade dialogbox" id="modal-delete-category-{{ $category->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
