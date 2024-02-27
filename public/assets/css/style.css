@@ -5280,15 +5280,18 @@ textarea,
   border-radius: 10px;
   padding: 20px 24px;
   text-align: center;
+  overflow: hidden;
 }
 
 .bill-box .img-wrapper {
   text-align: center;
   margin-bottom: 16px;
+  overflow: hidden;
 }
 
 .bill-box .img-wrapper img {
   margin: auto;
+  max-width: 100%;
 }
 
 .bill-box .img-wrapper .iconbox {
@@ -5311,6 +5314,9 @@ textarea,
   letter-spacing: -0.02em;
   line-height: 1em;
   margin-bottom: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .bill-box p {

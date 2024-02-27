@@ -24,7 +24,7 @@
             <strong>Thống kê</strong>
         </div>
     </a>
-    <a href="app-settings.html" class="item">
+    <a wire:navigate href="{{ route('classify.index') }}" class="item {{ Route::is('classify.*') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="settings-outline"></ion-icon>
             <strong>Phân loại</strong>

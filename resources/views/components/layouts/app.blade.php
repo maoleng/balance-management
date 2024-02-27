@@ -26,6 +26,25 @@
         </div>
     </div>
 </div>
+<div class="modal fade dialogbox" id="successDialog" data-bs-backdrop="static" tabindex="-1"
+     role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-icon text-success">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Thành công</h5>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <div class="btn-inline">
+                    <a href="#" class="btn" data-bs-dismiss="modal">ĐÓNG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="successToast" class="toast-box toast-top bg-success">
     <div class="in"><div class="text"></div></div>
     <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
@@ -45,6 +64,12 @@
     function showErrorDialog(msg)
     {
         const modal = $('#errorDialog')
+        modal.find('.modal-body').text(msg)
+        modal.modal('toggle')
+    }
+    function showSuccessDialog(msg)
+    {
+        const modal = $('#successDialog')
         modal.find('.modal-body').text(msg)
         modal.modal('toggle')
     }

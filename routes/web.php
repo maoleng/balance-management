@@ -9,6 +9,7 @@ use App\Http\Controllers\ReasonController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
+use App\Livewire\ClassifyComponent;
 use App\Livewire\MeComponent;
 use App\Livewire\SiteComponent;
 use App\Livewire\StatisticComponent;
@@ -31,16 +32,13 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
         Route::get('/cash/{transaction?}', Transaction\CashComponent::class)->name('cash');
         Route::get('/onus/{transaction?}', Transaction\ONUSComponent::class)->name('onus');
         Route::get('/crypto/{transaction?}', Transaction\CryptoComponent::class)->name('crypto');
-
-//        Route::delete('cash/{transaction}', [CashTransactionController::class, 'destroy'])->name('cash.destroy');
-//        Route::put('cash/group-transaction', [CashTransactionController::class, 'updateGroupTransaction'])->name('cash.update-group-transaction');
-//        Route::delete('onus/{transaction}', [ONUSTransactionController::class, 'destroy'])->name('onus.destroy');
-//        Route::delete('crypto/{transaction}', [CryptoTransactionController::class, 'destroy'])->name('crypto.destroy');
     });
 
-    Route::group(['prefix' => 'financial-management', 'as' => 'financial-management.'], function () {
-        Route::resource('category', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::resource('reason', ReasonController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::group(['prefix' => 'classify', 'as' => 'classify.'], function () {
+        Route::get('/', ClassifyComponent::class)->name('index');
+        Route::post('/store-image', [ClassifyComponent::class, 'storeImage'])->name('image.store');
+        Route::post('/store-category', [ClassifyComponent::class, 'storeCategory'])->name('category.store');
+        Route::post('/store-reason', [ClassifyComponent::class, 'storeReason'])->name('reason.store');
     });
 
     Route::group(['prefix' => 'statistic', 'as' => 'statistic.'], function () {
