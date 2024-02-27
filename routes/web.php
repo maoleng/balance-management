@@ -11,6 +11,7 @@ use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
 use App\Livewire\MeComponent;
 use App\Livewire\SiteComponent;
+use App\Livewire\StatisticComponent;
 use App\Livewire\Transaction;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +44,8 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     });
 
     Route::group(['prefix' => 'statistic', 'as' => 'statistic.'], function () {
-        Route::get('/', [StatisticController::class, 'index'])->name('index');
-        Route::get('/expense', [StatisticController::class, 'expense'])->name('expense');
-        Route::get('/income', [StatisticController::class, 'income'])->name('income');
+        Route::get('/', StatisticComponent::class)->name('index');
+        Route::get('/fetch', [StatisticComponent::class, 'fetch'])->name('fetch');
     });
 
 });

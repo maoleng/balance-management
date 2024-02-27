@@ -6,9 +6,9 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
     <!-- plugin css file  -->
-    <link rel="stylesheet" href="{{ asset('assets/plugin/datatables/responsive.dataTables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugin/datatables/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets-old/plugin/datatables/responsive.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets-old/plugin/datatables/dataTables.bootstrap5.min.css') }}">
 
     <!-- project css file  -->
-    <link rel="stylesheet" href="{{ asset('assets/css/cryptoon.style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets-old/css/cryptoon.style.min.css') }}">
 </head>

@@ -18,7 +18,7 @@
             <strong>Giao dịch</strong>
         </div>
     </a>
-    <a href="app-cards.html" class="item">
+    <a wire:navigate href="{{ route('statistic.index') }}" class="item {{ Route::is('statistic.*') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="stats-chart-outline"></ion-icon>
             <strong>Thống kê</strong>

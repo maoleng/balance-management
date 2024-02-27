@@ -14,7 +14,7 @@
     </div>
 
 </div>
-<script src="{{ asset('assets/bundles/libscripts.bundle.js') }}"></script>
+<script src="{{ asset('assets-old/bundles/libscripts.bundle.js') }}"></script>
 @yield('script')
 </body>
 </html>
