@@ -1,3 +1,14 @@
+function formatValue(value)
+{
+    if (Math.abs(value) >= 1e6) {
+        return (Math.abs(value) / 1e6).toFixed(1) + 'm';
+    } else if (Math.abs(value) >= 1e3) {
+        return (Math.abs(value) / 1e3).toFixed(1) + 'k';
+    } else {
+        return value.toString();
+    }
+}
+
 function getPieOptions()
 {
     return {
@@ -36,6 +47,14 @@ function getPieOptions()
                 borderWidth: 0
             }
         },
+        tooltip: {
+            enabled: true,
+            y: {
+                formatter: function (val) {
+                    return formatValue(val);
+                }
+            }
+        },
         responsive: [{
             breakpoint: 480,
             options: {
@@ -72,12 +91,24 @@ function getTreeMapOptions()
                 distributed: true,
                 enableShades: false
             }
-        }
+        },
+        tooltip: {
+            enabled: true,
+            style: {
+                fontSize: '12px',
+                fontFamily: undefined
+            },
+            y: {
+                formatter: function (val) {
+                    return formatValue(val);
+                }
+            }
+        },
+
     };
 }
 
-function getStackedBarOptions()
-{
+function getStackedBarOptions() {
     return {
         series: [],
         chart: {
@@ -96,6 +127,9 @@ function getStackedBarOptions()
                         style: {
                             fontSize: '13px',
                             fontWeight: 900
+                        },
+                        formatter: function (val) {
+                            return formatValue(val);
                         }
                     }
                 }
@@ -113,7 +147,7 @@ function getStackedBarOptions()
             categories: [],
             labels: {
                 formatter: function (val) {
-                    return val + "đ"
+                    return formatValue(val);
                 }
             }
         },
@@ -121,11 +155,16 @@ function getStackedBarOptions()
             title: {
                 text: undefined
             },
+            labels: {
+                formatter: function (val) {
+                    return formatValue(val);
+                }
+            }
         },
         tooltip: {
             y: {
                 formatter: function (val) {
-                    return val + "đ"
+                    return formatValue(val);
                 }
             }
         },
@@ -136,12 +175,16 @@ function getStackedBarOptions()
             position: 'top',
             horizontalAlign: 'left',
             offsetX: 40
+        },
+        dataLabels: {
+            formatter: function (val) {
+                return formatValue(val);
+            }
         }
     };
 }
 
-function getStackedAreaOptions()
-{
+function getStackedAreaOptions() {
     return {
         chart: {
             height: 300,
@@ -152,7 +195,7 @@ function getStackedAreaOptions()
             },
             events: {
                 selection: function(chart, e) {
-                    console.log(new Date(e.xaxis.min) )
+                    console.log(new Date(e.xaxis.min))
                 }
             },
             foreColor: 'grey',
@@ -161,9 +204,7 @@ function getStackedAreaOptions()
         dataLabels: {
             enabled: false
         },
-
         series: [],
-
         fill: {
             type: 'gradient',
             gradient: {
@@ -171,7 +212,6 @@ function getStackedAreaOptions()
                 opacityTo: 0.8,
             }
         },
-
         legend: {
             position: 'top',
             horizontalAlign: 'right',
@@ -179,6 +219,13 @@ function getStackedAreaOptions()
         },
         xaxis: {
             type: 'datetime',
+        },
+        yaxis: {
+            labels: {
+                formatter: function(val) {
+                    return formatValue(val);
+                }
+            },
         },
         grid: {
             yaxis: {
@@ -198,5 +245,13 @@ function getStackedAreaOptions()
             curve: 'smooth',
             width: 2,
         },
-    }
+        tooltip: {
+            y: {
+                formatter: function(val) {
+                    return formatValue(val);
+                }
+            }
+        }
+    };
 }
+
