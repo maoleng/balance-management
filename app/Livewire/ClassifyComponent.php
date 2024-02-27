@@ -3,8 +3,6 @@
 namespace App\Livewire;
 
 use App\Enums\ReasonType;
-use App\Livewire\Forms\CategoryForm;
-use App\Livewire\Forms\ReasonForm;
 use App\Models\Category;
 use App\Models\Reason;
 use Illuminate\Contracts\View\View;
@@ -13,24 +11,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class ClassifyComponent extends Component
 {
 
-    use WithFileUploads;
-
-
     public Collection $categories;
     public Collection $other_reasons;
     public Collection $earn_reasons;
-    public CategoryForm $category_form;
-    public ReasonForm $reason_form;
     public \Illuminate\Support\Collection $reasons;
 
     public function render(): View
     {
-        return view('livewire.classify');
+        return view('livewire.classify.index');
     }
 
     public function mount(): void
