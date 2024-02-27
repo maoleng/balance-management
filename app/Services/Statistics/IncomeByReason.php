@@ -5,7 +5,8 @@ namespace App\Services\Statistics;
 use App\Enums\ChartType;
 use App\Enums\FilterTime;
 use App\Enums\ReasonType;
-use Illuminate\Database\Query\Builder;
+use App\Models\Reason;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
@@ -14,7 +15,7 @@ class IncomeByReason
 
     public static function getIncomeByReason($time): array
     {
-        $q = DB::table('reasons')
+        $q = Reason::query()
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
             ->whereIn('reasons.type', [ReasonType::EARN, ReasonType::DAILY_REVENUE_ONUS, ReasonType::FARM_REVENUE_ONUS])
             ->whereBetween('transactions.created_at', FilterTime::getRanges($time))

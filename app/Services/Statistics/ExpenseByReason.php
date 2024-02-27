@@ -5,7 +5,8 @@ namespace App\Services\Statistics;
 use App\Enums\ChartType;
 use App\Enums\FilterTime;
 use App\Enums\ReasonType;
-use Illuminate\Database\Query\Builder;
+use App\Models\Reason;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
@@ -14,7 +15,7 @@ class ExpenseByReason
 
     public static function getExpenseByReason($time): array
     {
-        $q = DB::table('reasons')
+        $q = Reason::query()
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
             ->where('reasons.type', '=', ReasonType::SPEND)
             ->whereBetween('transactions.created_at', FilterTime::getRanges($time))
