@@ -20,6 +20,7 @@ class ExpenseByCategory
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
             ->where('reasons.type', '=', ReasonType::SPEND)
             ->whereBetween('transactions.created_at', FilterTime::getRanges($time))
+            ->whereNull('deleted_at')
             ->select(
                 'categories.id',
                 'categories.name as category',

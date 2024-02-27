@@ -20,6 +20,7 @@ class ExpenseByLabel
             ->join('reasons', 'reasons.id', '=', 'transactions.reason_id')
             ->where('reasons.type', '=', ReasonType::SPEND)
             ->whereBetween('created_at', FilterTime::getRanges($time))
+            ->whereNull('deleted_at')
             ->select(
                 DB::raw('DATE(created_at) as date'),
                 DB::raw('COALESCE(label, "null") as label'),

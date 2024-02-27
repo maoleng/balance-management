@@ -19,6 +19,7 @@ class IncomeByReason
             ->join('transactions', 'reasons.id', '=', 'transactions.reason_id')
             ->whereIn('reasons.type', [ReasonType::EARN, ReasonType::DAILY_REVENUE_ONUS, ReasonType::FARM_REVENUE_ONUS])
             ->whereBetween('transactions.created_at', FilterTime::getRanges($time))
+            ->whereNull('deleted_at')
             ->select(
                 'reasons.id',
                 'reasons.name as reason',
