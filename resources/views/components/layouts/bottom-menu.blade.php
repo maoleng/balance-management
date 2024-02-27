@@ -2,7 +2,7 @@
 <div class="appBottomMenu">
     <a wire:navigate href="{{ route('index') }}" class="item {{ Route::is('index') ? 'active' : '' }}">
         <div class="col">
-            <ion-icon name="storefront-outline"></ion-icon>
+            <ion-icon name="home-outline"></ion-icon>
             <strong>Tổng quan</strong>
         </div>
     </a>
