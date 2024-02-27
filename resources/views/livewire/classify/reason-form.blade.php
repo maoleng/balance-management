@@ -71,7 +71,9 @@
                             <input type="hidden" name="image" value="{{ $reason->image }}">
                         @endif
                         <div class="form-group basic">
-                            <button type="button" class="btn-save-reason btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">Thêm</button>
+                            <button type="button" class="btn-save-reason btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">
+                                {{ isset($reason) ? 'Sửa' : 'Thêm' }}
+                            </button>
                         </div>
                     </form>
                 </div>

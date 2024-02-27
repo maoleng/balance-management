@@ -38,6 +38,7 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
         Route::get('/', ClassifyComponent::class)->name('index');
         Route::post('/store-image', [ClassifyComponent::class, 'storeImage'])->name('image.store');
         Route::post('/store-category', [ClassifyComponent::class, 'storeCategory'])->name('category.store');
+        Route::delete('/destroy-category', [ClassifyComponent::class, 'destroyCategory'])->name('category.destroy');
         Route::post('/store-reason', [ClassifyComponent::class, 'storeReason'])->name('reason.store');
     });
 

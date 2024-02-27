@@ -65,6 +65,17 @@ class ClassifyComponent extends Component
         }
     }
 
+    public function destroyCategory(Request $request): array
+    {
+        $category = Category::query()->find($request->get('id'));
+        if ($category->reasons->isNotEmpty()) {
+            return ['status' => false, 'message' => 'Vẫn còn lí do gắn với danh mục này'];
+        }
+        $category->delete();
+
+        return ['status' => true, 'message' => 'Xóa thành công'];
+    }
+
     public function loadCategories(): void
     {
         $this->categories = Category::query()->with(['reasons' => function ($q) {

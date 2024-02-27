@@ -79,6 +79,27 @@
         $('.nav-link').on('click', function () {
             $('#btn-create').attr('data-bs-target', `#modal-${$(this).data('value')}-`)
         })
+        $('.btn-destroy-category').on('click', function () {
+            const form = $(this).closest('form')
+            form.closest('.modal').modal('toggle')
+            $(`#modal-delete-${form.data('category_id')}`).modal('toggle')
+        })
+        $('.btn-confirm-destroy-category').on('click', function () {
+            $.ajax({
+                type: 'DELETE',
+                url: '{{ route('classify.category.destroy') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: $(this).data('id'),
+                },
+                success: function (e) {
+                    $wire.$call('loadCategories')
+                    e.status === true
+                        ? showSuccessDialog(e.message)
+                        : showErrorDialog(e.message)
+                }
+            })
+        })
         $('.btn-save-category').on('click', function () {
             const form = $(this).closest('form')
             const nameInput = form.find('input[name="name"]')
@@ -97,12 +118,14 @@
                     money: moneyInput.val(),
                 },
                 success: function () {
-                    $wire.$call('loadReasons')
                     showSuccessDialog(`${category_id === null ? 'Tạo mới': 'Cập nhật'} thành công`)
                     if (category_id === null) {
                         nameInput.val('')
                         moneyInput.val('')
                     }
+                    $wire.$call('loadCategories').then(function () {
+                        Livewire.navigate('{{ route('classify.index') }}')
+                    })
                 },
             })
         })
