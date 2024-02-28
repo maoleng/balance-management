@@ -54,7 +54,7 @@ class CashTransactionForm extends Form
         )->id;
 
         $transaction = Transaction::query()->create([
-            'price' => $data['price'],
+            'price' => str_replace(',', '', $data['price']),
             'reason_id' => $reason_id,
             'external' => $data['is_credit'] ? ['is_credit' => true] : null,
             'created_at' => now(),

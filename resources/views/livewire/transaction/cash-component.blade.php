@@ -50,7 +50,7 @@
                             <div class="form-group basic animated">
                                 <div class="input-wrapper">
                                     <label class="label" for="i-price">Số tiền</label>
-                                    <input required wire:model="form.price" type="number" class="form-control" id="i-price" placeholder="Số tiền">
+                                    <input required wire:model="form.price" type="tel" class="form-control" id="i-price" placeholder="Số tiền">
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -130,7 +130,9 @@
 </div>
 @script
     <script>
-
+        $('#i-price').on('input', function() {
+            $(this).val($(this).val().replace(/\D/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+        })
         $('#btn-load').on('click', function () {
             $(this).data("p", parseInt($(this).data("p")) + 1);
         })
