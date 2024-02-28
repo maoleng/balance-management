@@ -14,6 +14,7 @@
                 url: '{{ route('subscription') }}',
                 method: 'POST',
                 data: {
+                    _token: '{{ csrf_token() }}',
                     subscription: subscription.toJSON(),
                 }
             })
