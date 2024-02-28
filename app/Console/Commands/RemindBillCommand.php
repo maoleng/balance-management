@@ -19,6 +19,7 @@ class RemindBillCommand extends Command
         foreach ($bills as $bill) {
             $user->notify(new BillNotification($bill));
         }
+        echo "Reminded: {$bills->count()}";
     }
 
 }
