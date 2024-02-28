@@ -17,19 +17,9 @@
                     subscription: subscription.toJSON(),
                 }
             })
-            showNotification()
         } else {
             subscription = sub
-            showNotification()
         }
-    }
-
-    function showNotification()
-    {
-        serviceWorkerRegistration.showNotification('Notifications granted', {
-            body: 'Here is a first notification',
-            vibrate: [300, 200, 300],
-        })
     }
 
     async function createSubscription()
