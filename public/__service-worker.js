@@ -48,3 +48,8 @@ self.addEventListener('activate', function (event) {
   // Calling claim() to force a "controllerchange" event on navigator.serviceWorker
   event.waitUntil(self.clients.claim());
 });
+
+self.addEventListener('push', function(event) {
+    const data = event.data.json();
+    self.registration.showNotification(data.title, data);
+});
