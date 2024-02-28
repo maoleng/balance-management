@@ -148,7 +148,16 @@
                     <div class="modal-body">
                         <div class="action-sheet-content">
                             <form wire:submit="storeGroup">
-                                <div class="pb-3">
+                                <div class="form-group basic animated pb-3">
+                                    <div class="input-wrapper">
+                                        <label class="label" for="i-reason">Lí do</label>
+                                        <input required wire:model="group_form.reason" type="text" class="form-control" id="i-reason" placeholder="Lí do">
+                                        <i class="clear-input">
+                                            <ion-icon name="close-circle"></ion-icon>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div>
                                     @foreach($this->reasons->whereIn('type', ReasonType::getCashReasonTypes()) as $reason)
                                         <div data-type="{{ $reason->type }}" class="s-reason chip {{ $reason->image ? 'chip-media' : '' }} chip-outline chip-info ms-05 mb-05">
                                             @if ($reason->image)
@@ -157,15 +166,6 @@
                                             <span class="chip-label">{{ $reason->name }}</span>
                                         </div>
                                     @endforeach
-                                </div>
-                                <div class="form-group basic animated">
-                                    <div class="input-wrapper">
-                                        <label class="label" for="i-reason">Lí do</label>
-                                        <input required wire:model="group_form.reason" type="text" class="form-control" id="i-reason" placeholder="Lí do">
-                                        <i class="clear-input">
-                                            <ion-icon name="close-circle"></ion-icon>
-                                        </i>
-                                    </div>
                                 </div>
                                 <div class="form-group basic animated">
                                     <div class="input-wrapper">
