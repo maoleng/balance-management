@@ -22,7 +22,6 @@ class CashTransactionForm extends Form
         return [
             'price' => [
                 'required',
-                'numeric',
             ],
             'type' => [
                 'nullable',

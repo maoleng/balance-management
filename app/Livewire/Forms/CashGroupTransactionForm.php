@@ -21,7 +21,6 @@ class CashGroupTransactionForm extends Form
         return [
             'price' => [
                 'required',
-                'numeric',
             ],
             'quantity' => [
                 'required',
