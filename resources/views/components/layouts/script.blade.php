@@ -1,10 +1,6 @@
-<script>
+<script data-navigate-once>
     let serviceWorkerRegistration = null
     let subscription = null
-
-    @if (authed())
-        init()
-    @endif
 
     async function init()
     {
@@ -62,4 +58,9 @@
         return outputArray;
     }
 
+</script>
+<script>
+    @if (authed())
+        init()
+    @endif
 </script>
