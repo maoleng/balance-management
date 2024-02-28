@@ -29,12 +29,19 @@ class AuthController extends Controller
         if ($user->email !== env('AUTH_EMAIL')) {
             return redirect()->back();
         }
-        $user = User::query()->create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'avatar' => $user->avatar,
-            'created_at' => now(),
-        ]);
+        $user = User::query()->updateOrCreate(
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar,
+            ],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar,
+                'created_at' => now(),
+            ]
+        );
         Auth::login($user, true);
 
         return redirect()->route('index');
