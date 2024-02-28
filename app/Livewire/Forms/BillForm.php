@@ -36,6 +36,7 @@ class BillForm extends Form
         $this->validate();
 
         $data = $this->all();
+        $data['price'] = str_replace(',', '', $data['price']);
         $data['id']
             ? Bill::query()->where('id', $data['id'])->update($data)
             : Bill::query()->create($data);
