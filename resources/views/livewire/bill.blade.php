@@ -29,7 +29,7 @@
                             <div class="form-group basic animated pt-2">
                                 <div class="input-wrapper">
                                     <label class="label" for="i-name">Tên</label>
-                                    <input required wire:model="form.name" type="tel" class="form-control" id="i-name" placeholder="Tên">
+                                    <input required wire:model="form.name" type="text" class="form-control" id="i-name" placeholder="Tên">
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
