@@ -150,7 +150,10 @@
                             <form wire:submit="storeGroup">
                                 <div class="pb-3">
                                     @foreach($this->reasons->whereIn('type', ReasonType::getCashReasonTypes()) as $reason)
-                                        <div data-type="{{ $reason->type }}" class="s-reason chip chip-outline chip-info ms-05 mb-05">
+                                        <div data-type="{{ $reason->type }}" class="s-reason chip {{ $reason->image ? 'chip-media' : '' }} chip-outline chip-info ms-05 mb-05">
+                                            @if ($reason->image)
+                                                <img src="{{ getFullPath($reason->image) }}" alt="avatar">
+                                            @endif
                                             <span class="chip-label">{{ $reason->name }}</span>
                                         </div>
                                     @endforeach
