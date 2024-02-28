@@ -40,9 +40,9 @@ class Bill extends Model
 
         return isset($color) ?
             <<<HTML
-                <div class="chip chip-outline chip-$color ms-05">&nbsp;&nbsp;$left&nbsp;&nbsp;</div>
+                <span class="text-$color">Còn $left</span>
             HTML
-            : '';
+            : 'Đã trả';
     }
 
 }

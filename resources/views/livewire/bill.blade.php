@@ -63,22 +63,22 @@
             </div>
         </div>
     </div>
-    <div class="section mt-3 text-center">
-        <div class="row">
-            @foreach($this->bills as $bill)
-                <div class="col-6 mb-2">
-                    <div class="bill-box">
-                        <div wire:click="edit({{ $bill }})" data-bs-toggle="modal" data-bs-target="#modal-bill" class="img-wrapper">
-                            <img src="{{ getFullPath($bill->image) }}" alt="img" class="image-block imaged w-75">
-                        </div>
-                        <div class="price">{!! formatVND($bill->price) !!}</div>
-                        <h5 class="text-muted">{{ $bill->name }}</h5>
-                        {!! $bill->payDateLeftTag !!}
+    <div class="listview-title mt-2">Danh sách các hóa đơn</div>
+    <ul class="listview image-listview">
+        @foreach($this->bills as $bill)
+        <li>
+            <a wire:click="edit({{ $bill }})" data-bs-toggle="modal" data-bs-target="#modal-bill" href="#" class="item">
+                <div class="in">
+                    <div>
+                        {{ $bill->name }}
+                        <footer>{!! $bill->payDateLeftTag !!}</footer>
                     </div>
+                    <span class="text-muted">{!! formatVND($bill->price) !!}</span>
                 </div>
-            @endforeach
-        </div>
-    </div>
+            </a>
+        </li>
+        @endforeach
+    </ul>
 </div>
 
 @script
