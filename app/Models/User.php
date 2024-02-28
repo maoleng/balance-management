@@ -12,6 +12,8 @@ class User extends Model
     use Notifiable;
     use HasPushSubscriptions;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name', 'email', 'avatar', 'created_at',
     ];
