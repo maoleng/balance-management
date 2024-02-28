@@ -1,12 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CashTransactionController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CryptoTransactionController;
-use App\Http\Controllers\ONUSTransactionController;
-use App\Http\Controllers\ReasonController;
-use App\Http\Controllers\StatisticController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
 use App\Livewire\ClassifyComponent;
@@ -14,6 +8,7 @@ use App\Livewire\MeComponent;
 use App\Livewire\SiteComponent;
 use App\Livewire\StatisticComponent;
 use App\Livewire\Transaction;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
@@ -48,4 +43,8 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
         Route::get('/fetch', [StatisticComponent::class, 'fetch'])->name('fetch');
     });
 
+    Route::post('/subscription', function (Request $request) {
+        $s = $request->get('subscription');
+        authed()->updatePushSubscription($s['endpoint'], $s['keys']['p256dh'], $s['keys']['auth']);
+    })->name('subscription');
 });
