@@ -1,8 +1,6 @@
 <?php
 
-use App\Lib\JWT\JWT;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
 
 if (!function_exists('c')) {
     function c(string $key)
@@ -34,18 +32,6 @@ if (! function_exists('getFullPath')) {
     function getFullPath($path): string
     {
         return $path ? asset('/storage/'.$path) : asset('assets/img/sample/avatar/avatar1.jpg');
-    }
-}
-
-if (! function_exists('authed')) {
-    function authed()
-    {
-        $token = Cookie::get('token');
-        if (empty($token)) {
-            return null;
-        }
-
-        return c(JWT::class)->match($token);
     }
 }
 

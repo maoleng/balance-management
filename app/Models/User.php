@@ -13,7 +13,7 @@ class User extends Model
     use HasPushSubscriptions;
 
     protected $fillable = [
-        'name', 'email', 'image', 'created_at',
+        'name', 'email', 'avatar', 'created_at',
     ];
 
 }

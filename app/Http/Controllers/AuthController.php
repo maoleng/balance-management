@@ -32,7 +32,7 @@ class AuthController extends Controller
         $user = User::query()->create([
             'name' => $user->name,
             'email' => $user->email,
-            'image' => $user->avatar,
+            'avatar' => $user->avatar,
             'created_at' => now(),
         ]);
         Auth::login($user, true);
