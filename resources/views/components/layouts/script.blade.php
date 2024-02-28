@@ -51,7 +51,7 @@
 
 </script>
 <script>
-    @if (authed())
+    @if (\Illuminate\Support\Facades\Auth::check())
         init()
     @endif
 </script>

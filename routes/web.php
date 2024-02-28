@@ -10,6 +10,7 @@ use App\Livewire\SiteComponent;
 use App\Livewire\StatisticComponent;
 use App\Livewire\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'middleware' => [IfAlreadyLogin::class]], static function() {
@@ -50,6 +51,6 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
 
     Route::post('/subscription', function (Request $request) {
         $s = $request->get('subscription');
-        authed()->updatePushSubscription($s['endpoint'], $s['keys']['p256dh'], $s['keys']['auth']);
+        Auth::user()->updatePushSubscription($s['endpoint'], $s['keys']['p256dh'], $s['keys']['auth']);
     })->name('subscription');
 });

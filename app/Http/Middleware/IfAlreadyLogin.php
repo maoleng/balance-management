@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IfAlreadyLogin
 {
@@ -16,8 +17,7 @@ class IfAlreadyLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        $check = authed();
-        if (isset($check)) {
+        if (Auth::check()) {
             return redirect()->route('index');
         }
 
