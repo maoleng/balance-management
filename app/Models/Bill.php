@@ -11,7 +11,7 @@ class Bill extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'price', 'image', 'pay_at',
+        'name', 'price', 'pay_at',
     ];
 
     protected $casts = [

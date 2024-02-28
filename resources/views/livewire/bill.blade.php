@@ -28,8 +28,8 @@
                         <form wire:submit="store">
                             <div class="form-group basic animated pt-2">
                                 <div class="input-wrapper">
-                                    <label class="label" for="i-price">Tên</label>
-                                    <input required wire:model="form.name" type="tel" class="form-control" id="i-price" placeholder="Tên">
+                                    <label class="label" for="i-name">Tên</label>
+                                    <input required wire:model="form.name" type="tel" class="form-control" id="i-name" placeholder="Tên">
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -64,25 +64,56 @@
         </div>
     </div>
     <div class="listview-title mt-2">Danh sách các hóa đơn</div>
-    <ul class="listview image-listview">
+    <ul class="listview simple-listview">
         @foreach($this->bills as $bill)
-        <li>
-            <a wire:click="edit({{ $bill }})" data-bs-toggle="modal" data-bs-target="#modal-bill" href="#" class="item">
-                <div class="in">
+            <li>
+                <a wire:click="edit({{ $bill }})" data-bs-toggle="modal" data-bs-target="#modal-bill" href="#" class="item">
                     <div>
                         {{ $bill->name }}
                         <footer>{!! $bill->payDateLeftTag !!}</footer>
                     </div>
                     <span class="text-muted">{!! formatVND($bill->price) !!}</span>
+                </a>
+                <button data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $bill->id }}" type="button" class="btn btn-icon btn-outline-danger me-1">
+                    <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="trash outline"></ion-icon>
+                </button>
+            </li>
+
+            <div class="modal fade dialogbox" id="modal-delete-{{ $bill->id }}" data-bs-backdrop="static" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Xóa</h5>
+                        </div>
+                        <div class="modal-body">
+                            Bạn chắc chứ?
+                        </div>
+                        <div class="modal-footer">
+                            <div class="btn-inline">
+                                <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
+                                <button wire:click="destroy({{ $bill }})" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
-        </li>
+            </div>
         @endforeach
     </ul>
 </div>
 
 @script
     <script>
+        $('#i-price').on('input', function() {
+            $(this).val($(this).val().replace(/\D/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+        })
+        $('#btn-add').on('click', function (e) {
+            if ($('#i-name').val().trim() === '' || $('#i-price').val().trim() === '' || $('#i-pay_at').val().trim() === '') {
+                e.preventDefault()
+                showErrorDialog('Vui lòng điền đầy đủ thông tin')
+            } else {
+                showSuccessToast('Thêm mới hóa đơn thành công')
+            }
+        })
         $('#btn-create').on('click', function () {
             $wire.$call('resetForm')
         })

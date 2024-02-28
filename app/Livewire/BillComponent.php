@@ -41,7 +41,13 @@ class BillComponent extends Component
         $this->form->edit($bill);
     }
 
-    public function resetForm()
+    public function destroy(Bill $bill): void
+    {
+        $bill->delete();
+        $this->loadBills();
+    }
+
+    public function resetForm(): void
     {
         $this->edit(new Bill);
     }
