@@ -6,10 +6,10 @@
             <strong>Tổng quan</strong>
         </div>
     </a>
-    <a href="app-pages.html" class="item">
+    <a wire:navigate href="{{ route('bill.index') }}" class="item">
         <div class="col">
             <ion-icon name="storefront-outline"></ion-icon>
-            <strong>Thị trường</strong>
+            <strong>Hóa đơn</strong>
         </div>
     </a>
     <a wire:navigate href="{{ route('transaction.index') }}" class="item {{ Route::is('transaction.*') ? 'active' : '' }}">

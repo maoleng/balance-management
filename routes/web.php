@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\IfAlreadyLogin;
+use App\Livewire\BillComponent;
 use App\Livewire\ClassifyComponent;
 use App\Livewire\MeComponent;
 use App\Livewire\SiteComponent;
@@ -21,6 +22,10 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
     Route::get('/', SiteComponent::class)->name('index');
     Route::get('/me', MeComponent::class)->name('me');
     Route::get('/market', [SiteComponent::class, 'market'])->name('market');
+
+    Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
+        Route::get('/', BillComponent::class)->name('index');
+    });
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {
         Route::get('/', Transaction\IndexComponent::class)->name('index');
