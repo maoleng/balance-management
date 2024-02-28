@@ -25,9 +25,14 @@ class Bill extends Model
         return $this->pay_at->lt(now()) ? -$diff : $diff;
     }
 
+    public function getPayDayLeftAttribute()
+    {
+        return $this->pay_at->diffForHumans(now(), CarbonInterface::DIFF_ABSOLUTE, parts: 2);
+    }
+
     public function getPayDateLeftTagAttribute(): string
     {
-        $left = $this->pay_at->diffForHumans(now(), CarbonInterface::DIFF_ABSOLUTE, parts: 2);
+        $left = $this->payDayLeft;
         $hour_left = $this->payHourLeft;
 
         if ($hour_left > 7 * 24) {

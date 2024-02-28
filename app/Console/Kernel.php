@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('crypto:notify')->everyFiveMinutes();
          $schedule->command('onus:daily_revenue')->dailyAt('02:00');
+         $schedule->command('bill:remind')->dailyAt('7:00');
+         $schedule->command('bill:remind')->dailyAt('19:00');
     }
 
     /**

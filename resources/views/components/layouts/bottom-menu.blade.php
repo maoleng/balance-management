@@ -6,7 +6,7 @@
             <strong>Tổng quan</strong>
         </div>
     </a>
-    <a wire:navigate href="{{ route('bill.index') }}" class="ite {{ Route::is('bill.*') ? 'active' : '' }}">
+    <a wire:navigate href="{{ route('bill.index') }}" class="item {{ Route::is('bill.*') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="storefront-outline"></ion-icon>
             <strong>Hóa đơn</strong>
