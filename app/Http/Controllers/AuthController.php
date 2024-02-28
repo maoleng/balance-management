@@ -31,9 +31,7 @@ class AuthController extends Controller
         }
         $user = User::query()->updateOrCreate(
             [
-                'name' => $user->name,
                 'email' => $user->email,
-                'avatar' => $user->avatar,
             ],
             [
                 'name' => $user->name,
