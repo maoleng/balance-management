@@ -20,7 +20,6 @@ class ONUSTransactionForm extends Form
         return [
             'price' => [
                 'required',
-                'numeric',
             ],
             'type' => [
                 'required',
@@ -49,7 +48,7 @@ class ONUSTransactionForm extends Form
 
         $coin = $data['coin'] ?? null;
         $transaction = Transaction::query()->create([
-            'price' => $data['price'],
+            'price' => str_replace(',', '', $data['price']),
             'reason_id' => $reason_id,
             'external' => $coin ? ['coin' => $coin] : null,
             'created_at' => now(),
