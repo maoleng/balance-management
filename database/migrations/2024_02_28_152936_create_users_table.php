@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('avatar');
+            $table->rememberToken();
             $table->dateTime('created_at');
         });
     }
