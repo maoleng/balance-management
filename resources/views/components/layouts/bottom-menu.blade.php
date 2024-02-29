@@ -8,7 +8,7 @@
     </a>
     <a wire:navigate href="{{ route('bill.index') }}" class="item {{ Route::is('bill.*') ? 'active' : '' }}">
         <div class="col">
-            <ion-icon name="storefront-outline"></ion-icon>
+            <ion-icon name="receipt-outline"></ion-icon>
             <strong>Hóa đơn</strong>
         </div>
     </a>

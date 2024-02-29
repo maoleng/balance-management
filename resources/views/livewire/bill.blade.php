@@ -21,7 +21,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thêm hóa đơn</h5>
+                    <h5 class="modal-title"></h5>
                 </div>
                 <div class="modal-body">
                     <div class="action-sheet-content">
@@ -70,9 +70,9 @@
                 <a href="#" class="btn-edit_bill item" data-bill_id="{{ $bill->id }}">
                     <div>
                         {{ $bill->name }}
-                        <footer>{!! $bill->payDateLeftTag !!}</footer>
                     </div>
-                    <span class="text-muted">{!! formatVND($bill->price) !!}</span>
+                    <span class="text-secondary">{!! formatVND($bill->price) !!}</span>
+                    <footer>{!! $bill->payDateLeftTag !!}</footer>
                 </a>
                 <button data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $bill->id }}" type="button" class="btn btn-icon btn-outline-danger me-1">
                     <ion-icon name="trash-outline" role="img" class="md hydrated" aria-label="trash outline"></ion-icon>
@@ -91,7 +91,7 @@
                         <div class="modal-footer">
                             <div class="btn-inline">
                                 <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
-                                <button wire:click="destroy({{ $bill }})" class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                                <button data-bill_id="{{ $bill->id }}" class="btn-delete_bill btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
                             </div>
                         </div>
                     </div>
@@ -103,9 +103,14 @@
 
 @script
     <script>
-        $('.btn-edit_bill').on('click', function (e) {
+        $('.btn-edit_bill').on('click', function () {
             $wire.$call('edit', $(this).data('bill_id')).then(function () {
-                $('#modal-bill').modal('toggle')
+                $('#modal-bill').modal('toggle').find('h5').text('Sửa hóa đơn')
+            })
+        })
+        $('.btn-delete_bill').on('click', function () {
+            $wire.$call('destroy', $(this).data('bill_id')).then(function () {
+                showSuccessToast('Xóa hóa đơn thành công')
             })
         })
         $('#i-price').on('input', function() {
@@ -116,10 +121,11 @@
                 e.preventDefault()
                 showErrorDialog('Vui lòng điền đầy đủ thông tin')
             } else {
-                showSuccessToast('Thêm mới hóa đơn thành công')
+                showSuccessToast('Cập nhật hóa đơn thành công')
             }
         })
         $('#btn-create').on('click', function () {
+            $('#modal-bill').find('h5').text('Thêm hóa đơn')
             $wire.$call('resetForm')
         })
     </script>
