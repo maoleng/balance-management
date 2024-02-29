@@ -103,12 +103,12 @@
 
 @script
     <script>
-        $('.btn-edit_bill').on('click', function () {
+        $(document).on('click', '.btn-edit_bill', function () {
             $wire.$call('edit', $(this).data('bill_id')).then(function () {
                 $('#modal-bill').modal('toggle').find('h5').text('Sửa hóa đơn')
             })
         })
-        $('.btn-delete_bill').on('click', function () {
+        $(document).on('click', '.btn-delete_bill', function () {
             $wire.$call('destroy', $(this).data('bill_id')).then(function () {
                 showSuccessToast('Xóa hóa đơn thành công')
             })
