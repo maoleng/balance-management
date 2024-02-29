@@ -36,8 +36,9 @@ class BillComponent extends Component
         $this->loadBills();
     }
 
-    public function edit(Bill $bill): void
+    public function edit($bill_id): void
     {
+        $bill = $this->bills->where('id', $bill_id)->first();
         $this->form->edit($bill);
     }
 

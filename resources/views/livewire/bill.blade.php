@@ -67,7 +67,7 @@
     <ul class="listview simple-listview">
         @foreach($this->bills as $bill)
             <li>
-                <a wire:click="edit({{ $bill }})" data-bs-toggle="modal" data-bs-target="#modal-bill" href="#" class="item">
+                <a href="#" class="btn-edit_bill item" data-bill_id="{{ $bill->id }}">
                     <div>
                         {{ $bill->name }}
                         <footer>{!! $bill->payDateLeftTag !!}</footer>
@@ -103,6 +103,11 @@
 
 @script
     <script>
+        $('.btn-edit_bill').on('click', function (e) {
+            $wire.$call('edit', $(this).data('bill_id')).then(function () {
+                $('#modal-bill').modal('toggle')
+            })
+        })
         $('#i-price').on('input', function() {
             $(this).val($(this).val().replace(/\D/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
         })
