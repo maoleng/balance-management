@@ -40,6 +40,8 @@ class BillComponent extends Component
     {
         $bill = $this->bills->where('id', $bill_id)->first();
         $this->form->edit($bill);
+
+        $this->dispatch('openModal');
     }
 
     public function destroy(Bill $bill): void

@@ -1,85 +1,87 @@
-@section('header')
-    <div class="appHeader bg-primary text-light">
-        <div class="pageTitle">
-            <img src="assets/img/logo.png" alt="logo" class="logo">
+@extends('components.main-layout.app')
+
+@section('title') <img src="assets/img/logo.png" alt="logo" class="logo"> @endsection
+@section('right')
+    <div class="right">
+        <a wire:navigate href="{{ route('me') }}" class="headerButton">
+            <img src="{{ asset('assets/img/avatar.jpg') }}" alt="image" class="imaged w32">
+        </a>
+    </div>
+@endsection
+
+@section('content')
+    <div id="appCapsule">
+        <div class="section wallet-card-section pt-1">
+            <div class="wallet-card">
+                <div class="balance">
+                    <div class="left">
+                        <span class="title">Tổng số dư</span>
+                        <h1 id="t-balance" class="total">**********</h1>
+                    </div>
+                    <div class="right">
+                        <button id="btn-toggle_show" type="button" class="btn btn-icon btn-outline-primary me-1">
+                            <ion-icon id="" name="eye-outline" role="img" class="md hydrated" aria-label="newspaper outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="right">
-            <a wire:navigate href="{{ route('me') }}" class="headerButton">
-                <img src="{{ asset('assets/img/avatar.jpg') }}" alt="image" class="imaged w32">
-            </a>
+        <div class="section">
+            <div class="row mt-2">
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Tiền mặt</div>
+                        <div id="t-cash_balance" class="value text-success">**********</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Dư nợ tín dụng</div>
+                        <div id="t-outstanding_credit" class="value text-primary">**********</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Tiết kiệm</div>
+                        <div id="t-onus_balance" class="value text-secondary">**********</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Tiết kiệm dài hạn</div>
+                        <div id="t-onus_farming_balance" class="value text-info">**********</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Tiền điện tử</div>
+                        <div id="t-crypto_balance" class="value text-warning">**********</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Đánh bạc</div>
+                        <div id="t-onus_future_balance" class="value text-danger">**********</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section mt-2 mb-3">
+            <div class="section-title">Phân bổ tài sản</div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart"></div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
-<div id="appCapsule">
-    <div class="section wallet-card-section pt-1">
-        <div class="wallet-card">
-            <div class="balance">
-                <div class="left">
-                    <span class="title">Tổng số dư</span>
-                    <h1 id="t-balance" class="total">**********</h1>
-                </div>
-                <div class="right">
-                    <button id="btn-toggle_show" type="button" class="btn btn-icon btn-outline-primary me-1">
-                        <ion-icon id="" name="eye-outline" role="img" class="md hydrated" aria-label="newspaper outline"></ion-icon>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="section">
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Tiền mặt</div>
-                    <div id="t-cash_balance" class="value text-success">**********</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Dư nợ tín dụng</div>
-                    <div id="t-outstanding_credit" class="value text-primary">**********</div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Tiết kiệm</div>
-                    <div id="t-onus_balance" class="value text-secondary">**********</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Tiết kiệm dài hạn</div>
-                    <div id="t-onus_farming_balance" class="value text-info">**********</div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Tiền điện tử</div>
-                    <div id="t-crypto_balance" class="value text-warning">**********</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Đánh bạc</div>
-                    <div id="t-onus_future_balance" class="value text-danger">**********</div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="section mt-2 mb-3">
-        <div class="section-title">Phân bổ tài sản</div>
-        <div class="card">
-            <div class="card-body">
-                <div id="chart"></div>
-            </div>
-        </div>
-    </div>
-</div>
 @assets
     <script src="{{ asset('assets/js/plugins/apexcharts/apexcharts.min.js') }}" defer></script>
 @endassets

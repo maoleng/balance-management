@@ -1,21 +1,18 @@
 @php use App\Enums\ReasonLabel; @endphp
 @php use App\Enums\ReasonType; @endphp
-@section('header')
-    <div class="appHeader">
-        <div class="left">
-            <a wire:navigate href="{{ route('index') }}" class="headerButton goBack">
-                <ion-icon name="chevron-back-outline"></ion-icon>
-            </a>
-        </div>
-        <div class="pageTitle">
-            Phân loại
-        </div>
-        <div class="right">
-            <a id="btn-create" href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#modal-category-">
-                <ion-icon name="add-outline"></ion-icon>
-            </a>
-        </div>
+@extends('components.main-layout.app')
+
+@section('title') Phân loại @endsection
+@section('back') {{ route('index') }} @endsection
+@section('right')
+    <div class="right">
+        <a id="btn-create" href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#modal-category-">
+            <ion-icon name="add-outline" role="img" class="md hydrated" aria-label="add outline"></ion-icon>
+        </a>
     </div>
+@endsection
+
+@section('content')
     <div class="extraHeader pe-0 ps-0">
         <ul class="nav nav-tabs lined" role="tablist">
             <li class="nav-item">
@@ -30,49 +27,49 @@
             </li>
         </ul>
     </div>
-@endsection
-<div id="appCapsule" class="extra-header-active full-height">
-    @include('livewire.classify.category-form')
-    @include('livewire.classify.reason-form')
+    <div id="appCapsule" class="extra-header-active full-height">
+        @include('livewire.classify.category-form')
+        @include('livewire.classify.reason-form')
 
-    <div class="section tab-content mt-2 mb-1">
-        <div class="tab-pane fade show active" id="category" role="tabpanel">
-            <ul class="listview link-listview inset">
-                @foreach($this->categories as $category)
-                    @include('livewire.classify.category-card')
-                @endforeach
-            </ul>
-        </div>
-        <div class="tab-pane fade" id="reason" role="tabpanel">
-            <div class="row">
-                @foreach($this->categories as $category)
-                    <h2>{{ $category->name }}</h2>
-                    @foreach($category->reasons as $reason)
+        <div class="section tab-content mt-2 mb-1">
+            <div class="tab-pane fade show active" id="category" role="tabpanel">
+                <ul class="listview link-listview inset">
+                    @foreach($this->categories as $category)
+                        @include('livewire.classify.category-card')
+                    @endforeach
+                </ul>
+            </div>
+            <div class="tab-pane fade" id="reason" role="tabpanel">
+                <div class="row">
+                    @foreach($this->categories as $category)
+                        <h2>{{ $category->name }}</h2>
+                        @foreach($category->reasons as $reason)
+                            @include('livewire.classify.reason-card')
+                        @endforeach
+                    @endforeach
+
+                    <h2>Thu nhập</h2>
+                    @foreach($this->earn_reasons as $reason)
                         @include('livewire.classify.reason-card')
                     @endforeach
-                @endforeach
 
-                <h2>Thu nhập</h2>
-                @foreach($this->earn_reasons as $reason)
-                    @include('livewire.classify.reason-card')
-                @endforeach
-
-                <h2>Chưa phân loại</h2>
-                @foreach($this->other_reasons as $reason)
-                    @include('livewire.classify.reason-card')
-                @endforeach
+                    <h2>Chưa phân loại</h2>
+                    @foreach($this->other_reasons as $reason)
+                        @include('livewire.classify.reason-card')
+                    @endforeach
+                </div>
             </div>
         </div>
+
+        @foreach($reasons as $reason)
+            @include('livewire.classify.reason-form')
+        @endforeach
+
+        @foreach($this->categories as $category)
+            @include('livewire.classify.category-form')
+        @endforeach
     </div>
-
-    @foreach($reasons as $reason)
-        @include('livewire.classify.reason-form')
-    @endforeach
-
-    @foreach($this->categories as $category)
-        @include('livewire.classify.category-form')
-    @endforeach
-</div>
+@endsection
 
 @script
     <script>
@@ -123,7 +120,7 @@
             })
         })
         $('.btn-confirm-destroy-reason').on('click', function () {
-            $wire.$call('loadReasons').then(() => refreshTab())
+            $wire.$call('loadReasons')
         })
         $('.btn-save-category').on('click', function () {
             const form = $(this).closest('form')
@@ -177,7 +174,7 @@
                     image: imageInput.val(),
                 },
                 success: function() {
-                    $wire.$call('loadReasons').then(() => refreshTab())
+                    $wire.$call('loadReasons')
                     showSuccessDialog(`${reason_id === null ? 'Tạo mới': 'Cập nhật'} thành công`)
                     if (reason_id === null) {
                         nameInput.val('')
@@ -208,19 +205,12 @@
                     },
                     success: function() {
                         form.closest('.modal').modal('toggle');
-                        $wire.$call('loadReasons').then(() => refreshTab())
+                        $wire.$call('loadReasons')
                         showSuccessDialog('Đổi ảnh thành công')
                     },
                 })
             }
             reader.readAsDataURL(file)
         })
-
-        function refreshTab()
-        {
-            const activeTab = $('.nav-link.active').data()
-            $('#category').removeClass('show active')
-            $('#reason').addClass('show active')
-        }
     </script>
 @endscript

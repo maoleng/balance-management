@@ -3,7 +3,7 @@
 <html lang="en">
 @include('components.layouts.head-tag')
 <body class="{{ Cache::get('dark-mode') }} @yield('bg-class')">
-@yield('header')
+
 {{ $slot }}
 @include('components.layouts.bottom-menu')
 <div class="modal fade dialogbox" id="errorDialog" data-bs-backdrop="static" tabindex="-1" role="dialog">
