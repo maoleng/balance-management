@@ -14,26 +14,18 @@ class CashFund
 
     public static function getOverview(): Model
     {
-        $spend = ReasonType::SPEND;
-        $earn = ReasonType::EARN;
-
-        return Transaction::query()->selectRaw("
-            SUM(CASE WHEN reasons.type = $spend THEN price * quantity ELSE 0 END) AS total_spend,
-            SUM(CASE WHEN reasons.type = $earn THEN price * quantity ELSE 0 END) AS total_earn,
-            SUM(CASE WHEN reasons.type = $spend AND DATE(created_at) = CURDATE() THEN price * quantity ELSE 0 END) AS spend_today,
-            SUM(CASE WHEN reasons.type = $earn AND DATE(created_at) = CURDATE() THEN price * quantity ELSE 0 END) AS earn_today,
-            SUM(CASE WHEN reasons.type = $spend AND YEARWEEK(DATE_ADD(created_at, INTERVAL 1 DAY)) = YEARWEEK(CURDATE()) THEN price * quantity ELSE 0 END) AS spend_week,
-            SUM(CASE WHEN reasons.type = $earn AND YEARWEEK(DATE_ADD(created_at, INTERVAL 1 DAY)) = YEARWEEK(CURDATE()) THEN price * quantity ELSE 0 END) AS earn_week,
-            SUM(CASE WHEN reasons.type = $spend AND MONTH(created_at) = MONTH(CURDATE()) THEN price * quantity ELSE 0 END) AS spend_month,
-            SUM(CASE WHEN reasons.type = $earn AND MONTH(created_at) = MONTH(CURDATE()) THEN price * quantity ELSE 0 END) AS earn_month,
-            SUM(CASE WHEN reasons.type = $spend AND YEAR(created_at) = YEAR(CURDATE()) THEN price * quantity ELSE 0 END) AS spend_year,
-            SUM(CASE WHEN reasons.type = $earn AND YEAR(created_at) = YEAR(CURDATE()) THEN price * quantity ELSE 0 END) AS earn_year,
-            SUM(CASE WHEN reasons.type = $spend THEN price * quantity ELSE 0 END) AS total_spend,
-            SUM(CASE WHEN reasons.type = $earn THEN price * quantity ELSE 0 END) AS total_earn,
-            SUM(CASE WHEN reasons.type = $spend AND YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1 THEN price * quantity ELSE 0 END) AS last_month_spend,
-            SUM(CASE WHEN reasons.type = $earn AND YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1 THEN price * quantity ELSE 0 END) AS last_month_earn
-
-        ")->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
+        return Transaction::query()->select(
+            DB::raw('SUM(CASE WHEN reasons.type = 1 AND DATE(transactions.created_at) = CURDATE() THEN transactions.price ELSE 0 END) AS earn_today'),
+            DB::raw('SUM(CASE WHEN reasons.type = 1 AND YEARWEEK(transactions.created_at, 1) = YEARWEEK(NOW(), 1) THEN transactions.price ELSE 0 END) AS earn_week'),
+            DB::raw('SUM(CASE WHEN reasons.type = 1 AND MONTH(transactions.created_at) = MONTH(CURDATE()) THEN transactions.price ELSE 0 END) AS earn_month'),
+            DB::raw('SUM(CASE WHEN reasons.type = 1 AND YEAR(transactions.created_at) = YEAR(CURDATE()) THEN transactions.price ELSE 0 END) AS earn_year'),
+            DB::raw('SUM(CASE WHEN reasons.type = 0 AND DATE(transactions.created_at) = CURDATE() THEN transactions.price ELSE 0 END) AS spend_today'),
+            DB::raw('SUM(CASE WHEN reasons.type = 0 AND YEARWEEK(transactions.created_at, 1) = YEARWEEK(NOW(), 1) THEN transactions.price ELSE 0 END) AS spend_week'),
+            DB::raw('SUM(CASE WHEN reasons.type = 0 AND MONTH(transactions.created_at) = MONTH(CURDATE()) THEN transactions.price ELSE 0 END) AS spend_month'),
+            DB::raw('SUM(CASE WHEN reasons.type = 0 AND YEAR(transactions.created_at) = YEAR(CURDATE()) THEN transactions.price ELSE 0 END) AS spend_year'),
+            DB::raw('SUM(CASE WHEN reasons.type = 1 AND MONTH(transactions.created_at) = MONTH(CURDATE() - INTERVAL 1 MONTH) THEN transactions.price ELSE 0 END) AS last_month_earn'),
+            DB::raw('SUM(CASE WHEN reasons.type = 0 AND MONTH(transactions.created_at) = MONTH(CURDATE() - INTERVAL 1 MONTH) THEN transactions.price ELSE 0 END) AS last_month_spend')
+        )->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
     }
 
     public static function getBalance($until = null): float
