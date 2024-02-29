@@ -132,11 +132,11 @@
                             <div class="row mt-2">
                                 <div class="col-6">
                                     <div class="title">Thu</div>
-                                    <h2 class="text-success">{!! formatVND($this->overview->spend_week) !!}</h2>
+                                    <h2 class="text-success">{!! formatVND($this->overview->earn_week) !!}</h2>
                                 </div>
                                 <div class="col-6">
                                     <div class="title">Chi</div>
-                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_week) !!}</h2>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->spend_week) !!}</h2>
                                 </div>
                             </div>
                         </div>
@@ -144,11 +144,11 @@
                             <div class="row mt-2">
                                 <div class="col-6">
                                     <div class="title">Thu</div>
-                                    <h2 class="text-success">{!! formatVND($this->overview->spend_month) !!}</h2>
+                                    <h2 class="text-success">{!! formatVND($this->overview->earn_month) !!}</h2>
                                 </div>
                                 <div class="col-6">
                                     <div class="title">Chi</div>
-                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_month) !!}</h2>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->spend_month) !!}</h2>
                                 </div>
                             </div>
                         </div>
@@ -156,11 +156,11 @@
                             <div class="row mt-2">
                                 <div class="col-6">
                                     <div class="title">Thu</div>
-                                    <h2 class="text-success">{!! formatVND($this->overview->last_month_spend) !!}</h2>
+                                    <h2 class="text-success">{!! formatVND($this->overview->last_month_earn) !!}</h2>
                                 </div>
                                 <div class="col-6">
                                     <div class="title">Chi</div>
-                                    <h2 class="text-danger">{!! formatVND($this->overview->last_month_earn) !!}</h2>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->last_month_spend) !!}</h2>
                                 </div>
                             </div>
                         </div>
@@ -168,11 +168,11 @@
                             <div class="row mt-2">
                                 <div class="col-6">
                                     <div class="title">Thu</div>
-                                    <h2 class="text-success">{!! formatVND($this->overview->spend_year) !!}</h2>
+                                    <h2 class="text-success">{!! formatVND($this->overview->earn_year) !!}</h2>
                                 </div>
                                 <div class="col-6">
                                     <div class="title">Chi</div>
-                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_year) !!}</h2>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->spend_year) !!}</h2>
                                 </div>
                             </div>
                         </div>
