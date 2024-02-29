@@ -128,5 +128,12 @@
             $('#modal-bill').find('h5').text('Thêm hóa đơn')
             $wire.$call('resetForm')
         })
+        document.addEventListener("livewire:load", function(event) {
+            Livewire.hook('afterDomUpdate', function(component) {
+                window.addEventListener('popstate', function(event) {
+                    Livewire.reload()
+                })
+            })
+        })
     </script>
 @endscript
