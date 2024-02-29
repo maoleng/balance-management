@@ -36,7 +36,7 @@ class BillComponent extends Component
         $this->loadBills();
     }
 
-    public function edit($bill_id): void
+    public function edit($bill_id = null): void
     {
         $bill = $this->bills->where('id', $bill_id)->first();
         $this->form->edit($bill);
@@ -46,11 +46,6 @@ class BillComponent extends Component
     {
         $bill->delete();
         $this->loadBills();
-    }
-
-    public function resetForm(): void
-    {
-        $this->edit(new Bill);
     }
 
 }

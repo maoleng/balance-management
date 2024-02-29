@@ -9,7 +9,7 @@
             Hóa đơn
         </div>
         <div class="right">
-            <a id="btn-create" href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#modal-bill">
+            <a id="btn-create" href="#" class="headerButton">
                 <ion-icon name="add-outline"></ion-icon>
             </a>
         </div>
@@ -108,6 +108,11 @@
                 $('#modal-bill').modal('toggle').find('h5').text('Sửa hóa đơn')
             })
         })
+        $('#btn-create').on('click', function () {
+            $wire.$call('edit').then(function () {
+                $('#modal-bill').modal('toggle').find('h5').text('Thêm hóa đơn')
+            })
+        })
         $(document).on('click', '.btn-delete_bill', function () {
             $wire.$call('destroy', $(this).data('bill_id')).then(function () {
                 showSuccessToast('Xóa hóa đơn thành công')
@@ -123,10 +128,6 @@
             } else {
                 showSuccessToast('Cập nhật hóa đơn thành công')
             }
-        })
-        $('#btn-create').on('click', function () {
-            $('#modal-bill').find('h5').text('Thêm hóa đơn')
-            $wire.$call('resetForm')
         })
         document.addEventListener("livewire:load", function(event) {
             Livewire.hook('afterDomUpdate', function(component) {
