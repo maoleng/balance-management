@@ -16,7 +16,6 @@ class AuthenticateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        Auth::login(\App\Models\User::query()->first());
         if (! Auth::check()) {
             return redirect()->route('login');
         }
