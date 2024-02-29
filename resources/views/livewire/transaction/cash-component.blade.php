@@ -145,6 +145,9 @@
                 showSuccessToast('Thêm mới giao dịch thành công')
             }
         })
+        $(".s-reason").on('click', function () {
+            typeCharacter($('#i-reason'), $(this).find('span').text())
+        })
         $("#i-reason").on("input", function () {
             const searchText = $(this).val().toLowerCase();
             $(".s-reason").each(function () {

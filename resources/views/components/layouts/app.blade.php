@@ -80,6 +80,19 @@
         $('#successToast').find('.text').text(msg)
         toastbox('successToast')
     }
+    function typeCharacter(inputElement, text)
+    {
+        let index = 0;
+        function typeNextCharacter() {
+            if (index < text.length) {
+                inputElement.val(inputElement.val() + text.charAt(index));
+                inputElement.trigger('input');
+                index++;
+                requestAnimationFrame(typeNextCharacter);
+            }
+        }
+        typeNextCharacter();
+    }
 </script>
 <script>
     AddtoHome("2000", "once");
