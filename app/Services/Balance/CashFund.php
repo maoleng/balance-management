@@ -29,7 +29,10 @@ class CashFund
             SUM(CASE WHEN reasons.type = $spend AND YEAR(created_at) = YEAR(CURDATE()) THEN price * quantity ELSE 0 END) AS spend_year,
             SUM(CASE WHEN reasons.type = $earn AND YEAR(created_at) = YEAR(CURDATE()) THEN price * quantity ELSE 0 END) AS earn_year,
             SUM(CASE WHEN reasons.type = $spend THEN price * quantity ELSE 0 END) AS total_spend,
-            SUM(CASE WHEN reasons.type = $earn THEN price * quantity ELSE 0 END) AS total_earn
+            SUM(CASE WHEN reasons.type = $earn THEN price * quantity ELSE 0 END) AS total_earn,
+            SUM(CASE WHEN reasons.type = $spend AND YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1 THEN price * quantity ELSE 0 END) AS last_month_spend,
+            SUM(CASE WHEN reasons.type = $earn AND YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE()) - 1 THEN price * quantity ELSE 0 END) AS last_month_earn
+
         ")->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
     }
 

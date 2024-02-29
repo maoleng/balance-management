@@ -71,11 +71,112 @@
             </div>
         </div>
 
-        <div class="section mt-2 mb-3">
-            <div class="section-title">Phân bổ tài sản</div>
+        <div class="section mt-4">
+            <div class="section-heading">
+                <h2 class="title">Phân bổ tài sản</h2>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section mt-4 mb-3">
+            <div class="section-heading">
+                <h2 class="title">Thu/Chi</h2>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs capsuled" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#t" role="tab">
+                                T
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#w" role="tab">
+                                W
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#m" role="tab">
+                                M
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#lm" role="tab">
+                                LM
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#y" role="tab">
+                                Y
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-1">
+                        <div class="tab-pane fade show active" id="t" role="tabpanel">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="title">Thu</div>
+                                    <h2 class="text-success">{!! formatVND($this->overview->earn_today) !!}</h2>
+                                </div>
+                                <div class="col-6">
+                                    <div class="title">Chi</div>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->spend_today) !!}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="w" role="tabpanel">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="title">Thu</div>
+                                    <h2 class="text-success">{!! formatVND($this->overview->spend_week) !!}</h2>
+                                </div>
+                                <div class="col-6">
+                                    <div class="title">Chi</div>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_week) !!}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="m" role="tabpanel">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="title">Thu</div>
+                                    <h2 class="text-success">{!! formatVND($this->overview->spend_month) !!}</h2>
+                                </div>
+                                <div class="col-6">
+                                    <div class="title">Chi</div>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_month) !!}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="lm" role="tabpanel">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="title">Thu</div>
+                                    <h2 class="text-success">{!! formatVND($this->overview->last_month_spend) !!}</h2>
+                                </div>
+                                <div class="col-6">
+                                    <div class="title">Chi</div>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->last_month_earn) !!}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="y" role="tabpanel">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <div class="title">Thu</div>
+                                    <h2 class="text-success">{!! formatVND($this->overview->spend_year) !!}</h2>
+                                </div>
+                                <div class="col-6">
+                                    <div class="title">Chi</div>
+                                    <h2 class="text-danger">{!! formatVND($this->overview->earn_year) !!}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
