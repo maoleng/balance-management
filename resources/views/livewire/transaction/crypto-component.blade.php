@@ -95,6 +95,9 @@
                                         + {!! formatVND($transaction['price']) !!}
                                     </div>
                                 @endif
+                                <div class="text-end text-white">
+                                    {{ $transaction['prettyCreatedTime'] }}
+                                </div>
                             </div>
                         </a>
                     @endforeach

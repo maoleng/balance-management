@@ -40,7 +40,7 @@ class CryptoComponent extends BaseComponent
             ->limit(10 * $p)
             ->get()
             ->groupBy(function ($transaction) {
-                return $transaction->created_at->isToday() ? 'Hôm nay' : $transaction->prettyCreatedAt;
+                return $transaction->prettyCreatedAt;
             })->each(fn($transactions) => $transactions->each(fn($transaction) => $transaction->appendCryptoData()))->toArray();
     }
 }

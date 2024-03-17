@@ -27,12 +27,24 @@ class Transaction extends Model
 
     public function getPrettyCreatedAtAttribute(): string
     {
+        if ($this->created_at->isToday()) {
+            return 'Hôm nay';
+        }
+        if ($this->created_at->isYesterday()) {
+            return 'Hôm qua';
+        }
+
         return Str::ucfirst($this->created_at->isoFormat('dddd')).', '.$this->created_at->format('d-m-Y');
+    }
+
+    public function getPrettyCreatedTimeAttribute(): string
+    {
+        return $this->created_at->format('H:i');
     }
 
     public function getPrettyCreatedAtWithTimeAttribute(): string
     {
-        return $this->prettyCreatedAt.' - '.$this->created_at->format('H:i');
+        return $this->prettyCreatedAt.' - '.$this->prettyCreatedTime;
     }
 
     public function reason(): BelongsTo
@@ -69,7 +81,7 @@ class Transaction extends Model
 
     public function appendCashData(): Transaction
     {
-        $this->append('isCredit');
+        $this->append('isCredit', 'prettyCreatedTime');
         if ($this->reason->type === ReasonType::GROUP) {
             $this->append('totalPrice');
         }
@@ -80,14 +92,14 @@ class Transaction extends Model
 
     public function appendONUSData(): Transaction
     {
-        $this->append('coinName');
+        $this->append('coinName', 'prettyCreatedTime');
 
         return $this;
     }
 
     public function appendCryptoData(): Transaction
     {
-        $this->append(['coinLogo', 'coinName']);
+        $this->append('coinLogo', 'coinName', 'prettyCreatedTime');
 
         return $this;
     }
