@@ -5420,7 +5420,7 @@ textarea,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #6236FF;
+  /*background: #6236FF;*/
   font-size: 26px;
   color: #fff;
 }
