@@ -45,6 +45,15 @@ class CashComponent extends BaseComponent
         $this->transactions->push($transaction);
     }
 
+    public $date;
+
+    public $time;
+
+    public function updateTime(): void
+    {
+        $this->transaction->update(['created_at' => $this->date.$this->time]);
+    }
+
     public function destroyGroup($transaction_id): void
     {
         Transaction::query()->find($transaction_id)->delete();

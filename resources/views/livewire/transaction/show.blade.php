@@ -72,11 +72,49 @@
                             <span>{{ $transaction->isCredit ? 'Tín dụng' : 'Tiền mặt' }}</span>
                         </li>
                     @endif
-                    <li>
+                    <li class="li-created_at">
                         <strong>Thời gian</strong>
                         <span>{{ $transaction->prettyCreatedAtWithTime }}</span>
                     </li>
                 </ul>
+
+                <div class="modal fade dialogbox" id="modal-edit_time" data-bs-backdrop="static" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chỉnh sửa giờ</h5>
+                            </div>
+                            <form>
+                                <div class="modal-body text-start mb-2">
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="i-date">Ngày</label>
+                                            <input wire:model="date" type="date" class="form-control" id="i-date">
+                                            <i class="clear-input">
+                                                <ion-icon name="close-circle"></ion-icon>
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group basic">
+                                        <div class="input-wrapper">
+                                            <label class="label" for="i-time">Giờ</label>
+                                            <input wire:model="time" type="time" class="form-control" id="i-time">
+                                            <i class="clear-input">
+                                                <ion-icon name="close-circle"></ion-icon>
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="btn-inline">
+                                        <button type="button" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <button wire:click="updateTime" onclick="showSuccessDialog('Chỉnh sửa giờ thành công')" type="button" class="btn btn-text-primary" data-bs-dismiss="modal">LƯU</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             @if ($transaction->reason->type === ReasonType::GROUP)
                 <div class="section mt-5 mb-2">
@@ -253,6 +291,16 @@
 
     </div>
 @endsection
+
+@if ($transaction->reason->type === ReasonType::GROUP) @script
+    <script>
+        $('.li-created_at').on('click', function () {
+            $('#i-date').val('{{ $transaction->created_at->format('Y-m-d') }}')
+            $('#i-time').val('{{ $transaction->created_at->format('H:i') }}')
+            $('#modal-edit_time').modal('toggle');
+        })
+    </script>
+@endscript @endif
 
 @if ($transaction->reason->type === ReasonType::GROUP) @script
     <script>
