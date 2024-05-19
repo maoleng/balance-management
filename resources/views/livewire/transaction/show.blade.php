@@ -292,7 +292,7 @@
     </div>
 @endsection
 
-@if ($transaction->reason->type === ReasonType::GROUP) @script
+@if (in_array($transaction->reason->type, [ReasonType::EARN, ReasonType::SPEND, ReasonType::GROUP])) @script
     <script>
         $('.li-created_at').on('click', function () {
             $('#i-date').val('{{ $transaction->created_at->format('Y-m-d') }}')
