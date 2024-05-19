@@ -2,6 +2,7 @@
 
 namespace App\Services\Balance;
 
+use Illuminate\Support\Facades\File;
 use App\Enums\ReasonType;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -28,11 +29,11 @@ class CashFund
         )->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
     }
 
-    public static function getBalance($until = null): float
+    public static function getBalance($until = null): int
     {
         $types = ReasonType::asArray();
 
-        return env('AUTH_INIT_CASH') + Transaction::query()
+        return (int) File::get('init.txt') + Transaction::query()
             ->where('external->is_credit', null)
             ->selectRaw(
                 "SUM(CASE
