@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 
 class CashFund
 {
@@ -29,11 +28,11 @@ class CashFund
         )->join('reasons', 'transactions.reason_id', '=', 'reasons.id')->first();
     }
 
-    public static function getBalance($until = null): int
+    public static function getBalance($until = null): float
     {
         $types = ReasonType::asArray();
 
-        return (int) File::get('init.txt') + Transaction::query()
+        return env('AUTH_INIT_CASH') + Transaction::query()
             ->where('external->is_credit', null)
             ->selectRaw(
                 "SUM(CASE
