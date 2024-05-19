@@ -15,7 +15,7 @@ class Bill extends Model
     ];
 
     protected $casts = [
-        'pay_at' => 'datetime'
+        'pay_at' => 'datetime',
     ];
 
     public function getPayHourLeftAttribute()

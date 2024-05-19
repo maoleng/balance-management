@@ -26,6 +26,9 @@ Route::group(['middleware' => [AuthenticateMiddleware::class]], function () {
 
     Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
         Route::get('/', BillComponent::class)->name('index');
+        Route::get('/list', [BillComponent::class, 'list'])->name('list');
+        Route::post('/', [BillComponent::class, 'save'])->name('save');
+        Route::delete('/', [BillComponent::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function () {

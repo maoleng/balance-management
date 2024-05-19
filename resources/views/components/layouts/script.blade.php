@@ -50,8 +50,97 @@
     }
 
 </script>
+
 <script>
     @if (\Illuminate\Support\Facades\Auth::check())
         init()
     @endif
+</script>
+
+<script>
+    if ($('body').hasClass('dark-mode')) {
+        $('#darkmodeSwitch').prop('checked', true);
+    }
+    $('#darkmodeSwitch').on('click', function () {
+        $('body').toggleClass('dark-mode');
+    })
+</script>
+
+<script>
+    function showErrorDialog(msg)
+    {
+        const modal = $('#errorDialog')
+        modal.find('.modal-body').text(msg)
+        modal.modal('toggle')
+    }
+    function showSuccessDialog(msg)
+    {
+        const modal = $('#successDialog')
+        modal.find('.modal-body').text(msg)
+        modal.modal('toggle')
+    }
+    function showSuccessToast(msg)
+    {
+        $('#successToast').find('.text').text(msg)
+        toastbox('successToast')
+    }
+</script>
+
+<div id="modal-confirm" class="modal fade dialogbox" data-bs-backdrop="static" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa</h5>
+            </div>
+            <div class="modal-body">
+                Bạn chắc chứ?
+            </div>
+            <div class="modal-footer">
+                <div class="btn-inline">
+                    <a href="#" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</a>
+                    <button class="btn btn-text-primary" data-bs-dismiss="modal">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmDelete(url)
+    {
+        const modal = $('#modal-confirm')
+        modal.modal('toggle')
+
+        return modal.find('button').off('click').on('click', async function () {
+            await $.ajax({
+                url: url,
+                method: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function () {
+                    showSuccessToast('Xóa hóa đơn thành công.')
+                }
+            })
+        })
+    }
+</script>
+
+<script>
+    function typeCharacter(inputElement, text)
+    {
+        let index = 0;
+        function typeNextCharacter() {
+            if (index < text.length) {
+                inputElement.val(inputElement.val() + text.charAt(index));
+                inputElement.trigger('input');
+                index++;
+                requestAnimationFrame(typeNextCharacter);
+            }
+        }
+        typeNextCharacter();
+    }
+</script>
+
+<script>
+    AddtoHome("2000", "once");
 </script>

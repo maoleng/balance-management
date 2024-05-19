@@ -55,47 +55,5 @@
 <script data-navigate-once src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/base.js') }}"></script>
 @include('components.layouts.script')
-
-<script>
-    if ($('body').hasClass('dark-mode')) {
-        $('#darkmodeSwitch').prop('checked', true);
-    }
-    $('#darkmodeSwitch').on('click', function () {
-        $('body').toggleClass('dark-mode');
-    })
-    function showErrorDialog(msg)
-    {
-        const modal = $('#errorDialog')
-        modal.find('.modal-body').text(msg)
-        modal.modal('toggle')
-    }
-    function showSuccessDialog(msg)
-    {
-        const modal = $('#successDialog')
-        modal.find('.modal-body').text(msg)
-        modal.modal('toggle')
-    }
-    function showSuccessToast(msg)
-    {
-        $('#successToast').find('.text').text(msg)
-        toastbox('successToast')
-    }
-    function typeCharacter(inputElement, text)
-    {
-        let index = 0;
-        function typeNextCharacter() {
-            if (index < text.length) {
-                inputElement.val(inputElement.val() + text.charAt(index));
-                inputElement.trigger('input');
-                index++;
-                requestAnimationFrame(typeNextCharacter);
-            }
-        }
-        typeNextCharacter();
-    }
-</script>
-<script>
-    AddtoHome("2000", "once");
-</script>
 </body>
 </html>
