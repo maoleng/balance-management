@@ -16,7 +16,13 @@ class Kernel extends ConsoleKernel
          $schedule->command('onus:daily_revenue')->dailyAt('02:00');
          $schedule->command('bill:remind')->dailyAt('7:00');
          $schedule->command('bill:remind')->dailyAt('19:00');
-         $schedule->command('credit:remind')->dailyAt('9:00');
+
+         for ($i = 3; $i <= 10; $i++) {
+             $schedule->command('credit:remind')->monthlyOn($i, '9:00');
+         }
+         for ($i = 17; $i <= 24; $i++) {
+             $schedule->command('credit:remind')->monthlyOn($i, '9:00');
+         }
     }
 
     /**
