@@ -36,8 +36,8 @@
                 </div>
                 <div class="col-6">
                     <div class="stat-box">
-                        <div class="title">Dư nợ tín dụng</div>
-                        <div id="t-outstanding_credit" class="value text-primary">**********</div>
+                        <div class="title">Tiền điện tử</div>
+                        <div id="t-crypto_balance" class="value text-warning">**********</div>
                     </div>
                 </div>
             </div>
@@ -58,16 +58,22 @@
             <div class="row mt-2">
                 <div class="col-6">
                     <div class="stat-box">
-                        <div class="title">Tiền điện tử</div>
-                        <div id="t-crypto_balance" class="value text-warning">**********</div>
+                        <div class="title">Dư nợ MoMo</div>
+                        <div id="t-outstanding_credit" class="value text-primary">**********</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="stat-box">
-                        <div class="title">Đánh bạc</div>
-                        <div id="t-onus_future_balance" class="value text-danger">**********</div>
+                        <div class="title">Dư nợ VIB</div>
+                        <div id="t-outstanding_vib" class="value text-primary">**********</div>
                     </div>
                 </div>
+{{--                <div class="col-6">--}}
+{{--                    <div class="stat-box">--}}
+{{--                        <div class="title">Đánh bạc</div>--}}
+{{--                        <div id="t-onus_future_balance" class="value text-danger">**********</div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
 
@@ -195,6 +201,7 @@
                 $('#t-balance').html('{!! formatVND($balance) !!}')
                 $('#t-cash_balance').html('{!! formatVND($cash_balance) !!}')
                 $('#t-outstanding_credit').html('{!! formatVND($outstanding_credit) !!}')
+                $('#t-outstanding_vib').html('{!! formatVND($outstanding_vib) !!}')
                 $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                 $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
                 $('#t-onus_farming_balance').html('{!! formatVND($onus_farming_balance) !!}')
@@ -204,6 +211,7 @@
                 $('#t-balance').html('**********')
                 $('#t-cash_balance').html('**********')
                 $('#t-outstanding_credit').html('**********')
+                $('#t-outstanding_vib').html('**********')
                 $('#t-crypto_balance').html('**********')
                 $('#t-onus_balance').html('**********')
                 $('#t-onus_farming_balance').html('**********')

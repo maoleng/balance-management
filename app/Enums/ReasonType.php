@@ -16,6 +16,8 @@ final class ReasonType extends Enum
     public const GROUP = 2;
     #[Description('Trả nợ tín dụng')]
     public const CREDIT_SETTLEMENT = 11;
+    #[Description('Trả nợ VIB')]
+    public const VIB_SETTLEMENT = 15;
     #[Description('Chuyển tiền mặt vào ONUS')]
     public const CASH_TO_ONUS = 3;
     #[Description('Chuyển từ ONUS vào ONUS Farming')]

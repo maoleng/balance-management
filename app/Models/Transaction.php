@@ -62,6 +62,11 @@ class Transaction extends Model
         return isset($this->external['is_credit']);
     }
 
+    public function getIsVIBAttribute(): bool
+    {
+        return isset($this->external['is_vib']);
+    }
+
     public function getCoinNameAttribute(): ?string
     {
         return $this->external['coin'] ?? null;
@@ -81,7 +86,7 @@ class Transaction extends Model
 
     public function appendCashData(): Transaction
     {
-        $this->append('isCredit', 'prettyCreatedTime');
+        $this->append('isCredit', 'isVIB', 'prettyCreatedTime');
         if ($this->reason->type === ReasonType::GROUP) {
             $this->append('totalPrice');
         }

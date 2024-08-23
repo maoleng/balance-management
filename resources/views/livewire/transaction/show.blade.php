@@ -69,7 +69,14 @@
                         </li>
                         <li>
                             <strong>Phương thức</strong>
-                            <span>{{ $transaction->isCredit ? 'Tín dụng' : 'Tiền mặt' }}</span>
+                            <span>
+                                @if($transaction->isCredit)
+                                    Ví trả sau MoMo
+                                @elseif($transaction->isVIB)
+                                    Thẻ tín dụng VIB
+                                @else
+                                    Tiền mặt
+                                @endif
                         </li>
                     @endif
                     <li class="li-created_at">

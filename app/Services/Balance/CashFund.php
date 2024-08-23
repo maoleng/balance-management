@@ -35,10 +35,11 @@ class CashFund
 
         return (int) File::get('init.txt') + Transaction::query()
             ->where('external->is_credit', null)
+            ->where('external->is_vib', null)
             ->selectRaw(
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
-                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['CREDIT_SETTLEMENT']}, {$types['BUY_CRYPTO']}) THEN -price
+                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['CREDIT_SETTLEMENT']}, {$types['VIB_SETTLEMENT']}, {$types['BUY_CRYPTO']}) THEN -price
                     WHEN reasons.type IN ({$types['EARN']}, {$types['ONUS_TO_CASH']}, {$types['SELL_CRYPTO']}) THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
@@ -61,6 +62,26 @@ class CashFund
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
                     WHEN reasons.type = {$types['CREDIT_SETTLEMENT']} THEN price
+                END) AS cash_balance")
+            ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
+            ->first()->cash_balance ?? 0;
+    }
+
+    public static function getOutstandingVIB($until = null): float
+    {
+        $types = ReasonType::asArray();
+
+        return Transaction::query()
+            ->where(function ($q) {
+                $q->where('external->is_vib', true)->orWhereHas('reason', function ($q) {
+                    $q->where('type', ReasonType::VIB_SETTLEMENT);
+                });
+            })
+            ->where('created_at', '<', $until ?? now())
+            ->selectRaw(
+                "SUM(CASE
+                    WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
+                    WHEN reasons.type = {$types['VIB_SETTLEMENT']} THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
             ->first()->cash_balance ?? 0;

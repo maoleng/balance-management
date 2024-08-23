@@ -53,7 +53,7 @@ class CashGroupTransactionForm extends Form
             'price' => str_replace(',', '', $data['price']),
             'quantity' => $data['quantity'],
             'reason_id' => $reason_id,
-            'external' => $transaction->is_credit ? ['is_credit' => true] : null,
+            'external' => $transaction->external,
             'transaction_id' => $transaction->id,
             'created_at' => $transaction->created_at,
         ]);

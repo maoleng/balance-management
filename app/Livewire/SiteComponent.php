@@ -17,6 +17,7 @@ class SiteComponent extends Component
     public float $cash_balance;
     public float $crypto_balance;
     public float $outstanding_credit;
+    public float $outstanding_vib;
     public float $onus_balance;
     public mixed $onus_future_balance;
     public mixed $onus_farming_balance;
@@ -36,6 +37,7 @@ class SiteComponent extends Component
 
         $this->overview = CashFund::getOverview();
         $this->outstanding_credit = CashFund::getOutstandingCredit();
+        $this->outstanding_vib = CashFund::getOutstandingVIB();
         $this->cash_balance = $cash_balance;
         $this->crypto_balance = $crypto_balance;
         $this->onus_balance = $onus_balance;

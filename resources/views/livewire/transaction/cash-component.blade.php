@@ -44,6 +44,7 @@
                                     @endforeach
                                     <span data-type="{{ ReasonType::GROUP }}" class="s-reason badge badge-warning">{{ ReasonType::getDescription(ReasonType::GROUP) }}</span>
                                     <span data-type="{{ ReasonType::CREDIT_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::CREDIT_SETTLEMENT) }}</span>
+                                    <span data-type="{{ ReasonType::VIB_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::VIB_SETTLEMENT) }}</span>
                                 </div>
                                 <div class="form-group basic animated">
                                     <div class="input-wrapper">
@@ -68,10 +69,20 @@
                                     </div>
                                 </div>
                                 <div class="pb-3 pt-2">
-                                    <label class="label" for="userid2">Trả sau</label>
-                                    <div class="form-check form-switch">
-                                        <input wire:model="form.is_credit" class="form-check-input" type="checkbox" id="is_credit">
-                                        <label class="form-check-label" for="is_credit"></label>
+                                    <label class="label" for="userid2">Nguồn tiền</label>
+                                    <div class="input-list">
+                                        <div class="form-check">
+                                            <input wire:model="form.money_source" class="form-check-input" type="radio" value="0" name="money_source" id="i-source_0">
+                                            <label class="form-check-label" for="i-source_0">Tiền mặt</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input wire:model="form.money_source" class="form-check-input" type="radio" value="1" name="money_source" id="i-source_1">
+                                            <label class="form-check-label" for="i-source_1">Ví trả sau MoMo</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input wire:model="form.money_source" class="form-check-input" type="radio" value="2" name="money_source" id="i-source_2">
+                                            <label class="form-check-label" for="i-source_2">Thẻ tín dụng VIB</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group basic">
@@ -95,7 +106,9 @@
                                 <div>
                                     <strong>{{ $transaction['reason']['shortName'] }}</strong>
                                     @if($transaction['isCredit'])
-                                        <span class="badge badge-danger">Tín dụng</span>
+                                        <span class="badge badge-danger">Ví trả sau MoMo</span>
+                                    @elseif($transaction['isVIB'])
+                                        <span class="badge badge-danger">Thẻ tín dụng VIB</span>
                                     @else
                                         <span class="badge badge-secondary">Tiền mặt</span>
                                     @endif

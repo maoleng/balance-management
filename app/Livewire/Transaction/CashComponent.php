@@ -68,7 +68,9 @@ class CashComponent extends BaseComponent
             ->whereNull('transaction_id')
             ->with(['reason', 'transactions.reason'])
             ->whereHas('reason', function ($q) {
-                $q->whereIn('type', array_merge(ReasonType::getCashReasonTypes(), [ReasonType::GROUP, ReasonType::CREDIT_SETTLEMENT]));
+                $q->whereIn('type', array_merge(ReasonType::getCashReasonTypes(), [
+                    ReasonType::GROUP, ReasonType::CREDIT_SETTLEMENT, ReasonType::VIB_SETTLEMENT,
+                ]));
             })
             ->orderByDesc('created_at')
             ->limit(10 * $p)

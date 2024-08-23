@@ -15,7 +15,7 @@ class CashTransactionForm extends Form
     public $price;
     public $type;
     public $reason;
-    public $is_credit = false;
+    public $money_source = 0;
 
     public function rules()
     {
@@ -29,7 +29,7 @@ class CashTransactionForm extends Form
             'reason' => [
                 'required',
             ],
-            'is_credit' => [
+            'money_source' => [
                 'nullable',
             ],
         ];
@@ -52,10 +52,18 @@ class CashTransactionForm extends Form
             ]
         )->id;
 
+        if ($data['money_source'] === '1') {
+            $external = ['is_credit' => true];
+        } elseif ($data['money_source'] === '2') {
+            $external = ['is_vib' => true];
+        } else {
+            $external = null;
+        }
+
         $transaction = Transaction::query()->create([
             'price' => str_replace(',', '', $data['price']),
             'reason_id' => $reason_id,
-            'external' => $data['is_credit'] ? ['is_credit' => true] : null,
+            'external' => $external,
             'created_at' => now(),
         ]);
 
