@@ -204,9 +204,9 @@
                                 <th scope="col" class="text-end">Lợi Nhuận</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($crypto_coins as $coin)
-                                <tr class="align-middle">
+                            <tbody class="align-middle">
+                            @foreach($crypto_portfolio['coins'] as $coin)
+                                <tr>
                                     <td class="text-center">
                                         <img src="{{ $coin['img'] }}" class="imaged w36">
                                     </td>
@@ -218,10 +218,21 @@
                                     <td class="text-end text-{{ $coin['color'] }}">
                                         {!! formatVND($coin['profit'], $coin['color']) !!}
                                         <br>
-                                        {{ $coin['percent'] }}
+                                        {{ $coin['profit_percent'] }}
                                     </td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <th>Tổng</th>
+                                <th>{!! formatVND($crypto_portfolio['total_price']) !!}</th>
+                                <th>
+                                    <h3 class="text-end text-{{ $crypto_portfolio['color'] }}">
+                                        {!! formatVND($crypto_portfolio['total_profit'], $crypto_portfolio['color']) !!}
+                                        <br>
+                                        {{ $crypto_portfolio['total_profit_percent'] }}
+                                    </h3>
+                                </th>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

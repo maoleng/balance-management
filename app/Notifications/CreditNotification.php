@@ -30,8 +30,8 @@ class CreditNotification extends Notification
         $left = '';
         if ($day >= 3 && $day <= 10) {
             $left = 'Còn '.(10 - $day).' ngày nữa là tới hạn thanh toán Ví trả sau.';
-        } elseif ($day >= 17 && $day <= 24) {
-            $left = 'Còn '.(24 - $day).' ngày nữa là tới hạn thanh toán Thẻ tín dụng.';
+        } elseif ($day >= 19 && $day <= 26) {
+            $left = 'Còn '.(26 - $day).' ngày nữa là tới hạn thanh toán Thẻ tín dụng.';
         }
 
         return (new WebPushMessage)

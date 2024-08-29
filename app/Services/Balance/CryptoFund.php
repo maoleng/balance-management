@@ -4,10 +4,7 @@ namespace App\Services\Balance;
 
 use App\Enums\ReasonType;
 use App\Models\Transaction;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\File;
 
 class CryptoFund
 {
@@ -16,10 +13,11 @@ class CryptoFund
     {
         $coins = self::getCoinsValue();
         $balance = 0;
+        $total_price = 0;
+        $total_profit = 0;
 
         $portfolio = [];
         foreach ($coins as $coin_name => $coin) {
-
             if ($coin['quantity'] > 0) {
                 $cur_coin_price = $coin['quantity'] * self::getRealMoneyOfCoin($coin_name);
                 $profit = $cur_coin_price - $coin['price'];
@@ -29,16 +27,24 @@ class CryptoFund
                     'price' => $coin['price'],
                     'quantity' => $coin['quantity'],
                     'profit' => $profit,
-                    'percent' => round(($profit / $coin['price'] * 100), 2).'%',
+                    'profit_percent' => round(($profit / $coin['price'] * 100), 2).'%',
                     'color' => $profit > 0 ? 'primary' : 'danger',
                 ];
                 $balance += $cur_coin_price;
+                $total_price += $coin['price'];
+                $total_profit += $profit;
             }
         }
 
         return [
             'balance' => $balance,
-            'coins' => $portfolio,
+            'portfolio' => [
+                'coins' => $portfolio,
+                'total_price' => $total_price,
+                'total_profit' => $total_profit,
+                'color' => $total_profit > 0 ? 'primary' : 'danger',
+                'total_profit_percent' => round(($total_profit / $total_price * 100), 2).'%'
+            ],
         ];
     }
 
@@ -46,15 +52,27 @@ class CryptoFund
     {
         $transactions = Transaction::query()->whereHas('reason', function ($q) {
             $q->whereIn('type', [ReasonType::BUY_CRYPTO, ReasonType::SELL_CRYPTO]);
-        })->with('reason')->get();
+        })->with('reason')->orderBy('created_at')->get();
 
         $coins = [];
         foreach ($transactions as $transaction) {
             $coin_name = $transaction->coinName;
-            $coins[$coin_name]['quantity'] = ($coins[$coin_name]['quantity'] ?? 0) +
-                ($transaction->reason->type === ReasonType::BUY_CRYPTO ? $transaction->quantity : -$transaction->quantity);
-            $coins[$coin_name]['price'] = ($coins[$coin_name]['price'] ?? 0) +
-                ($transaction->reason->type === ReasonType::BUY_CRYPTO ? $transaction->price : -$transaction->price);
+            $cur_quantity = ($coins[$coin_name]['quantity'] ?? 0) + (
+                $transaction->reason->type === ReasonType::BUY_CRYPTO
+                    ? $transaction->quantity
+                    : -$transaction->quantity
+                );
+            $coins[$coin_name]['quantity'] = $cur_quantity;
+            if ($cur_quantity === 0.0) {
+                $price = 0;
+            } else {
+                $price = ($coins[$coin_name]['price'] ?? 0) + (
+                    $transaction->reason->type === ReasonType::BUY_CRYPTO
+                        ? $transaction->price
+                        : -$transaction->price
+                    );
+            }
+            $coins[$coin_name]['price'] = $price;
         }
 
         return $coins;

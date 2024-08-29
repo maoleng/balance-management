@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
          for ($i = 3; $i <= 10; $i++) {
              $schedule->command('credit:remind')->monthlyOn($i, '9:00');
          }
-         for ($i = 17; $i <= 24; $i++) {
+         for ($i = 19; $i <= 26; $i++) {
              $schedule->command('credit:remind')->monthlyOn($i, '9:00');
          }
     }
