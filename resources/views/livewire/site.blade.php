@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="stat-box">
+                    <div class="stat-box" data-bs-toggle="modal" data-bs-target="#cryptoModal">
                         <div class="title">Tiền điện tử</div>
                         <div id="t-crypto_balance" class="value text-warning">**********</div>
                     </div>
@@ -182,6 +182,53 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cryptoModal" data-bs-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Danh mục đầu tư</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table" style="font-size: 16px">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Xu</th>
+                                <th scope="col">Lúc Mua</th>
+                                <th scope="col" class="text-end">Lợi Nhuận</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($crypto_coins as $coin)
+                                <tr class="align-middle">
+                                    <td class="text-center">
+                                        <img src="{{ $coin['img'] }}" class="imaged w36">
+                                    </td>
+                                    <td class="price">
+                                        {!! formatVND($coin['price']) !!}
+                                        <br>
+                                        {{ $coin['quantity'].' '.$coin['name'] }}
+                                    </td>
+                                    <td class="text-end text-{{ $coin['color'] }}">
+                                        {!! formatVND($coin['profit'], $coin['color']) !!}
+                                        <br>
+                                        {{ $coin['percent'] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-inline">
+                        <a href="#" class="btn btn-primary" data-bs-dismiss="modal">ĐÓNG</a>
                     </div>
                 </div>
             </div>

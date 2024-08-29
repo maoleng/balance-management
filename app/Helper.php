@@ -35,6 +35,15 @@ if (! function_exists('getFullPath')) {
     }
 }
 
+if (! function_exists('getCoinLogo')) {
+    function getCoinLogo($coin): string
+    {
+        $coin = strtolower($coin);
+
+        return "https://assets.coincap.io/assets/icons/$coin@2x.png";
+    }
+}
+
 if (! function_exists('showMessage')) {
     function showMessage(): string
     {

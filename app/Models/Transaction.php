@@ -79,9 +79,7 @@ class Transaction extends Model
 
     public function getCoinLogoAttribute(): string
     {
-        $coin = strtolower($this->coinName);
-
-        return "https://assets.coincap.io/assets/icons/$coin@2x.png";
+        return getCoinLogo($this->coinName);
     }
 
     public function appendCashData(): Transaction

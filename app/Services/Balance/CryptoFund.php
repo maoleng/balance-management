@@ -12,17 +12,34 @@ use Illuminate\Support\Facades\File;
 class CryptoFund
 {
 
-    public static function getBalance(): float
+    public static function getPortfolio(): array
     {
         $coins = self::getCoinsValue();
         $balance = 0;
+
+        $portfolio = [];
         foreach ($coins as $coin_name => $coin) {
+
             if ($coin['quantity'] > 0) {
-                $balance += $coin['quantity'] * self::getRealMoneyOfCoin($coin_name);
+                $cur_coin_price = $coin['quantity'] * self::getRealMoneyOfCoin($coin_name);
+                $profit = $cur_coin_price - $coin['price'];
+                $portfolio[] = [
+                    'name' => $coin_name,
+                    'img' => getCoinLogo($coin_name),
+                    'price' => $coin['price'],
+                    'quantity' => $coin['quantity'],
+                    'profit' => $profit,
+                    'percent' => round(($profit / $coin['price'] * 100), 2).'%',
+                    'color' => $profit > 0 ? 'primary' : 'danger',
+                ];
+                $balance += $cur_coin_price;
             }
         }
 
-        return $balance;
+        return [
+            'balance' => $balance,
+            'coins' => $portfolio,
+        ];
     }
 
     public static function getCoinsValue(): array

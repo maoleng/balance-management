@@ -16,6 +16,7 @@ class SiteComponent extends Component
     public mixed $balance;
     public float $cash_balance;
     public float $crypto_balance;
+    public array $crypto_coins;
     public float $outstanding_credit;
     public float $outstanding_vib;
     public float $onus_balance;
@@ -33,13 +34,16 @@ class SiteComponent extends Component
         $onus_balance = ONUSFund::getBalance();
         $onus_farming_balance = ONUSFund::getFarmingBalance();
         $onus_future_balance = ONUSFund::getFutureBalance();
-        $crypto_balance = CryptoFund::getBalance();
+        $crypto_fund = CryptoFund::getPortfolio();
+        $crypto_balance = $crypto_fund['balance'];
+        $crypto_coins = $crypto_fund['coins'];
 
         $this->overview = CashFund::getOverview();
         $this->outstanding_credit = CashFund::getOutstandingCredit();
         $this->outstanding_vib = CashFund::getOutstandingVIB();
         $this->cash_balance = $cash_balance;
         $this->crypto_balance = $crypto_balance;
+        $this->crypto_coins = $crypto_coins;
         $this->onus_balance = $onus_balance;
         $this->onus_farming_balance = $onus_farming_balance;
         $this->onus_future_balance = $onus_future_balance;
