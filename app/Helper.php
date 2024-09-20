@@ -44,12 +44,34 @@ if (! function_exists('getCoinLogo')) {
     }
 }
 
+if (! function_exists('convertExpNum')) {
+    function convertExpNum($num): string
+    {
+        if (str_contains($num, 'E')) {
+            $pre_num_len = strlen(substr(strrchr($num, '.'), 1)) - 3 + (int) substr($num, -1);
+            $num = number_format($num, $pre_num_len, '.', '');
+        }
+
+        return $num;
+    }
+}
+
 if (! function_exists('addWithPrecision')) {
     function addWithPrecision($a, $b): float
     {
-        $a_len = strlen(substr(strrchr($a, '.'), 1));
-        $b_len = strlen(substr(strrchr($b, '.'), 1));
-        $len = max($a_len, $b_len);
+        $pre_a_len = strlen(substr(strrchr($a, '.'), 1));
+        $pre_b_len = strlen(substr(strrchr($b, '.'), 1));
+
+        if (str_contains($a, 'E')) {
+            $pre_a_len = $pre_a_len - 3 + (int) substr($a, -1);
+            $a = number_format($a, $pre_a_len, '.', '');
+        }
+         if (str_contains($b, 'E')) {
+            $pre_b_len = $pre_b_len - 3 + (int) substr($b, -1);
+            $b = number_format($b, $pre_b_len, '.', '');
+        }
+
+        $len = max($pre_a_len, $pre_b_len);
 
         return (float) bcadd($a, $b, $len);
     }

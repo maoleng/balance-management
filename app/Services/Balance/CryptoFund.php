@@ -5,7 +5,6 @@ namespace App\Services\Balance;
 use App\Enums\ReasonType;
 use App\Models\Transaction;
 use GuzzleHttp\Client;
-use phpseclib3\Math\BigInteger\Engines\BCMath;
 
 class CryptoFund
 {
@@ -26,7 +25,7 @@ class CryptoFund
                     'name' => $coin_name,
                     'img' => getCoinLogo($coin_name),
                     'price' => $coin['price'],
-                    'quantity' => $coin['quantity'],
+                    'quantity' => convertExpNum($coin['quantity']),
                     'profit' => $profit,
                     'profit_percent' => $coin['price'] === 0 ? '0%' : round(($profit / $coin['price'] * 100), 2).'%',
                     'color' => $profit > 0 ? 'primary' : 'danger',
