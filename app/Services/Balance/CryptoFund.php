@@ -5,6 +5,7 @@ namespace App\Services\Balance;
 use App\Enums\ReasonType;
 use App\Models\Transaction;
 use GuzzleHttp\Client;
+use phpseclib3\Math\BigInteger\Engines\BCMath;
 
 class CryptoFund
 {
@@ -43,7 +44,7 @@ class CryptoFund
                 'total_price' => $total_price,
                 'total_profit' => $total_profit,
                 'color' => $total_profit > 0 ? 'primary' : 'danger',
-                'total_profit_percent' => round(($total_profit / $total_price * 100), 2).'%'
+                'total_profit_percent' => $total_price === 0 ? '0%' : round(($total_profit / $total_price * 100), 2).'%'
             ],
         ];
     }
@@ -57,20 +58,21 @@ class CryptoFund
         $coins = [];
         foreach ($transactions as $transaction) {
             $coin_name = $transaction->coinName;
-            $cur_quantity = ($coins[$coin_name]['quantity'] ?? 0) + (
+            $cur_quantity = addWithPrecision(($coins[$coin_name]['quantity'] ?? 0), (
                 $transaction->reason->type === ReasonType::BUY_CRYPTO
                     ? $transaction->quantity
                     : -$transaction->quantity
-                );
+                ));
+
             $coins[$coin_name]['quantity'] = $cur_quantity;
             if ($cur_quantity === 0.0) {
                 $price = 0;
             } else {
-                $price = ($coins[$coin_name]['price'] ?? 0) + (
+                $price = addWithPrecision(($coins[$coin_name]['price'] ?? 0), (
                     $transaction->reason->type === ReasonType::BUY_CRYPTO
                         ? $transaction->price
                         : -$transaction->price
-                    );
+                    ));
             }
             $coins[$coin_name]['price'] = $price;
         }

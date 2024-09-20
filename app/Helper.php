@@ -44,6 +44,17 @@ if (! function_exists('getCoinLogo')) {
     }
 }
 
+if (! function_exists('addWithPrecision')) {
+    function addWithPrecision($a, $b): float
+    {
+        $a_len = strlen(substr(strrchr($a, '.'), 1));
+        $b_len = strlen(substr(strrchr($b, '.'), 1));
+        $len = max($a_len, $b_len);
+
+        return (float) bcadd($a, $b, $len);
+    }
+}
+
 if (! function_exists('showMessage')) {
     function showMessage(): string
     {
