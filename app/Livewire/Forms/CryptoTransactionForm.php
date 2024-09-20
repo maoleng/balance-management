@@ -21,7 +21,6 @@ class CryptoTransactionForm extends Form
         return [
             'price' => [
                 'required',
-                'numeric',
             ],
             'quantity' => [
                 'required',
@@ -55,7 +54,7 @@ class CryptoTransactionForm extends Form
         )->id;
 
         $transaction = Transaction::query()->create([
-            'price' => $data['price'],
+            'price' => str_replace(',', '', $data['price']),
             'quantity' => $data['quantity'],
             'reason_id' => $reason_id,
             'external' => ['coin' => $data['name']],

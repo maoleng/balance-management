@@ -28,7 +28,7 @@ class CryptoFund
                     'price' => $coin['price'],
                     'quantity' => $coin['quantity'],
                     'profit' => $profit,
-                    'profit_percent' => round(($profit / $coin['price'] * 100), 2).'%',
+                    'profit_percent' => $coin['price'] === 0 ? '0%' : round(($profit / $coin['price'] * 100), 2).'%',
                     'color' => $profit > 0 ? 'primary' : 'danger',
                 ];
                 $balance += $cur_coin_price;
