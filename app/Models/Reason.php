@@ -26,12 +26,4 @@ class Reason extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getShortNameAttribute()
-    {
-        $len = Str::length($this->name);
-
-        return $len >= 12 ? Str::limit($this->name, 12) : $this->name;
-
-    }
-
 }

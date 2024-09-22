@@ -88,7 +88,6 @@ class Transaction extends Model
         if ($this->reason->type === ReasonType::GROUP) {
             $this->append('totalPrice');
         }
-        $this->reason->append('shortName');
 
         return $this;
     }

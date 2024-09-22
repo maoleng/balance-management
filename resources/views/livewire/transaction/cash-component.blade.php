@@ -104,7 +104,7 @@
                             <div class="detail">
                                 <img src="{{ getFullPath($transaction['reason']['image']) }}" alt="img" class="image-block imaged w48">
                                 <div>
-                                    <strong>{{ $transaction['reason']['shortName'] }}</strong>
+                                    <strong>{{ $transaction['reason']['name'] }}</strong>
                                     @if($transaction['isCredit'])
                                         <span class="badge badge-danger">Ví trả sau MoMo</span>
                                     @elseif($transaction['isVIB'])
