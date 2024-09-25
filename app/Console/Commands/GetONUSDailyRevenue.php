@@ -16,7 +16,7 @@ class GetONUSDailyRevenue extends Command
     public function handle(): void
     {
         $balance = ONUSFund::getBalance();
-        $revenue = round($balance * 0.033 / 100);
+        $revenue = round($balance * 0.035 / 100);
 
         $type = ReasonType::DAILY_REVENUE_ONUS;
         $reason_id = Reason::query()->firstOrCreate(
