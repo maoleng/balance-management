@@ -68,12 +68,6 @@
                         <div id="t-outstanding_vib" class="value text-primary">**********</div>
                     </div>
                 </div>
-{{--                <div class="col-6">--}}
-{{--                    <div class="stat-box">--}}
-{{--                        <div class="title">Đánh bạc</div>--}}
-{{--                        <div id="t-onus_future_balance" class="value text-danger">**********</div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
         </div>
 
@@ -263,7 +257,6 @@
                 $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                 $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
                 $('#t-onus_farming_balance').html('{!! formatVND($onus_farming_balance) !!}')
-                $('#t-onus_future_balance').html('{!! formatVND($onus_future_balance) !!}')
             } else {
                 iconToggle.attr('name', 'eye-outline')
                 $('#t-balance').html('**********')
@@ -273,11 +266,10 @@
                 $('#t-crypto_balance').html('**********')
                 $('#t-onus_balance').html('**********')
                 $('#t-onus_farming_balance').html('**********')
-                $('#t-onus_future_balance').html('**********')
             }
         })
         var options = {
-            series: [{{ "$cash_balance, $onus_balance, $onus_farming_balance, $crypto_balance, $onus_future_balance" }}],
+            series: [{{ "$cash_balance, $onus_balance, $onus_farming_balance, $crypto_balance" }}],
             chart: {
                 type: 'donut',
             },
@@ -316,7 +308,7 @@
                     enabled: false,
                 }
             },
-            labels: ['Tiền mặt', 'Tiết kiệm', 'Tiết kiệm dài hạn', 'Tiền điện tử', 'Đánh bạc'],
+            labels: ['Tiền mặt', 'Tiết kiệm', 'Tiết kiệm dài hạn', 'Tiền điện tử'],
             colors: ['#28a745', '#6c757d', '#17a2b8', '#ffc107', '#dc3545'],
         };
 

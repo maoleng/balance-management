@@ -35,15 +35,6 @@ final class ReasonType extends Enum
     #[Description('Bán tiền mã hóa')]
     public const SELL_CRYPTO = 10;
 
-    #[Description('Chuyển từ ONUS sang ONUS Future')]
-    public const ONUS_TO_ONUS_FUTURE = 12;
-
-    #[Description('Chuyển từ ONUS Future sang ONUS')]
-    public const ONUS_FUTURE_TO_ONUS = 13;
-
-    #[Description('Lãi ONUS Future')]
-    public const FUTURE_REVENUE_ONUS = 14;
-
     public static function getCashReasonTypes(): array
     {
         return [
@@ -61,16 +52,13 @@ final class ReasonType extends Enum
             'DAILY_REVENUE_ONUS' => self::DAILY_REVENUE_ONUS,
             'FARM_REVENUE_ONUS' => self::FARM_REVENUE_ONUS,
             'ONUS_TO_CASH' => self::ONUS_TO_CASH,
-            'ONUS_TO_ONUS_FUTURE' => self::ONUS_TO_ONUS_FUTURE,
-            'ONUS_FUTURE_TO_ONUS' => self::ONUS_FUTURE_TO_ONUS,
-            'FUTURE_REVENUE_ONUS' => self::FUTURE_REVENUE_ONUS,
         ];
     }
 
     public static function classifyONUSType($type): ?bool
     {
         return match ($type) {
-            self::CASH_TO_ONUS, self::DAILY_REVENUE_ONUS, self::FARM_REVENUE_ONUS, self::FUTURE_REVENUE_ONUS => true,
+            self::CASH_TO_ONUS, self::DAILY_REVENUE_ONUS, self::FARM_REVENUE_ONUS => true,
             self::ONUS_TO_CASH => false,
             default => null,
         };

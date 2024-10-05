@@ -66,11 +66,11 @@
                                 </div>
                             </div>
                             <div class="right">
-                                @if (in_array($transaction['reason']['type'], [ReasonType::ONUS_TO_CASH, ReasonType::ONUS_TO_ONUS_FUTURE], true))
+                                @if ($transaction['reason']['type'] === ReasonType::ONUS_TO_CASH)
                                     <div class="price text-danger">
                                         - {!! formatVND($transaction['price'], 'danger') !!}
                                     </div>
-                                @elseif (in_array($transaction['reason']['type'], [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS, ReasonType::FUTURE_REVENUE_ONUS], true))
+                                @elseif (in_array($transaction['reason']['type'], [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS], true))
                                     <div class="price text-info">
                                         {!! formatVND($transaction['price'], 'info') !!}
                                     </div>
