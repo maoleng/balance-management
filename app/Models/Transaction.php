@@ -94,7 +94,7 @@ class Transaction extends Model
 
     public function appendONUSData(): Transaction
     {
-        $this->append('coinName', 'prettyCreatedTime');
+        $this->append('prettyCreatedTime');
 
         return $this;
     }

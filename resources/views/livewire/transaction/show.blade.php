@@ -282,12 +282,6 @@
                 </div>
 
                 <ul class="listview flush transparent simple-listview no-space mt-3">
-                    @if ($transaction->coinName)
-                        <li>
-                            <strong>Mã tiền</strong>
-                            <span>{{ $transaction->coinName }}</span>
-                        </li>
-                    @endif
                     <li>
                         <strong>Thời gian</strong>
                         <span>{{ $transaction->prettyCreatedAtWithTime }}</span>
