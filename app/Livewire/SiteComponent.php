@@ -20,7 +20,6 @@ class SiteComponent extends Component
     public float $outstanding_credit;
     public float $outstanding_vib;
     public float $onus_balance;
-    public mixed $onus_farming_balance;
 
     public function render(): View
     {
@@ -31,7 +30,6 @@ class SiteComponent extends Component
     {
         $cash_balance = CashFund::getBalance();
         $onus_balance = ONUSFund::getBalance();
-        $onus_farming_balance = ONUSFund::getFarmingBalance();
         $crypto_fund = CryptoFund::getPortfolio();
         $crypto_balance = $crypto_fund['balance'];
         $crypto_portfolio = $crypto_fund['portfolio'];
@@ -43,8 +41,7 @@ class SiteComponent extends Component
         $this->crypto_balance = $crypto_balance;
         $this->crypto_portfolio = $crypto_portfolio;
         $this->onus_balance = $onus_balance;
-        $this->onus_farming_balance = $onus_farming_balance;
-        $this->balance = $cash_balance + $crypto_balance + $onus_balance + $onus_farming_balance;
+        $this->balance = $cash_balance + $crypto_balance + $onus_balance;
     }
 
 }

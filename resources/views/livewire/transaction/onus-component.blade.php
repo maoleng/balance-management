@@ -43,7 +43,6 @@
                                         </i>
                                     </div>
                                 </div>
-                                <div id="d-coin"></div>
                                 <div class="form-group basic">
                                     <button id="btn-add" type="submit" class="btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">Thêm</button>
                                 </div>
@@ -69,10 +68,6 @@
                                 @if ($transaction['reason']['type'] === ReasonType::ONUS_TO_CASH)
                                     <div class="price text-danger">
                                         - {!! formatVND($transaction['price'], 'danger') !!}
-                                    </div>
-                                @elseif (in_array($transaction['reason']['type'], [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS], true))
-                                    <div class="price text-info">
-                                        {!! formatVND($transaction['price'], 'info') !!}
                                     </div>
                                 @else
                                     <div class="price text-secondary">
@@ -110,25 +105,6 @@
                 showErrorDialog('Vui lòng điền đầy đủ thông tin')
             } else {
                 showSuccessToast('Thêm mới giao dịch thành công')
-            }
-        })
-        $('.i-reason').on('click', function () {
-            const reasons = '{{ implode(',', [ReasonType::ONUS_TO_ONUS_FARMING, ReasonType::ONUS_FARMING_TO_ONUS, ReasonType::FARM_REVENUE_ONUS]) }}'.split(',')
-            if (reasons.includes($(this).val())) {
-                $('#d-coin').empty()
-                $('#d-coin').append(`
-                    <div class="form-group basic animated pb-3">
-                        <div class="input-wrapper">
-                            <label class="label" for="i-coin">Mã tiền</label>
-                            <input required wire:model="form.coin" type="text" class="form-control" id="i-coin" placeholder="Mã tiền">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
-                            </i>
-                        </div>
-                    </div>
-                `)
-            } else {
-                $('#d-coin').empty()
             }
         })
     </script>
