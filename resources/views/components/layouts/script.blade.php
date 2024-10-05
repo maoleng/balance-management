@@ -58,12 +58,13 @@
 </script>
 
 <script>
-    if ($('body').hasClass('dark-mode')) {
-        $('#darkmodeSwitch').prop('checked', true);
-    }
-    $('#darkmodeSwitch').on('click', function () {
-        $('body').toggleClass('dark-mode');
-    })
+    @if (Cache::get('screen-mode') === 'auto')
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            $('body').addClass('dark-mode')
+        } else {
+            $('body').removeClass('dark-mode')
+        }
+    @endif
 </script>
 
 <script>

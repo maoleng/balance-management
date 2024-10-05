@@ -12,19 +12,8 @@
                 </a>
             </div>
         </div>
-        <div class="listview-title mt-1">Giao diện</div>
+        <div class="listview-title mt-1">Cấu hình</div>
         <ul class="listview image-listview text inset no-line">
-            <li>
-                <div class="item">
-                    <div class="in">
-                        <div>Tối</div>
-                        <div class="form-check form-switch  ms-2">
-                            <input wire:click="toggleDarkMode" class="form-check-input dark-mode-switch" type="checkbox" id="darkmodeSwitch">
-                            <label class="form-check-label" for="darkmodeSwitch"></label>
-                        </div>
-                    </div>
-                </div>
-            </li>
             <li>
                 <a href="#" class="item" data-bs-toggle="modal" data-bs-target="#DialogForm">
                     <div class="in">
@@ -33,15 +22,22 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('me') }}" class="item">
+                <a href="#" class="item" data-bs-toggle="modal" data-bs-target="#screenModeModal">
                     <div class="in">
-                        <div>Tải lại trang</div>
+                        <div>Giao diện</div>
                     </div>
                 </a>
             </li>
         </ul>
         <div class="listview-title mt-1">Bảo mật</div>
         <ul class="listview image-listview text mb-2 inset">
+            <li>
+                <a href="{{ route('me') }}" class="item">
+                    <div class="in">
+                        <div>Tải lại trang</div>
+                    </div>
+                </a>
+            </li>
             <li>
                 <a href="#" class="item">
                     <div class="in">
@@ -72,7 +68,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="btn-inline">
-                            <button type="button" class="btn btn-text-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-text-secondary" data-bs-dismiss="modal">HỦY</button>
                             <button wire:click="saveInitAmount" onclick="showSuccessDialog('Cài đặt số dư thành công')" type="button" class="btn btn-text-primary" data-bs-dismiss="modal">LƯU</button>
                         </div>
                     </div>
@@ -80,4 +76,54 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade dialogbox" id="screenModeModal" data-bs-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-body text-start mb-2">
+                        <div class="form-group basic">
+                            <div class="input-wrapper d-flex justify-content-center">
+                                <div class="input-list pt-1">
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check" name="type" value="auto" id="type_auto" autocomplete="off" wire:model="selectedType">
+                                        <label class="btn btn-outline-primary" for="type_auto">Tự động</label>
+                                        <input type="radio" class="btn-check" name="type" value="dark-mode" id="type_dark" autocomplete="off" wire:model="selectedType">
+                                        <label class="btn btn-outline-primary" for="type_dark">Tối</label>
+                                        <input type="radio" class="btn-check" name="type" value="light-mode" id="type_light" autocomplete="off" wire:model="selectedType">
+                                        <label class="btn btn-outline-primary" for="type_light">Sáng</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-inline">
+                            <button type="button" class="btn btn-text-secondary" data-bs-dismiss="modal">HỦY</button>
+                            <button wire:click="toggleDarkMode" onclick="showSuccessDialog('Cài đặt màn hình thành công')" id="btn-save_screen" type="button" class="btn btn-text-primary" data-bs-dismiss="modal">LƯU</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@script
+<script>
+    $('#btn-save_screen').on('click', function () {
+        const type = $('input[name="type"]:checked').val()
+        if (type === 'dark-mode') {
+            $('body').addClass('dark-mode')
+        } else if (type === 'light-mode') {
+            $('body').removeClass('dark-mode')
+        } else {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                $('body').addClass('dark-mode')
+            } else {
+                $('body').removeClass('dark-mode')
+            }
+        }
+    })
+</script>
+@endscript

@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
 @include('components.layouts.head-tag')
-<body class="{{ Cache::get('dark-mode') }} @yield('bg-class')">
+<body class="{{ Cache::get('screen-mode') }} @yield('bg-class')">
 
 {{ $slot }}
 @include('components.layouts.bottom-menu')
