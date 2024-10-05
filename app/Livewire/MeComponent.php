@@ -12,10 +12,12 @@ class MeComponent extends Component
 {
 
     public int $init;
+    public string $selectedType;
 
     public function mount(): void
     {
-        $this->init = (int) CashFund::getBalance();
+        $this->init = CashFund::getBalance();
+        $this->selectedType = Cache::get('screen-mode', 'auto');
     }
 
     public function render(): View
@@ -40,8 +42,7 @@ class MeComponent extends Component
 
     public function toggleDarkMode(): void
     {
-        $dark_mode = Cache::get('dark-mode') === 'dark-mode' ? '' : 'dark-mode';
-        Cache::forever('dark-mode', $dark_mode);
+        Cache::forever('screen-mode', $this->selectedType);
     }
 
 }
