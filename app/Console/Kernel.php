@@ -12,7 +12,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-         $schedule->command('crypto:notify')->everyFiveMinutes();
          $schedule->command('onus:daily_revenue')->dailyAt('02:00');
          $schedule->command('bill:remind')->dailyAt('7:00');
          $schedule->command('bill:remind')->dailyAt('19:00');
