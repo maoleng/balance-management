@@ -18,6 +18,8 @@ final class ReasonType extends Enum
     public const CREDIT_SETTLEMENT = 11;
     #[Description('Trả nợ VIB')]
     public const VIB_SETTLEMENT = 15;
+    #[Description('Trả nợ LIO')]
+    public const LIO_SETTLEMENT = 16;
     #[Description('Chuyển tiền mặt vào ONUS')]
     public const CASH_TO_ONUS = 3;
     #[Description('Lãi hằng ngày ONUS')]

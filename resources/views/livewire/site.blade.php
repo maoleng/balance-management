@@ -48,18 +48,24 @@
                         <div id="t-onus_balance" class="value text-secondary">**********</div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-2">
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Dư nợ MoMo</div>
                         <div id="t-outstanding_credit" class="value text-primary">**********</div>
                     </div>
                 </div>
+            </div>
+            <div class="row mt-2">
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Dư nợ VIB</div>
                         <div id="t-outstanding_vib" class="value text-primary">**********</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Dư nợ LIO</div>
+                        <div id="t-outstanding_lio" class="value text-primary">**********</div>
                     </div>
                 </div>
             </div>
@@ -248,6 +254,7 @@
                 $('#t-cash_balance').html('{!! formatVND($cash_balance) !!}')
                 $('#t-outstanding_credit').html('{!! formatVND($outstanding_credit) !!}')
                 $('#t-outstanding_vib').html('{!! formatVND($outstanding_vib) !!}')
+                $('#t-outstanding_lio').html('{!! formatVND($outstanding_lio) !!}')
                 $('#t-crypto_balance').html('{!! formatVND($crypto_balance) !!}')
                 $('#t-onus_balance').html('{!! formatVND($onus_balance) !!}')
             } else {
@@ -256,6 +263,7 @@
                 $('#t-cash_balance').html('**********')
                 $('#t-outstanding_credit').html('**********')
                 $('#t-outstanding_vib').html('**********')
+                $('#t-outstanding_lio').html('**********')
                 $('#t-crypto_balance').html('**********')
                 $('#t-onus_balance').html('**********')
             }

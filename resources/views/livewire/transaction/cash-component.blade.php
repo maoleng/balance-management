@@ -45,6 +45,7 @@
                                     <span data-type="{{ ReasonType::GROUP }}" class="s-reason badge badge-warning">{{ ReasonType::getDescription(ReasonType::GROUP) }}</span>
                                     <span data-type="{{ ReasonType::CREDIT_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::CREDIT_SETTLEMENT) }}</span>
                                     <span data-type="{{ ReasonType::VIB_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::VIB_SETTLEMENT) }}</span>
+                                    <span data-type="{{ ReasonType::LIO_SETTLEMENT }}" class="s-reason badge badge-info">{{ ReasonType::getDescription(ReasonType::LIO_SETTLEMENT) }}</span>
                                 </div>
                                 <div class="form-group basic animated">
                                     <div class="input-wrapper">
@@ -83,6 +84,10 @@
                                             <input wire:model="form.money_source" class="form-check-input" type="radio" value="2" name="money_source" id="i-source_2">
                                             <label class="form-check-label" for="i-source_2">Thẻ tín dụng VIB</label>
                                         </div>
+                                        <div class="form-check">
+                                            <input wire:model="form.money_source" class="form-check-input" type="radio" value="3" name="money_source" id="i-source_3">
+                                            <label class="form-check-label" for="i-source_3">Thẻ tín dụng LIO</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group basic">
@@ -109,6 +114,8 @@
                                         <span class="badge badge-danger">Ví trả sau MoMo</span>
                                     @elseif($transaction['isVIB'])
                                         <span class="badge badge-danger">Thẻ tín dụng VIB</span>
+                                    @elseif($transaction['isLIO'])
+                                        <span class="badge badge-danger">Thẻ tín dụng LIO</span>
                                     @else
                                         <span class="badge badge-secondary">Tiền mặt</span>
                                     @endif

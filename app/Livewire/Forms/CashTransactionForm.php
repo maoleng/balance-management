@@ -56,6 +56,8 @@ class CashTransactionForm extends Form
             $external = ['is_credit' => true];
         } elseif ($data['money_source'] === '2') {
             $external = ['is_vib' => true];
+        } elseif ($data['money_source'] === '3') {
+            $external = ['is_lio' => true];
         } else {
             $external = null;
         }

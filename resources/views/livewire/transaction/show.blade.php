@@ -74,6 +74,8 @@
                                     Ví trả sau MoMo
                                 @elseif($transaction->isVIB)
                                     Thẻ tín dụng VIB
+                                @elseif($transaction->isLIO)
+                                    Thẻ tín dụng LIO
                                 @else
                                     Tiền mặt
                                 @endif

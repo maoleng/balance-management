@@ -36,10 +36,11 @@ class CashFund
         return (int) File::get('init.txt') + Transaction::query()
             ->where('external->is_credit', null)
             ->where('external->is_vib', null)
+            ->where('external->is_lio', null)
             ->selectRaw(
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
-                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['CREDIT_SETTLEMENT']}, {$types['VIB_SETTLEMENT']}, {$types['BUY_CRYPTO']}) THEN -price
+                    WHEN reasons.type IN ({$types['CASH_TO_ONUS']}, {$types['CREDIT_SETTLEMENT']}, {$types['VIB_SETTLEMENT']}, {$types['LIO_SETTLEMENT']}, {$types['BUY_CRYPTO']}) THEN -price
                     WHEN reasons.type IN ({$types['EARN']}, {$types['ONUS_TO_CASH']}, {$types['SELL_CRYPTO']}) THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
@@ -82,6 +83,26 @@ class CashFund
                 "SUM(CASE
                     WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
                     WHEN reasons.type = {$types['VIB_SETTLEMENT']} THEN price
+                END) AS cash_balance")
+            ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
+            ->first()->cash_balance ?? 0;
+    }
+
+    public static function getOutstandingLIO($until = null): float
+    {
+        $types = ReasonType::asArray();
+
+        return Transaction::query()
+            ->where(function ($q) {
+                $q->where('external->is_lio', true)->orWhereHas('reason', function ($q) {
+                    $q->where('type', ReasonType::LIO_SETTLEMENT);
+                });
+            })
+            ->where('created_at', '<', $until ?? now())
+            ->selectRaw(
+                "SUM(CASE
+                    WHEN reasons.type = {$types['SPEND']} THEN -price * quantity
+                    WHEN reasons.type = {$types['LIO_SETTLEMENT']} THEN price
                 END) AS cash_balance")
             ->join('reasons', 'transactions.reason_id', '=', 'reasons.id')
             ->first()->cash_balance ?? 0;

@@ -20,6 +20,7 @@ class SiteComponent extends Component
     public float $outstanding_credit;
     public float $outstanding_vib;
     public float $onus_balance;
+    public float $outstanding_lio;
 
     public function render(): View
     {
@@ -37,6 +38,7 @@ class SiteComponent extends Component
         $this->overview = CashFund::getOverview();
         $this->outstanding_credit = CashFund::getOutstandingCredit();
         $this->outstanding_vib = CashFund::getOutstandingVIB();
+        $this->outstanding_lio = CashFund::getOutstandingLIO();
         $this->cash_balance = $cash_balance;
         $this->crypto_balance = $crypto_balance;
         $this->crypto_portfolio = $crypto_portfolio;

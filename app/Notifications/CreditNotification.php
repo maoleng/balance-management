@@ -16,6 +16,15 @@ class CreditNotification extends Notification
 {
     use Queueable;
 
+    private string $left;
+    private string $outstanding;
+
+    public function __construct($left, $outstanding)
+    {
+        $this->left = $left;
+        $this->outstanding = $outstanding;
+    }
+
     public function via(): array
     {
         return [WebPushChannel::class];
@@ -23,22 +32,11 @@ class CreditNotification extends Notification
 
     public function toWebPush(): WebPushMessage
     {
-        $momo = number_format(-CashFund::getOutstandingCredit()).'đ';
-        $vib = number_format(-CashFund::getOutstandingVIB()).'đ';
-
-        $day = now()->day;
-        $left = '';
-        if ($day >= 3 && $day <= 10) {
-            $left = 'Còn '.(10 - $day).' ngày nữa là tới hạn thanh toán Ví trả sau.';
-        } elseif ($day >= 19 && $day <= 26) {
-            $left = 'Còn '.(26 - $day).' ngày nữa là tới hạn thanh toán Thẻ tín dụng.';
-        }
-
         return (new WebPushMessage)
             ->title('Dư nợ tín dụng')
             ->icon(asset('assets/img/icon/192x192.png'))
             ->badge(asset('assets/img/icon/96x96.png'))
-            ->body("Dư nợ Ví trả sau là $momo. \nDư nợ Thẻ tín dụng là $vib. \n$left");
+            ->body("$this->left. \n$this->outstanding");
     }
 
 }
